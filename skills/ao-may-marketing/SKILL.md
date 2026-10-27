@@ -1,0 +1,103 @@
+---
+name: ao-may-marketing
+description: "Làm marketing cho chuỗi nhượng quyền Áo Mây Laundry và từng cửa hàng: đọc đúng bài và đúng cửa hàng trong Notion, viết caption Facebook, lập kế hoạch 14 ngày, thiết kế poster giữ logo gốc và kiểm tra chất lượng. Dùng khi người dùng nhắc Áo Mây, tên hoặc mã một cửa hàng Áo Mây (Tân Hưng/TH, Chánh Hưng/CH, Dương Quảng Hàm/DQH, Tân Phú/TP, Nguyễn Xí/NX, An Khánh/AK), mẫu DQH-01 hoặc bài số trong lịch Áo Mây."
+metadata:
+  version: 1.4.2
+---
+
+# Áo Mây Marketing
+
+Áo Mây is a laundry **franchise brand**; each franchise store has its own profile (store code, contacts, services, assets, poster route). Read [brand context](references/brand-context.md) first. Respond in Vietnamese unless requested otherwise. This skill supplies instructions, brand context and bundled assets; it does not provide an image model or a Facebook publisher.
+
+## 0. Precedence (read before anything else)
+Apply in this order when sources conflict:
+1. The user's explicit instruction in the current conversation.
+2. Official Áo Mây brand kit (not received yet).
+3. The store's own profile and approved template (`assets/stores/<CODE>/spec.json`, its Notion store row).
+4. Chain-wide rules (brand-context, Notion 01/03).
+5. Within any source, a newer dated entry overrides an older one.
+
+Where each kind of information lives — one place only:
+| Information | Source |
+|---|---|
+| How to work (workflow, checks) | this SKILL.md |
+| Chain rules, voice, prohibitions, store index | references/brand-context.md |
+| Store facts: address, hotline, fanpage, services, offers, hashtags | Notion database **02 Cửa hàng** (brand-context holds a dated snapshot only) |
+| Posts, captions, briefs | Notion **07 Content Calendar** (DQH posts may still sit in 06 until migrated) |
+| Fonts, coordinates, colours, file names, SHA-256, poster route | `assets/stores/<CODE>/spec.json` |
+| Logo, CTA, background, reference images | files under `assets/` — made by the user only |
+
+If a Notion page describes a production workflow that differs from this skill, follow this skill and mention the difference in one sentence.
+
+## Choose the workflow
+- Brand context and positioning: product-marketing.
+- Facebook captions, 14-day plans, short video scripts: social.
+- Campaign angles and hook variants: ad-creative.
+- Poster: §3, route taken from the store's spec.json.
+- New persuasive copy: copywriting; polish existing copy: copy-editing.
+The bundled general skills are subordinate to current user instructions and verified Áo Mây requirements. Never apply miu-miu-marketing guidance, colours or assets to Áo Mây.
+
+## 1. Resolve store and source
+1. **Store:** map the user's words to exactly one store code using the store index in brand-context (names and aliases). Ambiguous or unknown → ask. Never borrow facts, assets, hashtags or offers from another store.
+2. **Readiness:** load `assets/stores/<CODE>/spec.json` (locate the skill folder as in §3 Preflight). If `status` is `draft`, captions/plans may use only confirmed facts and **no poster is made** — tell the user which fields or files are missing.
+3. **Post:** use the host Notion connection. Fetch the Calendar schema before querying. Filter by store (relation `Cửa hàng` once migrated; until then the legacy select `Cửa hàng` in 07 or `Chi nhánh` in 06) AND post number together. Post numbers repeat across stores — never match by number alone.
+4. Fetch the matching page. Read Bài đăng, Cửa hàng, Caption, Hook/Ý tưởng, Brief poster, Ngày đăng, Trạng thái, Ghi chú and page body. Keep the page URL.
+5. Reconcile contradictions. Explicitly revised production properties beat old draft text. Do not silently combine versions. Ask only if the conflict changes the deliverable.
+6. Re-fetch the store row in 02 for contacts, services and offers. A field that is empty or marked unconfirmed must not appear on a poster or in a caption as fact.
+7. Record a compact source lock: store code, post number, title, source URL, hook, topic, caption, brief, contact facts, uncertainties. Check it again before delivery. Do not change a numbered post's topic.
+8. If Notion tools are unavailable, say so and use an actual user-supplied brief. Never claim a live read or invent missing rows.
+9. A request with a user photo and no post number ("thay nội dung theo ảnh này") → the photo + the user's message are the brief.
+
+## 2. Produce the copy or plan
+Use a strong varied hook, relatable situation, specific supported benefit, one CTA and a few local hashtags. Preserve an existing caption unless editing is requested. Keep image copy short. A 14-day plan has one row per day and store with objective, service, hook, caption, CTA, visual brief and status. Vary topics and creative treatment between stores posting the same day. Mark proposals and unknown service availability. Do not invent prices, promotions, opening hours, free delivery, express turnaround or guaranteed results; use only offers confirmed for that store.
+
+### Caption length and substance (user-updated 2026-10-23)
+The user wants copy that is engaging and sufficiently developed, neither verbose nor skeletal. Default to one hook plus 3 short paragraphs (a concrete situation, practical service benefit, one CTA), then store contacts and 3–4 relevant hashtags. For a regular Facebook service post, aim for roughly 120–170 whitespace-separated Vietnamese words before contacts as an editorial guide, not a quota; shorten if the topic is simple. Every sentence must add information or emotional relevance. Do not stretch a thin post with filler, repeated rhetorical questions or several versions of the same pain point.
+
+Develop one specific customer moment and explain how the service helps that moment. Use 1–2 grounded benefits, supported by verified service facts. Avoid turning the entire caption into 'send item / ask timing / get quote'. Keep timing or availability qualifications in one natural sentence when relevant. Rotate situations, hooks and CTA wording across nearby posts. When the user says a numbered post is too sparse, rewrite that exact store/post Caption and matching body section in Notion, preserving poster, topic, approval status and unrelated content.
+
+Hashtags: use the store's saved set (Notion 02 / brand-context store index) and swap only the service group. A store without a saved set → propose one and mark it as a proposal.
+
+## 3. Poster
+
+### Preflight (every poster, no reminder needed)
+1. Locate the skill folder: `find / -path '*skills/ao-may-marketing/SKILL.md' 2>/dev/null`. The install path contains a version number and changes on update — never hard-code it, never reuse a path from an earlier chat. All paths in spec.json are relative to `<skill folder>/assets/`.
+2. Load `stores/<CODE>/spec.json`. Check: `status` is `active`; every entry in `files` exists; if `sha256` is filled the hash matches; entries with `require_rgba` are RGBA with real transparency (some alpha < 255); every font in `fonts` contains every character of the text to render (fontTools).
+3. Print a short table (file · OK/FAIL · reason). Any FAIL → stop, show the table, name the file the user must fix. Never substitute a chat attachment, a Notion file, a previous poster, another store's file or anything generated.
+4. **Assets are made and maintained by the user.** Never create, redraw, edit, re-export or "fix" files under `assets/`. Files attached in chat are never used as assets (chat may re-encode them).
+
+### Route — read `route` from spec.json
+| `route` | Meaning |
+|---|---|
+| `direct` | 3A: the image model generates the whole poster in one call |
+| `compose` | 3B: code composites the original logo, CTA and Vietnamese text over a background and subject |
+Never mix routes in one poster. Never change a store's route without the user's instruction.
+
+### 3A. Direct generation
+1. Read the source brief. Use the logo from spec (`logo.file`) as an image reference and request faithful identity; do not promise pixel-exact reproduction. If `logo.mode` is `chain+label`, the store name from `logo.label` is set as separate text beside the chain logo, never merged into it.
+2. Write one complete production prompt: scene, composition, colours from spec, logo reference, exact Vietnamese headline, supporting copy, CTA, store name and verified contacts from Notion 02. Use real store photos when the brief needs them; never present a synthetic storefront as real.
+3. Call the image tool ONCE for ONE finished square poster. Request 1080×1080; disclose a different returned size.
+4. No separate background, preview, second option or proof sheet. No Python/Pillow/SVG/HTML compositing on this route.
+5. The generated image is the only user-facing image; do not re-embed it.
+6. Read all visible text and accents, verify contacts against Notion 02, inspect logo fidelity, crop and layout. A material defect → state it plainly and ask before a second generation.
+
+### 3B. Template compositing
+Parameters come only from spec.json; **do not hand-edit individual glyphs**.
+1. Look at `files.ref_approved` and `files.ref_headline` before designing (look only, never paste from them).
+2. Copy: headline (uppercase, ≤2 lines), ≤1 short sub-line, benefit bar ≤ `benefit_bar.max_items`. Confirmed facts only.
+3. Subject: a user-supplied photo. Clean cutout if possible, otherwise a rounded white card with black outline; never a rough cutout, cropped-off or blurry subject. **No photo → stop and ask for one**; do not generate a subject.
+4. Background: `files.background`. Composition by service: dry-clean/dress/blazer → garment dominant; pickup/delivery → service scene; stuffed toys → subject dominant. No podium unless the brief asks.
+5. Compose with Python/Pillow at exactly the spec canvas:
+   - Logo: paste `files.logo` with `logo.scale` at `logo.paste_at`, uniform scale only, no effects, nothing over it.
+   - Headline: a pre-cut PNG in `files.headline_dir` matching the exact phrase → use it (uniform scale only). Otherwise render with `fonts.headline`: NFC-normalise, uppercase, then apply `embolden_px`, `tracking_px`, `stroke_px`/`stroke_color`, `shadow_offset_px`/`shadow_color`, `shear` exactly as specified.
+     Render at the real size (`one_line_cap_px` for one line, `two_line_cap_px` for two); all px values in the spec are for that size — never render small and scale up, never test at a smaller size.
+     **Diacritic check:** after rendering, inspect every stacked or crowded mark at 100% (Ấ Ầ Ẩ Ẫ Ậ, Ắ Ằ Ẳ Ẵ Ặ, Ế Ề Ể Ễ Ệ, Ố Ồ Ổ Ỗ Ộ, Ớ Ờ Ở Ỡ Ợ, Ứ Ừ Ử Ữ Ự, Đ). Judge the **black fill only**: each black mark must be separate and recognisable, not touching another black mark or a letter, and black letters must not touch each other. The white stroke and the shadow MAY merge around marks and between letters — that is the approved sticker style (see ref-approved and ref-headline), not a defect. If the black fill fails, stop and report the spec values that cause it — do not adjust glyphs by hand.
+   - Sub-line and benefit bar: `fonts.secondary` / `fonts.body` per spec boxes.
+   - Footer: paste `files.footer` unchanged at `footer.box`. Never retype hotline or address.
+6. **Logo pixel check:** crop the logo area from the saved output, compare with `files.logo` resized by the same factor and composited on the same background crop. Mean absolute difference must be ≤ 2 (0–255); otherwise rebuild, do not deliver.
+7. QC: view the full image and a 360 px downscale; read every word and diacritic; compare the headline with the references on weight, width, corner softness, slant, spacing, stroke and shadow. Never claim "khớp 100%". If `headline.font_status` is `provisional`, say in one line that the headline font is not yet approved.
+8. Deliver exactly one final PNG named per brand-context convention, plus one line: `Assets: preflight OK · logo SHA-256 <khớp/chưa khai báo> · pixel diff <value>`. Do not show intermediate composites.
+
+## 4. Text screening and delivery
+The check_marketing_copy tool (part of the App, not of this skill) is a limited automated screen; it never replaces proofreading and is not publication approval or logo verification.
+Deliver the requested artifact and matching caption when requested, with source reference where useful. Update Notion only within the user's authorized scope. Do not set Đã duyệt without actual user approval; do not infer Đã đăng from generating a poster or a planned date. When the user approves a new template or font, tell them which spec.json values or files to change — this skill cannot update itself or its assets.

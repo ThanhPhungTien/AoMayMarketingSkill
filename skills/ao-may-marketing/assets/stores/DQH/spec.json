@@ -1,0 +1,123 @@
+{
+  "_note": "Dương Quảng Hàm — mẫu DQH-01, ghép bằng code. Mọi đường dẫn tính từ thư mục assets/. Người dùng tự quản lý file; đổi file thì cập nhật sha256 (để trống = không kiểm). Toạ độ box = [x, y, w, h], đo từ ảnh mẫu đã duyệt 27/10/2026, sai số khoảng ±3 px.",
+  "version": "2026-10-27b",
+  "store_code": "DQH",
+  "store_name": "Áo Mây – Dương Quảng Hàm",
+  "status": "active",
+  "route": "compose",
+  "template": "DQH-01",
+  "canvas": [
+    1080,
+    1080
+  ],
+  "files": {
+    "logo": {
+      "path": "stores/DQH/logo.png",
+      "sha256": "1afd653b31085b383761c0ebdf2293da6c2851c48e5b92dae0ca099688b4de54",
+      "require_rgba": true
+    },
+    "footer": {
+      "path": "stores/DQH/cta-footer.png",
+      "sha256": "",
+      "require_rgba": true
+    },
+    "background": {
+      "path": "stores/DQH/bg-default.png",
+      "sha256": ""
+    },
+    "ref_approved": {
+      "path": "stores/DQH/ref-approved.png",
+      "sha256": ""
+    },
+    "ref_headline": {
+      "path": "stores/DQH/ref-headline.jpg",
+      "sha256": ""
+    },
+    "headline_dir": {
+      "path": "stores/DQH/headline/",
+      "optional": true
+    }
+  },
+  "fonts": {
+    "headline": "chain/fonts/PaytoneOne-Regular.ttf",
+    "secondary": "chain/fonts/BeVietnamPro-Black.ttf",
+    "body": "chain/fonts/BeVietnamPro-SemiBold.ttf"
+  },
+  "logo": {
+    "scale": 0.467,
+    "paste_at": [
+      287,
+      -133
+    ],
+    "content_box": [
+      368,
+      26,
+      344,
+      154
+    ]
+  },
+  "headline": {
+    "font_status": "provisional",
+    "uppercase": true,
+    "zone": [
+      90,
+      200,
+      900,
+      195
+    ],
+    "one_line_cap_px": 150,
+    "two_line_cap_px": 105,
+    "embolden_px": 0,
+    "tracking_px": 2,
+    "shear": -0.06,
+    "line_rotate_deg": 0,
+    "fill": "#000000",
+    "stroke_px": 12,
+    "stroke_color": "#FFFFFF",
+    "shadow_offset_px": [
+      0,
+      10
+    ],
+    "shadow_color": "#10A9B9",
+    "note": "27/10: embolden 3 → 0, tracking -4 → 2 vì làm đậm làm dính dấu Ấ (mũ + sắc) và bít lỗ chữ A. Thông số px tính cho cỡ chữ thật one_line_cap_px."
+  },
+  "subline": {
+    "box": [
+      208,
+      398,
+      664,
+      41
+    ],
+    "fill": "#000000",
+    "stroke_px": 4,
+    "stroke_color": "#FFFFFF"
+  },
+  "subject_box": [
+    40,
+    445,
+    1000,
+    395
+  ],
+  "benefit_bar": {
+    "box": [
+      121,
+      842,
+      838,
+      71
+    ],
+    "radius": 36,
+    "border_px": 4,
+    "max_items": 3
+  },
+  "footer": {
+    "box": [
+      28,
+      970,
+      1024,
+      76
+    ]
+  },
+  "background": {
+    "top_color": "#2AE7ED"
+  }
+}
