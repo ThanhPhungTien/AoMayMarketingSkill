@@ -14,8 +14,10 @@ skills/ao-may-marketing/
   assets/stores/<MÃ>/         spec.json + logo, CTA, nền, ảnh mẫu của từng cửa hàng
 tools/preflight.py            kiểm tra offline: spec, file, SHA-256, RGBA, font, version
 tools/build_release.py        đóng zip đầy đủ vào dist/
+tools/compose_preview.py      xem trước poster route compose theo spec.json, ra dist/
 RELEASE_PROMPT.md             prompt gửi ChatGPT để phát hành và kiểm tra
 CHANGELOG.md                  lịch sử phiên bản + release_id
+TEST_PLAN.md                  bài thử end-to-end trên ChatGPT sau mỗi bản phát hành
 ```
 
 Nguồn sự thật: **cách làm** = SKILL.md · **thông tin cửa hàng, bài đăng** = Notion (Áo Mây | Marketing Hub) · **thông số kỹ thuật** = `spec.json`.

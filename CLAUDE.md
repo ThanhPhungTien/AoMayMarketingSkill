@@ -17,6 +17,7 @@ pip install pillow fonttools
 python3 tools/preflight.py            # kiểm tra nhanh, thiếu ảnh = WARN
 python3 tools/preflight.py --strict   # thiếu ảnh = FAIL (trước khi phát hành)
 python3 tools/build_release.py        # preflight --strict rồi đóng zip vào dist/
+python3 tools/compose_preview.py DQH  # xem trước poster compose ra dist/preview_DQH*.png
 ```
 CI (`.github/workflows/check.yml`) chạy `preflight.py` không `--strict` trên mọi push/PR.
 
