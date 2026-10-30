@@ -2,6 +2,12 @@
 
 Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi phát hành).
 
+## 1.4.3 — 2026-10-30
+- Thêm §3C: làm lại poster từ ảnh mẫu (giữ nguyên ảnh mẫu làm nền, một khối logo, đối chiếu từng chữ, icon vector, không thêm thương hiệu khác). Rút ra từ thử nghiệm trên ChatGPT.
+- §3C còn quy định: bỏ tên thương hiệu cũ ở mọi nơi (tiêu đề, ảnh, thẻ vé), bỏ tuyên bố riêng của cửa hàng mẫu (since, tiêu chuẩn châu Âu, miễn phí giao nhận, số phần trăm), kiểm icon đúng hình, không tô màu lên vùng ảnh thật, logo cố định góc trên trái ~28% rộng, không nền phụ.
+- Chưa phát hành: còn chờ ảnh trong assets (xem CLAUDE.md).
+- release_id: (điền)
+
 ## 1.4.2 — 2026-10-27
 - Kiểm tra dấu chỉ xét nét đen; viền trắng liền quanh dấu là kiểu sticker đã duyệt.
 - release_id: (điền)

@@ -2,7 +2,7 @@
 name: ao-may-marketing
 description: "Làm marketing cho chuỗi nhượng quyền Áo Mây Laundry và từng cửa hàng: đọc đúng bài và đúng cửa hàng trong Notion, viết caption Facebook, lập kế hoạch 14 ngày, thiết kế poster giữ logo gốc và kiểm tra chất lượng. Dùng khi người dùng nhắc Áo Mây, tên hoặc mã một cửa hàng Áo Mây (Tân Hưng/TH, Chánh Hưng/CH, Dương Quảng Hàm/DQH, Tân Phú/TP, Nguyễn Xí/NX, An Khánh/AK), mẫu DQH-01 hoặc bài số trong lịch Áo Mây."
 metadata:
-  version: 1.4.2
+  version: 1.4.3
 ---
 
 # Áo Mây Marketing
@@ -97,6 +97,18 @@ Parameters come only from spec.json; **do not hand-edit individual glyphs**.
 6. **Logo pixel check:** crop the logo area from the saved output, compare with `files.logo` resized by the same factor and composited on the same background crop. Mean absolute difference must be ≤ 2 (0–255); otherwise rebuild, do not deliver.
 7. QC: view the full image and a 360 px downscale; read every word and diacritic; compare the headline with the references on weight, width, corner softness, slant, spacing, stroke and shadow. Never claim "khớp 100%". If `headline.font_status` is `provisional`, say in one line that the headline font is not yet approved.
 8. Deliver exactly one final PNG named per brand-context convention, plus one line: `Assets: preflight OK · logo SHA-256 <khớp/chưa khai báo> · pixel diff <value>`. Do not show intermediate composites.
+
+### 3C. Restyle from a reference poster (user gives a sample poster and asks to change brand, colour, logo or contacts)
+Learned from failed runs; apply every time.
+1. **The sample is the base, not an inspiration.** Edit that exact image: keep layout, subject, objects, photos and every Vietnamese word. Never redesign, never swap the subject (a wedding-dress sample stays a wedding dress), never add benefits, badges, offers or other brands' names or patterns (no CHANEL, GUCCI, LV).
+2. **Logo:** only the logo file the user attached, as one lockup (wordmark + tagline + emblem together). Never redraw it, never split its parts. No logo attached → stop and ask. Unless the user says otherwise, place it top-left, about 5% from the top and left edges, about 28% of the image width, with no backing card or patch; use the same position and size on every poster of a series.
+3. **Colour:** change the palette as told; keep subjects whose colour matters (a white dress stays white). Recolour design elements (bars, icons, buttons, headline accent, corner blocks); do not tint neutral photo areas (suits, shirts, tables, walls): that leaves pink or purple smears.
+4. **Contacts:** replace hotline and address with exactly the text the user gave; the old store's contacts must not survive anywhere.
+   The old brand's name must disappear everywhere, including headlines ("TẠI ÁO MÂY"), photos (embroidered apron, signage) and tags. Service promises such as "miễn phí giao nhận" also stay out unless confirmed for the new store.
+   Claims that belong to the sample's store (founding year such as "since 2017", standards such as "tiêu chuẩn châu Âu", awards, ticket or barcode cards naming the old store) are not facts about the new store: remove them unless the user confirms them.
+5. **Icons** must be drawn as vectors or taken from the sample; font glyphs for phone, pin or arrow can render as empty boxes, and the model may swap a phone icon for a smiley. Check each icon is the right symbol.
+6. **Proofread before delivery:** read every word and diacritic against the sample, line by line (known slips: "nhăn nhàu" → "nếp nhăn mẹ", "Cầu Vồng" → "Cầu Vông"). Confirm the output size is the requested one.
+7. One image per request, then wait for approval before the next sample. If an A/B "which image do you like more" prompt appears, skip it.
 
 ## 4. Text screening and delivery
 The check_marketing_copy tool (part of the App, not of this skill) is a limited automated screen; it never replaces proofreading and is not publication approval or logo verification.
