@@ -4,7 +4,7 @@ Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi p
 
 ## 1.4.7 — 2026-10-30
 - §3C thêm mục 8–9: khối cố định (logo, khối liên hệ, nút, thẻ vé) dựng bằng code; không lặp nhiều vòng sửa bằng model ảnh.
-- Gộp file AK (references/AK-editorial-poster-system.md, AK/spec.json) lấy từ bản live 1.4.12 để không bị ghi đè. Manifest plugin 1.4.13. release_id: (điền)
+- Gộp file AK (references/AK-editorial-poster-system.md, AK/spec.json) lấy từ bản live 1.4.12 để không bị ghi đè. Manifest plugin 1.4.13. release_id: pluginrel_6ae446e151b081919474aaca18db6999 (đã phát hành, ChatGPT xác nhận)
 
 ## 1.4.6 — 2026-10-30
 - Đồng bộ repo với bản đang chạy trên ChatGPT (plugin 1.4.11, SKILL.md 1.4.5), vốn đã đi trước repo: thêm mục "Mandatory final export" (DQH-01 phải xuất đúng 1080×1080), sửa bước 3 và 5 của §3A; DQH spec.json điền sha256 cho footer, nền, ref, đổi ref-headline sang .png, thêm footer.canvas_paste_at.
