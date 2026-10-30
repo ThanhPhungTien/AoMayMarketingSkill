@@ -2,7 +2,11 @@
 
 Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi phát hành).
 
-## 1.4.3 — 2026-10-30
+## 1.4.6 — 2026-10-30
+- Đồng bộ repo với bản đang chạy trên ChatGPT (plugin 1.4.11, SKILL.md 1.4.5), vốn đã đi trước repo: thêm mục "Mandatory final export" (DQH-01 phải xuất đúng 1080×1080), sửa bước 3 và 5 của §3A; DQH spec.json điền sha256 cho footer, nền, ref, đổi ref-headline sang .png, thêm footer.canvas_paste_at.
+- Các mục 1.4.3 dưới đây gộp vào bản này (số 1.4.3 chỉ từng dùng nội bộ trong repo, chưa phát hành).
+
+### Gộp từ 1.4.3 — 2026-10-30
 - Thêm §3C: làm lại poster từ ảnh mẫu (giữ nguyên ảnh mẫu làm nền, một khối logo, đối chiếu từng chữ, icon vector, không thêm thương hiệu khác). Rút ra từ thử nghiệm trên ChatGPT.
 - §3C còn quy định: bỏ tên thương hiệu cũ ở mọi nơi (tiêu đề, ảnh, thẻ vé), bỏ tuyên bố riêng của cửa hàng mẫu (since, tiêu chuẩn châu Âu, miễn phí giao nhận, số phần trăm), kiểm icon đúng hình, không tô màu lên vùng ảnh thật, logo cố định góc trên trái ~28% rộng, không nền phụ.
 - Chưa phát hành: còn chờ ảnh trong assets (xem CLAUDE.md).

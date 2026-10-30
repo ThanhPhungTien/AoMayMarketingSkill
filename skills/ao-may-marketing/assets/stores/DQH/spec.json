@@ -18,20 +18,20 @@
     },
     "footer": {
       "path": "stores/DQH/cta-footer.png",
-      "sha256": "",
+      "sha256": "33214d0dd00c95ac1661172a548279be0309f53c4129f9d8d08bfecc50244c7c",
       "require_rgba": true
     },
     "background": {
       "path": "stores/DQH/bg-default.png",
-      "sha256": ""
+      "sha256": "a8eac0e200e9e4762ea508a11cadefd9315999b93d4e540c9788361837cc0bc7"
     },
     "ref_approved": {
       "path": "stores/DQH/ref-approved.png",
-      "sha256": ""
+      "sha256": "8b4b5dda4241f0a6a9a56effbae257f94dd6cf000bb4b87e3cfc334c3cb93112"
     },
     "ref_headline": {
-      "path": "stores/DQH/ref-headline.jpg",
-      "sha256": ""
+      "path": "stores/DQH/ref-headline.png",
+      "sha256": "2ae71d53d463018e7a9dc1097aa368a81c9d63757567f1d8a16894e617a50eb9"
     },
     "headline_dir": {
       "path": "stores/DQH/headline/",
@@ -115,7 +115,12 @@
       970,
       1024,
       76
-    ]
+    ],
+    "canvas_paste_at": [
+      0,
+      535
+    ],
+    "note": "Source is a 1080×1080 transparent canvas; original visible pixels at [27,435,1026,79]. Paste full original canvas at [0,535], without resizing or re-exporting."
   },
   "background": {
     "top_color": "#2AE7ED"

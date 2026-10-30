@@ -2,7 +2,7 @@
 name: ao-may-marketing
 description: "Làm marketing cho chuỗi nhượng quyền Áo Mây Laundry và từng cửa hàng: đọc đúng bài và đúng cửa hàng trong Notion, viết caption Facebook, lập kế hoạch 14 ngày, thiết kế poster giữ logo gốc và kiểm tra chất lượng. Dùng khi người dùng nhắc Áo Mây, tên hoặc mã một cửa hàng Áo Mây (Tân Hưng/TH, Chánh Hưng/CH, Dương Quảng Hàm/DQH, Tân Phú/TP, Nguyễn Xí/NX, An Khánh/AK), mẫu DQH-01 hoặc bài số trong lịch Áo Mây."
 metadata:
-  version: 1.4.3
+  version: 1.4.6
 ---
 
 # Áo Mây Marketing
@@ -60,6 +60,9 @@ Hashtags: use the store's saved set (Notion 02 / brand-context store index) and 
 
 ## 3. Poster
 
+### Mandatory final export — user-confirmed 2026-10-28
+For DQH-01, the delivered PNG and the image uploaded to Notion MUST measure exactly **1080 × 1080 pixels**. Verify the saved file dimensions programmatically before delivery. A prompt requesting 1080 × 1080 is not verification. If an image model returns another square size, resize the complete finished image proportionally to 1080 × 1080 with a high-quality filter (e.g. Pillow LANCZOS); do not crop, change the layout, add elements or regenerate. This size-only export is explicitly authorized by the user on either route and is not a change of poster route. Keep the original generated file. Deliver the checked 1080 × 1080 export and use that same export on Notion. Never deliver a different size with only a disclosure.
+
 ### Preflight (every poster, no reminder needed)
 1. Locate the skill folder: `find / -path '*skills/ao-may-marketing/SKILL.md' 2>/dev/null`. The install path contains a version number and changes on update — never hard-code it, never reuse a path from an earlier chat. All paths in spec.json are relative to `<skill folder>/assets/`.
 2. Load `stores/<CODE>/spec.json`. Check: `status` is `active`; every entry in `files` exists; if `sha256` is filled the hash matches; entries with `require_rgba` are RGBA with real transparency (some alpha < 255); every font in `fonts` contains every character of the text to render (fontTools).
@@ -76,9 +79,9 @@ Never mix routes in one poster. Never change a store's route without the user's 
 ### 3A. Direct generation
 1. Read the source brief. Use the logo from spec (`logo.file`) as an image reference and request faithful identity; do not promise pixel-exact reproduction. If `logo.mode` is `chain+label`, the store name from `logo.label` is set as separate text beside the chain logo, never merged into it.
 2. Write one complete production prompt: scene, composition, colours from spec, logo reference, exact Vietnamese headline, supporting copy, CTA, store name and verified contacts from Notion 02. Use real store photos when the brief needs them; never present a synthetic storefront as real.
-3. Call the image tool ONCE for ONE finished square poster. Request 1080×1080; disclose a different returned size.
+3. Call the image tool ONCE for ONE finished square poster. Request 1080×1080; for DQH-01 enforce the mandatory final export above if the returned size differs.
 4. No separate background, preview, second option or proof sheet. No Python/Pillow/SVG/HTML compositing on this route.
-5. The generated image is the only user-facing image; do not re-embed it.
+5. Deliver only one final image; do not show previews. For DQH-01, provide the checked 1080×1080 export when resizing was necessary.
 6. Read all visible text and accents, verify contacts against Notion 02, inspect logo fidelity, crop and layout. A material defect → state it plainly and ask before a second generation.
 
 ### 3B. Template compositing
