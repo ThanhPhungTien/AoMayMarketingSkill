@@ -1,6 +1,6 @@
 {
   "_note": "Áo Mây – An Khánh: hồ sơ mới tạo 27/10/2026, chưa có thông tin xác nhận. Route mặc định direct; đổi khi có mẫu riêng. Mọi đường dẫn tính từ thư mục assets/. Người dùng tự quản lý file; đổi file thì cập nhật sha256 (để trống = không kiểm).",
-  "version": "2026-10-27",
+  "version": "2026-10-30",
   "store_code": "AK",
   "store_name": "Áo Mây – An Khánh",
   "status": "draft",
@@ -27,5 +27,26 @@
   },
   "fonts": {
     "body": "chain/fonts/BeVietnamPro-SemiBold.ttf"
+  },
+  "editorial_poster_system": {
+    "name": "Áo Mây Editorial Poster System",
+    "prompt_reference": "skills/ao-may-marketing/references/AK-editorial-poster-system.md",
+    "only_store": "AK",
+    "canvas_px": [
+      1920,
+      1920
+    ],
+    "palette": {
+      "butter_yellow": "#F6D64A",
+      "warm_cream": "#FFF8ED",
+      "charcoal_black": "#242424",
+      "accents": [
+        "sky blue",
+        "soft sage green"
+      ]
+    },
+    "language_rule": "English unless specific Vietnamese marketing copy is provided",
+    "approval": "user-supplied creative direction; do not mark poster approved",
+    "preflight": "keep existing draft status and verified facts requirement"
   }
 }
