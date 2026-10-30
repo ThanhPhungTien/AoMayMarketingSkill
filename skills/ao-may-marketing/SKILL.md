@@ -2,7 +2,7 @@
 name: ao-may-marketing
 description: "Làm marketing cho chuỗi nhượng quyền Áo Mây Laundry và từng cửa hàng: đọc đúng bài và đúng cửa hàng trong Notion, viết caption Facebook, lập kế hoạch 14 ngày, thiết kế poster giữ logo gốc và kiểm tra chất lượng. Dùng khi người dùng nhắc Áo Mây, tên hoặc mã một cửa hàng Áo Mây (Tân Hưng/TH, Chánh Hưng/CH, Dương Quảng Hàm/DQH, Tân Phú/TP, Nguyễn Xí/NX, An Khánh/AK), mẫu DQH-01 hoặc bài số trong lịch Áo Mây."
 metadata:
-  version: 1.4.6
+  version: 1.4.7
 ---
 
 # Áo Mây Marketing
@@ -112,6 +112,8 @@ Learned from failed runs; apply every time.
 5. **Icons** must be drawn as vectors or taken from the sample; font glyphs for phone, pin or arrow can render as empty boxes, and the model may swap a phone icon for a smiley. Check each icon is the right symbol.
 6. **Proofread before delivery:** read every word and diacritic against the sample, line by line (known slips: "nhăn nhàu" → "nếp nhăn mẹ", "Cầu Vồng" → "Cầu Vông"). Confirm the output size is the requested one.
 7. One image per request, then wait for approval before the next sample. If an A/B "which image do you like more" prompt appears, skip it.
+8. **Fixed blocks are built by code, not drawn by the image model.** Paste the user's logo file (transparent background, never re-rendered); draw the contact block and the CTA button with the fonts in `assets/chain/fonts`. Contact block: phone and pin icons the same diameter, the glyph centred inside its pink circle; phone number and address in the same font; about 3% margin from every edge; nothing cropped by the image edge. CTA button: label centred, arrow on the same line, whole button inside its block. Ticket or voucher card: fully inside the image, clean edges, no leftover white patch from the sample, brand name text clear of the button.
+9. **Do not iterate the same image through many model edit rounds.** Each round tends to add a new defect (blur, patches, mis-typed diacritics). If two rounds do not fix a block, rebuild that block by code.
 
 ## 4. Text screening and delivery
 The check_marketing_copy tool (part of the App, not of this skill) is a limited automated screen; it never replaces proofreading and is not publication approval or logo verification.
