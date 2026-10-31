@@ -122,9 +122,14 @@ def check(code):
     for k in ("hotline", "address"):
         add(f"contacts.{k}", "OK" if ct.get(k) else "FAIL", ct.get(k) or "chưa khai báo")
 
-    for k in ("logo_paste_at", "logo_width", "logo_zone", "blocks"):
+    for k in ("logo_width", "blocks"):
         if not rs.get(k):
             add(f"restyle.{k}", "FAIL", "chưa khai báo")
+    lp = rs.get("logo_position")
+    if lp:
+        add("restyle.logo_position", "OK" if lp in LOGO_POSITIONS else "FAIL", f"{lp} (chỉ nhận {', '.join(LOGO_POSITIONS)})")
+    elif not (rs.get("logo_paste_at") and rs.get("logo_zone")):
+        add("restyle.logo_position", "FAIL", "chưa khai báo (top-left, top-center hoặc top-right)")
     for name, b in (rs.get("blocks") or {}).items():
         ok = b.get("file") in files and len(b.get("paste_at") or ()) == 2 and len(b.get("reserve") or ()) == 4
         add(f"restyle.blocks.{name}", "OK" if ok else "FAIL", "file, paste_at, reserve")
@@ -150,15 +155,42 @@ def blank_ok(base, zone, limit=0.018):
     return share <= limit, round(share, 5)
 
 
+LOGO_POSITIONS = ("top-left", "top-center", "top-right")
+
+
+def logo_geometry(rs):
+    """Vị trí logo: chỉ 3 lựa chọn top-left / top-center / top-right (không nhập x,y).
+    Trả về (toạ độ dán, vùng chừa trống). Spec cũ chỉ có logo_paste_at/logo_zone vẫn chạy."""
+    mode = rs.get("logo_position")
+    if not mode:
+        return tuple(rs["logo_paste_at"]), list(rs["logo_zone"])
+    W, _ = rs["canvas"]
+    lw, m = rs["logo_width"], rs.get("logo_margin", 54)
+    x = {"top-left": m, "top-center": (W - lw) // 2, "top-right": W - m - lw}[mode]
+    pad, zh = 24, rs.get("logo_zone_height", 152)
+    zx0 = 0 if mode == "top-left" else max(0, x - pad)
+    zx1 = W if mode == "top-right" else min(W, x + lw + pad)
+    return (x, m), [zx0, 0, zx1, zh]
+
+
 def edge_step(base, zone):
-    """Ô phẳng lộ ra: bước nhảy độ sáng lớn nhất khi băng qua cạnh phải / cạnh dưới của vùng logo.
+    """Ô phẳng lộ ra: bước nhảy độ sáng lớn nhất khi băng qua cạnh của vùng logo.
     Chuyển sắc mượt cho bước nhỏ; ô hồng viền cứng cho bước lớn."""
     import numpy as np
     g = np.asarray(base.convert("L"), dtype=float)
     x0, y0, x1, y1 = zone
-    cols = [abs(g[4:y1 - 20, x + 1].mean() - g[4:y1 - 20, x].mean()) for x in range(x1 - 30, x1 + 60)]
-    rows = [abs(g[y + 1, 8:50].mean() - g[y, 8:50].mean()) for y in range(y1 - 30, y1 + 5)]
-    return round(max(cols + rows), 2)
+    W = g.shape[1]
+    steps = []
+    edges = []
+    if x1 < W:
+        edges.append(range(max(0, x1 - 30), min(W - 1, x1 + 60)))
+    if x0 > 0:
+        edges.append(range(max(0, x0 - 60), min(W - 1, x0 + 30)))
+    for rng in edges:
+        steps += [abs(g[4:y1 - 20, x + 1].mean() - g[4:y1 - 20, x].mean()) for x in rng]
+    rx0, rx1 = x0 + 8, min(W, x0 + 50)
+    steps += [abs(g[y + 1, rx0:rx1].mean() - g[y, rx0:rx1].mean()) for y in range(y1 - 30, y1 + 5)]
+    return round(max(steps), 2)
 
 
 def heal_zone(base, zone, grow=(60, 30), feather=14):
@@ -205,6 +237,7 @@ def paste(code, base_path, out_path, block_name, heal=False):
     block = Image.open(ASSETS / files[blk["file"]]["path"]).convert("RGBA")
     logo = Image.open(ASSETS / files["logo"]["path"]).convert("RGBA")
     lw = rs["logo_width"]
+    pos, zone = logo_geometry(rs)
     logo = logo.resize((lw, round(logo.height * lw / logo.width)), Image.LANCZOS)
 
     base = Image.open(base_path).convert("RGBA")
@@ -212,10 +245,10 @@ def paste(code, base_path, out_path, block_name, heal=False):
         print(f"FAIL: nền {base.size}, cần {canvas} (không tự resize)")
         return 1
     if heal:
-        base = heal_zone(base, rs["logo_zone"])
+        base = heal_zone(base, zone)
         print("làm mượt góc logo: đã lấp vùng logo từ viền ngoài (--heal)")
     zl = rs.get("logo_zone_detail_max", 0.018)
-    ok, share = blank_ok(base, rs["logo_zone"], zl)
+    ok, share = blank_ok(base, zone, zl)
     print(f"vùng logo của nền: chi tiết sắc {share} (≤{zl}) -> {'OK' if ok else 'FAIL'}")
     if not ok:
         print("FAIL: vùng logo không trống — sinh lại nền")
@@ -227,7 +260,7 @@ def paste(code, base_path, out_path, block_name, heal=False):
     if not ok2:
         print(f"FAIL: chữ/icon lấn vào {mg}px trên khối {block_name} (y {ry - mg}-{ry}) — nội dung phải dừng trước y={ry - mg}")
         return 1
-    step = edge_step(base, rs["logo_zone"])
+    step = edge_step(base, zone)
     limit = rs.get("zone_edge_max", 8)
     print(f"cạnh vùng logo: bước nhảy độ sáng {step} (<{limit}) -> {'OK' if step < limit else 'FAIL'}")
     if step >= limit:
@@ -236,7 +269,6 @@ def paste(code, base_path, out_path, block_name, heal=False):
 
     out = base.copy()
     out.alpha_composite(block, tuple(blk["paste_at"]))
-    pos = tuple(rs["logo_paste_at"])
     out.alpha_composite(logo, pos)
     out.convert("RGB").save(out_path)
 

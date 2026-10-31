@@ -40,9 +40,10 @@
   },
   "restyle": {
     "canvas": [1080, 1080],
-    "logo_paste_at": [54, 54],
+    "logo_position": "top-left",
+    "logo_margin": 54,
+    "logo_zone_height": 152,
     "logo_width": 302,
-    "logo_zone": [0, 0, 380, 152],
     "zone_edge_max": 18,
     "logo_zone_detail_max": 0.009,
     "headline_top_min": 170,
@@ -58,14 +59,14 @@
       "ticket": {"file": "ticket", "paste_at": [0, 0], "reserve": [0, 860, 1080, 220], "margin": 3}
     },
     "layout_mode": "free",
-    "fixed_positions": "Chỉ logo (logo_paste_at, logo_width) và khối CTA/vé (blocks.*.paste_at) là cố định. Mọi thành phần khác do model tự bố cục.",
+    "fixed_positions": "Chỉ logo (logo_position: top-left, top-center hoặc top-right; logo_width)  và khối CTA/vé (blocks.*.paste_at) là cố định. Mọi thành phần khác do model tự bố cục.",
     "components": [
       {"key": "background", "required": true, "note": "nền sáng theo `background` và `background_variants`"},
       {"key": "headline", "required": true, "note": "1-2 dòng; dòng 1 đen headline_main, dòng 2 hồng text_accent; chữ lấy đúng từ ảnh mẫu"},
       {"key": "subline", "required": true, "note": "dải/câu phụ 1 dòng, có thể kèm icon"},
       {"key": "before_after", "required": true, "note": "2 khung ảnh bo góc: TRƯỚC/SAU hoặc BEFORE/AFTER + mũi tên; ảnh cùng loại sản phẩm với mẫu"},
       {"key": "benefits", "required": true, "note": "3-4 mục icon thật + tiêu đề ngắn + mô tả ngắn; không để ô icon trống"},
-      {"key": "logo", "required": true, "fixed": true, "note": "code dán, model chỉ chừa trống logo_zone"},
+      {"key": "logo", "required": true, "fixed": true, "note": "code dán, model chỉ chừa trống vùng quanh vị trí logo (logo_position)"},
       {"key": "cta", "required": true, "fixed": true, "note": "code dán (cta hoặc ticket), model chừa trống reserve và margin"}
     ],
     "layout_constraints": "Bố cục tự do (cột trái/phải, xếp dọc, cỡ khung) miễn: đủ các thành phần trên; không thành phần nào chạm logo_zone hoặc lấn vào reserve/margin của khối; không bị cắt mép; chữ không condensed; không thêm logo, hotline, địa chỉ hay thương hiệu khác.",
