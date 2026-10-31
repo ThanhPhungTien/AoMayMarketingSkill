@@ -88,6 +88,10 @@ input[aria-invalid=true]{border-color:var(--warn)}
 .grp h4{margin:0 0 2px;font-size:15px}
 .grp .note{margin-bottom:8px}
 .sw{display:inline-block;width:12px;height:12px;border-radius:3px;border:1px solid var(--line);vertical-align:-1px;margin:0 4px 0 0}
+.seg{display:flex;gap:0;margin-top:8px}
+.seg button{flex:1;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 10px;cursor:pointer;font:inherit;font-size:13px}
+.seg button:first-child{border-radius:8px 0 0 8px}.seg button:last-child{border-radius:0 8px 8px 0;border-left:0}
+.seg button.on{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
 .mock-note{font-size:12px;color:var(--muted);margin-top:6px}
 .mock [data-comp].hl rect{stroke-width:2.2}
 .mock{max-width:420px}
@@ -250,9 +254,10 @@ function mockupSvg(){
   '<g data-comp="bg"><rect class="mk-free" x="346" y="92" width="52" height="26" rx="6"/><text class="mt" x="372" y="105" text-anchor="middle" dominant-baseline="central">Nền</text></g>'+
   '<g data-comp="headline"><rect class="mk-free" x="32" y="80" width="300" height="50" rx="4"/><text class="mt" x="182" y="96" text-anchor="middle" dominant-baseline="central">Tiêu đề dòng 1</text><text class="mt" x="182" y="115" text-anchor="middle" dominant-baseline="central">Tiêu đề dòng 2</text></g>'+
   '<g data-comp="sub"><rect class="mk-free" x="32" y="138" width="330" height="26" rx="13"/><text class="mt" x="197" y="151" text-anchor="middle" dominant-baseline="central">Dải phụ + icon</text></g>'+
-  '<g data-comp="photo"><rect class="mk-free" x="32" y="173" width="170" height="104" rx="10"/><text class="mt" x="117" y="225" text-anchor="middle" dominant-baseline="central">Ảnh trước</text>'+
+  '<g id="mk-compare"><g data-comp="photo"><rect class="mk-free" x="32" y="173" width="170" height="104" rx="10"/><text class="mt" x="117" y="225" text-anchor="middle" dominant-baseline="central">Ảnh trước</text>'+
   '<rect class="mk-free" x="217" y="173" width="170" height="104" rx="10"/><text class="mt" x="302" y="225" text-anchor="middle" dominant-baseline="central">Ảnh sau</text></g>'+
-  '<line class="mk-arr" x1="204" y1="225" x2="215" y2="225"/>'+
+  '<line class="mk-arr" x1="204" y1="225" x2="215" y2="225"/></g>'+
+  '<g id="mk-hero" style="display:none"><g data-comp="photo"><rect class="mk-free" x="32" y="173" width="355" height="104" rx="10"/><text class="mt" x="210" y="225" text-anchor="middle" dominant-baseline="central">Một ảnh minh họa chính (không so sánh)</text></g></g>'+
   '<g data-comp="benefits"><rect class="mk-free" x="30" y="286" width="84" height="50" rx="8"/><text class="mt" x="72" y="311" text-anchor="middle" dominant-baseline="central">Lợi ích 1</text>'+
   '<rect class="mk-free" x="122" y="286" width="84" height="50" rx="8"/><text class="mt" x="164" y="311" text-anchor="middle" dominant-baseline="central">Lợi ích 2</text>'+
   '<rect class="mk-free" x="214" y="286" width="84" height="50" rx="8"/><text class="mt" x="256" y="311" text-anchor="middle" dominant-baseline="central">Lợi ích 3</text>'+
@@ -262,6 +267,10 @@ function mockupSvg(){
   '</svg>';
   var d = document.createElement("div"); d.className = "mock"; d.innerHTML = svg;
   return d;
+}
+function setMockType(root, type){
+  var c = root.querySelector("#mk-compare"), h = root.querySelector("#mk-hero"); if(!c||!h) return;
+  c.style.display = type === "hero" ? "none" : ""; h.style.display = type === "hero" ? "" : "none";
 }
 function setMockLogoPos(root, pos){
   var r = root.querySelector("#mk-logo"), t = root.querySelector("#mk-logo-t"); if(!r) return;
@@ -408,6 +417,8 @@ function renderGeneral(){
 
 var LOGO_POS_OPTS = [["","— chọn —"],["top-left","Trên trái"],["top-center","Giữa (trên cùng)"],["top-right","Trên phải"]];
 var DEFAULT_POS = {MM:"top-left"};
+var KIND_OPTS = [["","— chọn —"],["compare","So sánh (hai khung trước/sau)"],["hero","Không so sánh (một ảnh minh họa chính)"],["both","Cả hai dạng"]];
+var DEFAULT_KIND = {AK:"hero", DQH:"hero", MM:"both"};
 var TYPE_OPTS = [["","— chọn —"],["inherit","Giữ nguyên nhận diện trụ sở gốc (màu, font, kiểu nền như Áo Mây gốc)"],["custom","Đổi nhận diện (màu sắc, logo riêng)"]];
 var TYPE_HINT = {inherit:"Dùng đúng bộ nhận diện của trụ sở gốc nên không cần điền màu, font, kiểu nền. Chỉ cần thông tin riêng của cửa hàng: tên, hotline, địa chỉ, logo kèm tên chi nhánh, CTA.", custom:"Cửa hàng có nhận diện riêng: điền màu, font, logo và màu logo để chọn nền tương phản."};
 var HQ_DEFAULT = {colors:{primary:"#44A49F", secondary:"#ED8752", textPrimary:"#344054", textSecondary:"#475467", background:"#EFFBFB", accent:"#ED8752"}, fonts:{headingName:"Montserrat", bodyName:"Montserrat"}, logoTone:"dark"};
@@ -416,7 +427,7 @@ var GROUP_NOTE = {
   logo:"Cố định, script dán, rộng 302 px, cách mép 54 px. Chỉ có 3 vị trí: trên trái, giữa, trên phải.",
   headline:"Be Vietnam Pro Black, in hoa, không condensed. Dòng 1 chữ đen, dòng 2 màu nhấn. Bắt đầu dưới logo, không bị cắt.",
   sub:"Dải phụ và các mục lợi ích: icon màu nhấn + chữ ngắn, dùng font nội dung.",
-  photo:"Hai khung bo góc TRƯỚC/SAU + mũi tên, ảnh cùng loại sản phẩm với mẫu. Gửi 1 đến 3 mẫu đã duyệt.",
+  photo:"Poster có 2 dạng: SO SÁNH (hai khung bo góc TRƯỚC/SAU + mũi tên) và KHÔNG SO SÁNH (một ảnh minh họa chính, như poster An Khánh). Ảnh cùng loại sản phẩm với mẫu. Gửi 1 đến 3 mẫu đã duyệt, ghi rõ mẫu nào thuộc dạng nào.",
   bg:"Nền tương phản với logo: logo tối thì nền SÁNG, logo sáng thì nền ĐẬM. Không hoa, vàng, lấp lánh. Miu Miu xoay 4 kiểu V1 đến V4.",
   cta:"Cố định, script dán từ y=940 (khối vé từ y=860). Hotline và địa chỉ phải khớp ảnh CTA, không gõ lại trên poster."
 };
@@ -459,6 +470,13 @@ function renderStore(st){
   var left = el("div",{class:"left"});
   var mk = mockupSvg();
   left.appendChild(mk);
+  var seg = el("div",{class:"seg"});
+  [["compare","So sánh"],["hero","Không so sánh"]].forEach(function(o){
+    var b = el("button",{type:"button",text:o[1],"data-k":o[0],onclick:function(){ setMockType(mk,o[0]); seg.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x===b); }); }});
+    if(o[0]==="compare") b.classList.add("on"); seg.appendChild(b);
+  });
+  left.appendChild(seg);
+  (function(){ var k = d.posterKind === "hero" ? "hero" : "compare"; setMockType(mk,k); seg.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x.getAttribute("data-k")===k); }); })();
   var mn = el("div",{class:"mock-note"});
   mn.innerHTML = '<div class="legend"><span><i class="a"></i>Cố định, script dán</span><span><i class="b"></i>ChatGPT tự bố trí</span></div>'+
     '<div>Khung 1080×1080 px, PNG. Ô nét đứt = vùng trống bắt buộc.</div><div>Nội dung kết thúc trước y≈925 (15 px trên thanh CTA).</div><div>Chữ và ảnh trong khối tím đổi theo từng ảnh mẫu, không cần điền.</div>';
@@ -513,7 +531,7 @@ function renderStore(st){
   right.appendChild(group("logo","Logo",[assetBlock("logo","Logo PNG gốc",logoFiles), field("Vị trí logo", posSel)].concat(inherit ? [] : [field("Màu của logo (để chọn nền tương phản)", toneSel), toneMsg, toneMeasured])));
   right.appendChild(group("headline","Tiêu đề", inherit ? [inheritedBox("headline")] : [el("div",{class:"grid"},fontFields("heading","Font tiêu đề").concat([colorField("textPrimary","Màu chữ chính (dòng 1)"), colorField("accent","Màu nhấn (dòng 2, icon, nhãn)")]))]));
   right.appendChild(group("sub","Dải phụ và lợi ích", inherit ? [inheritedBox("sub")] : [el("div",{class:"grid"},fontFields("body","Font nội dung").concat(fontFields("script","Font viết tay (nếu có)"),[colorField("textSecondary","Màu chữ phụ")]))]));
-  right.appendChild(group("photo","Ảnh trước / sau",[field("Mẫu poster đã duyệt (1–3 ảnh)", filePicker(function(){return d.refs;},function(v){d.refs=v;},"image/*",true))]));
+  right.appendChild(group("photo","Ảnh minh họa (so sánh hoặc không)",[field("Dạng poster hay dùng", selectInput(KIND_OPTS,function(){return d.posterKind;},function(v){d.posterKind=v; setMockType(mk, v==="hero"?"hero":"compare"); seg.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x.getAttribute("data-k")===(v==="hero"?"hero":"compare")); });})), field("Mẫu poster đã duyệt (1–3 ảnh)", filePicker(function(){return d.refs;},function(v){d.refs=v;},"image/*",true))]));
   right.appendChild(group("bg","Nền", inherit ? [inheritedBox("bg")] : [el("div",{class:"grid"},[colorField("background","Màu nền"), colorField("primary","Màu chính (primary)"), colorField("secondary","Màu bổ trợ (secondary)")])]));
   var foot = el("div",{class:"grid",style:"margin-top:10px"},[
     field("Hotline", textInput(function(){return d.hotline;},function(v){d.hotline=v;},"Đúng như trên CTA"), st.sug.hotline?("Đề xuất: "+st.sug.hotline):"", st.sug.hotline),
@@ -574,6 +592,7 @@ function applyPrefill(){
   if(!hq.logoTone) hq.logoTone = HQ_DEFAULT.logoTone;
   Object.keys(DEFAULT_TONE).forEach(function(code){ var d = sget(code); if(!d.logoTone) d.logoTone = DEFAULT_TONE[code]; });
   Object.keys(DEFAULT_TYPE).forEach(function(code){ var d = sget(code); if(!d.franchiseType) d.franchiseType = DEFAULT_TYPE[code]; });
+  Object.keys(DEFAULT_KIND).forEach(function(code){ var d = sget(code); if(!d.posterKind) d.posterKind = DEFAULT_KIND[code]; });
   Object.keys(DEFAULT_POS).forEach(function(code){ var d = sget(code); if(!d.logoPos) d.logoPos = DEFAULT_POS[code]; });
   Object.keys(PREFILL).forEach(function(code){
     var d = sget(code), p = PREFILL[code];
@@ -626,6 +645,7 @@ function toMarkdown(){
     });
     ASSETS.forEach(function(a){ var v=(x.assets||{})[a[0]]||{}; L.push("| "+a[1]+" | "+mdEscape(v.mode||"")+(v.file?" — "+mdEscape(v.file.name)+" sha256 "+(v.file.sha256||"?"):"")+" |"); });
     L.push("| Màu logo | "+mdEscape(({dark:"tối (nền sáng)",light:"sáng (nền đậm)",mixed:"hỗn hợp"})[x.logoTone]||"")+(typeof x.logoLuma==="number"?" (đo "+x.logoLuma+")":"")+" |");
+    L.push("| Dạng poster hay dùng | "+mdEscape(({compare:"so sánh (trước/sau)",hero:"không so sánh (một ảnh minh họa)",both:"cả hai dạng"})[x.posterKind]||"")+" |");
     L.push("| Loại nhượng quyền | "+mdEscape(({inherit:"giữ nguyên nhận diện trụ sở gốc",custom:"đổi nhận diện (màu sắc, logo riêng)"})[x.franchiseType]||"")+" |");
     L.push("| Mẫu đã duyệt | "+mdEscape((x.refs||[]).map(function(r){return r.name;}).join(", "))+" |");
     L.push("| Vị trí logo | "+mdEscape(({"top-left":"trên trái","top-center":"giữa","top-right":"trên phải"})[x.logoPos]||"")+" |","| Chừa đáy từ y | "+mdEscape(x.footerFromY)+" |","| Route | "+mdEscape(x.route)+" |","| Ngôn ngữ | "+mdEscape(x.lang)+" |","| Ghi chú | "+mdEscape(x.note)+" |","");
