@@ -3,7 +3,7 @@
 Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi phát hành).
 
 ## 1.4.14 — 2026-11-01
-- Spec MM: dải phụ chỉ có chữ, không icon (prompt_template và components); icon chỉ ở mục lợi ích. Lý do: bản trước tôi ghi "có thể kèm icon" nên ChatGPT thêm icon áo vào dải phụ. Chưa phát hành; release_id: (điền)
+- Spec MM: dải phụ chỉ có chữ, không icon (prompt_template và components); icon chỉ ở mục lợi ích. Lý do: bản trước tôi ghi "có thể kèm icon" nên ChatGPT thêm icon áo vào dải phụ. Đã phát hành 2026-11-01, manifest plugin 1.4.20, 6 file ảnh cũ trên bản live giữ nguyên. release_id: pluginrel_6ae6366094908191a5f26548310859b8 (ChatGPT báo updated)
 
 ## 1.4.13 — 2026-11-01
 - §3D: tự sinh lại nền tối đa 3 lần trong cùng lượt. Sau mỗi nền, soi nhanh (có vẽ logo, tên cửa hàng, hotline, địa chỉ, thanh liên hệ, người, hoặc thiếu thành phần thì coi là hỏng) rồi chạy `paste`; FAIL hoặc hỏng thì sinh lại, hết 3 lần thì dừng và báo lý do từng lần. Lượt hai vẫn là phương án dự phòng. Lý do: thử 1.4.12 live, ChatGPT tự loại nền hỏng nhưng dừng thay vì sinh lại. Đã phát hành 2026-11-01, manifest plugin 1.4.19, 6 file ảnh cũ trên bản live giữ nguyên. release_id: pluginrel_6ae6348c4f208191a6d57db156f1c031 (ChatGPT báo updated)
