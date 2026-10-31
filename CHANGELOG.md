@@ -2,8 +2,11 @@
 
 Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi phát hành).
 
+## 1.4.12 — 2026-11-01
+- Prompt nền cố định: spec MM thêm `restyle.prompt_template` (nêu đủ 6 thành phần, kể cả DẢI PHỤ riêng, font Be Vietnam Pro Black, vùng trống, điều cấm); SKILL §3D bước 2(e) bắt chép nguyên mẫu này, chỉ điền loại poster và chủ đề. Lý do: thử 1.4.11 live, ChatGPT tự viết prompt và bỏ sót dải phụ. Chưa phát hành; release_id: (điền)
+
 ## 1.4.11 — 2026-11-01
-- §3D đổi thành quy trình HAI LƯỢT, chấp nhận việc ChatGPT dừng sau công cụ ảnh: lượt 1 = check (Python) rồi gen nền và kết thúc bằng một câu mời gõ "ghép"; lượt 2 = chỉ Python (đổi cỡ, paste), cấm công cụ ảnh. Lý do: thử 1.4.10 live, lượt một vẫn gen cả poster không có logo/CTA, lượt hai (chỉ Python) cho PASTE OK, CTA lệch 0, logo lệch 0. Chưa phát hành; release_id: (điền)
+- §3D đổi thành quy trình HAI LƯỢT, chấp nhận việc ChatGPT dừng sau công cụ ảnh: lượt 1 = check (Python) rồi gen nền và kết thúc bằng một câu mời gõ "ghép"; lượt 2 = chỉ Python (đổi cỡ, paste), cấm công cụ ảnh. Lý do: thử 1.4.10 live, lượt một vẫn gen cả poster không có logo/CTA, lượt hai (chỉ Python) cho PASTE OK, CTA lệch 0, logo lệch 0. Đã phát hành 2026-11-01, manifest plugin 1.4.17, 6 file ảnh cũ trên bản live giữ nguyên. release_id: pluginrel_6ae630d3e778819195c3ac81bd7bb588 (ChatGPT báo updated)
 
 ## 1.4.10 — 2026-10-31
 - §3D viết lại thành danh sách [A]–[D]: lệnh đầu tiên của lượt phải là check và dán bảng vào câu trả lời; ảnh trả về từ công cụ ảnh không phải điểm kết thúc, hành động kế tiếp bắt buộc là Python (lưu nen.png, đổi cỡ, paste). Lý do: 1.4.9 vẫn dừng sau bước nền khi thử lại bài giày. Đã phát hành 2026-11-01, manifest plugin 1.4.16, 6 file ảnh cũ trên bản live giữ nguyên (không dùng delete_paths). release_id: pluginrel_6ae62ca7aeb081919e70317807ce9fb9 (ChatGPT báo updated)
