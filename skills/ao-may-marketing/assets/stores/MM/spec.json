@@ -59,7 +59,7 @@
       "ticket": {"file": "ticket", "paste_at": [0, 0], "reserve": [0, 860, 1080, 220], "margin": 3}
     },
     "layout_mode": "free",
-    "prompt_policy": "Prompt gửi model ảnh chỉ gồm: mẫu và chủ đề, nhận diện (màu, kiểu font), vùng trống bắt buộc, điều cấm. Không chỉ định bố cục, thành phần, vị trí hay cỡ chữ; model tự sáng tạo. components bên dưới là danh sách để người kiểm tra đối chiếu, không dán vào prompt.",
+    "prompt_policy": "Prompt gửi model ảnh chỉ gồm: mẫu và chủ đề, nhận diện (màu, kiểu font), vùng trống bắt buộc, điều cấm. Không chỉ định bố cục, vị trí hay cỡ chữ; model tự sáng tạo. Nhưng prompt PHẢI nêu tên các thành phần bắt buộc ở components (chỉ tên, không nói vị trí) và kiểu font tiêu đề ở font_style; thiếu một thành phần (nhất là dải/mục lợi ích có icon) hoặc sai font là lỗi, phải gen lại.",
     "poster_types": {"compare": "so sánh: hai khung TRƯỚC/SAU + mũi tên", "single": "không so sánh: một ảnh minh họa chính (như poster An Khánh); mục lợi ích tuỳ chọn"},
     "fixed_positions": "Chỉ logo (logo_position: top-left, top-center hoặc top-right; logo_width)  và khối CTA/vé (blocks.*.paste_at) là cố định. Mọi thành phần khác do model tự bố cục.",
     "components": [

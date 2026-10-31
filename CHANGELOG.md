@@ -2,8 +2,12 @@
 
 Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi phát hành).
 
+## 1.4.11 — 2026-11-01
+- §3D đổi thành quy trình HAI LƯỢT, chấp nhận việc ChatGPT dừng sau công cụ ảnh: lượt 1 = check (Python) rồi gen nền và kết thúc bằng một câu mời gõ "ghép"; lượt 2 = chỉ Python (đổi cỡ, paste), cấm công cụ ảnh. Lý do: thử 1.4.10 live, lượt một vẫn gen cả poster không có logo/CTA, lượt hai (chỉ Python) cho PASTE OK, CTA lệch 0, logo lệch 0. Chưa phát hành; release_id: (điền)
+
 ## 1.4.10 — 2026-10-31
-- §3D viết lại thành danh sách [A]–[D]: lệnh đầu tiên của lượt phải là check và dán bảng vào câu trả lời; ảnh trả về từ công cụ ảnh không phải điểm kết thúc, hành động kế tiếp bắt buộc là Python (lưu nen.png, đổi cỡ, paste). Lý do: 1.4.9 vẫn dừng sau bước nền khi thử lại bài giày. Chưa phát hành; release_id: (điền)
+- §3D viết lại thành danh sách [A]–[D]: lệnh đầu tiên của lượt phải là check và dán bảng vào câu trả lời; ảnh trả về từ công cụ ảnh không phải điểm kết thúc, hành động kế tiếp bắt buộc là Python (lưu nen.png, đổi cỡ, paste). Lý do: 1.4.9 vẫn dừng sau bước nền khi thử lại bài giày. Đã phát hành 2026-11-01, manifest plugin 1.4.16, 6 file ảnh cũ trên bản live giữ nguyên (không dùng delete_paths). release_id: pluginrel_6ae62ca7aeb081919e70317807ce9fb9 (ChatGPT báo updated)
+- Bổ sung (phong cách chung): thêm `references/editorial-style.md`, rút gọn từ prompt An Khánh thành phong cách editorial dùng cho cả chuỗi (Swiss, chữ đậm làm chủ đạo, 2–5 yếu tố đồ họa, ảnh phục vụ tiêu đề, chữ ≤30%). Màu, font, logo vẫn theo từng cửa hàng; vàng #F6D64A chỉ của AK. §3D bước 2 dặn chép khối phong cách này vào prompt ngắn.
 - Bổ sung (prompt ngắn): §3D bước 2 và spec `prompt_policy`: prompt gửi model ảnh chỉ nêu mẫu, chủ đề, nhận diện, vùng trống bắt buộc và điều cấm; bố cục để model tự sáng tạo. `components` chỉ là danh sách kiểm tra sau khi sinh, không đưa vào prompt.
 - Bổ sung (dạng poster): spec restyle thêm `poster_types` (compare = so sánh trước/sau, single = không so sánh, một ảnh minh họa chính); component `before_after` đổi thành `visual` theo dạng. §3D bước 2 dặn chọn dạng theo ảnh mẫu.
 - Bổ sung (vị trí logo): spec restyle thêm `logo_position` chỉ nhận `top-left`, `top-center`, `top-right` (kèm `logo_margin`, `logo_zone_height`), thay cho việc nhập toạ độ x,y. Script tự tính toạ độ dán và vùng chừa trống; spec cũ chỉ có `logo_paste_at` và `logo_zone` vẫn chạy. MM đặt `top-left`, kết quả dán giống hệt bản trước.

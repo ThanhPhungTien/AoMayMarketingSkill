@@ -1,6 +1,6 @@
 # Áo Mây Editorial Poster System — An Khánh (AK)
 
-Source: User-provided creative prompt, 2026-10-30. Apply ONLY to Áo Mây An Khánh (AK), as a store-specific creative direction. Not a chain-wide style. Keep the store's `status: draft` preflight and verified-contact requirements intact: a creative prompt does not authorize generating a poster before store readiness is satisfied. An explicit later user request takes precedence. No logo reconstruction.
+Source: User-provided creative prompt, 2026-10-30. Originally AK-only; since 2026-11-01 the style (not the palette, canvas or language) is chain-wide, see `editorial-style.md`. The palette and the 1920 / English rules below remain AK-specific. Keep the store's `status: draft` preflight and verified-contact requirements intact: a creative prompt does not authorize generating a poster before store readiness is satisfied. An explicit later user request takes precedence. No logo reconstruction.
 
 ## Canvas
 Create a **1920 × 1920 px square Facebook post**. Design a premium editorial poster for Áo Mây, a modern Vietnamese neighbourhood laundry and garment care studio. The poster should feel like a collectible independent magazine cover, creative design studio campaign, or boutique café branding. Never look like a traditional laundry advertisement.
