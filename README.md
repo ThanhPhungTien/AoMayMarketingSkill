@@ -11,6 +11,7 @@ skills/ao-may-marketing/
   SKILL.md                    cách làm (quy trình, kiểm tra)
   references/brand-context.md quy chuẩn chuỗi + bảng cửa hàng (bản chụp từ Notion 02)
   assets/chain/               logo chuỗi, font dùng chung (+ giấy phép OFL)
+  scripts/restyle_poster.py   route restyle: kiểm đủ thông tin cửa hàng + dán CTA/logo thật (check | paste)
   assets/stores/<MÃ>/         spec.json + logo, CTA, nền, ảnh mẫu của từng cửa hàng
 tools/preflight.py            kiểm tra offline: spec, file, SHA-256, RGBA, font, version
 tools/build_release.py        đóng zip đầy đủ vào dist/

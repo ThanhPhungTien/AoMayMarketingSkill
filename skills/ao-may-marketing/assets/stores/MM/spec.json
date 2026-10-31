@@ -1,0 +1,61 @@
+{
+  "_note": "Miu Miu Premium Laundry (by Latusa) — thương hiệu riêng, không dùng màu hay logo Áo Mây. Route restyle: model ảnh sinh nền theo ảnh mẫu, code dán CTA/khối vé và logo thật. Mọi đường dẫn tính từ thư mục assets/. Người dùng tự quản lý file; đổi file thì cập nhật sha256. Thêm cửa hàng/thương hiệu khác: sao chép file này, đổi file, màu, liên hệ.",
+  "version": "2026-10-31",
+  "store_code": "MM",
+  "store_name": "Miu Miu Premium Laundry",
+  "status": "active",
+  "route": "restyle",
+  "files": {
+    "logo": {
+      "path": "stores/MM/logo.png",
+      "sha256": "fa3822328a33c377df95dc4b508ef08d09f89e5a2879a5596ce2b61ac96e4445",
+      "require_rgba": true
+    },
+    "cta": {
+      "path": "stores/MM/cta-bar.png",
+      "sha256": "fcd9e9940f7edc27347665dfae4c85d6ae6fc5552582fe60863cdf49f990fbd0",
+      "require_rgba": true
+    },
+    "ticket": {
+      "path": "stores/MM/ticket-block.png",
+      "sha256": "414d5b506c4abf12733e74b3939362b7c7bd6e7be7b67549601079c4f1ec4749",
+      "require_rgba": true,
+      "optional": true
+    }
+  },
+  "fonts": {
+    "headline": "chain/fonts/BeVietnamPro-Black.ttf",
+    "body": "chain/fonts/BeVietnamPro-SemiBold.ttf"
+  },
+  "colors": {
+    "text_accent": "#F34F7B",
+    "logo_accent": "#F58B9F",
+    "on_pink": "#FFFFFF",
+    "headline_main": "#000000"
+  },
+  "contacts": {
+    "hotline": "0937 246 323",
+    "address": "S202 Đ. Cầu Vồng 2, Vinhomes Grand Park, P. Long Bình, TP. HCM",
+    "note": "Hotline và địa chỉ đã nằm sẵn trong ảnh CTA/khối vé; không gõ lại trên poster."
+  },
+  "restyle": {
+    "canvas": [1080, 1080],
+    "logo_paste_at": [54, 54],
+    "logo_width": 302,
+    "logo_zone": [0, 0, 380, 170],
+    "blocks": {
+      "cta": {"file": "cta", "paste_at": [0, 0], "reserve": [0, 940, 1080, 140]},
+      "ticket": {"file": "ticket", "paste_at": [0, 0], "reserve": [0, 860, 1080, 220]}
+    },
+    "headline": {
+      "font_style": "Be Vietnam Pro Black, in hoa, nét rộng, không condensed, chữ đặc",
+      "line_1": "headline_main",
+      "line_2": "text_accent"
+    },
+    "script_font": "Meow Script Regular (chưa có file .ttf trong assets: model mô phỏng)",
+    "forbid_people": "không mặt người, không toàn thân; tay và cánh tay được",
+    "forbid_text": ["Áo Mây", "An Khánh"],
+    "keep_brands": ["DIOR", "SALOMON", "GUCCI", "Vibram"],
+    "max_posters_per_run": 5
+  }
+}

@@ -1,8 +1,8 @@
 ---
 name: ao-may-marketing
-description: "Làm marketing cho chuỗi nhượng quyền Áo Mây Laundry và từng cửa hàng: đọc đúng bài và đúng cửa hàng trong Notion, viết caption Facebook, lập kế hoạch 14 ngày, thiết kế poster giữ logo gốc và kiểm tra chất lượng. Dùng khi người dùng nhắc Áo Mây, tên hoặc mã một cửa hàng Áo Mây (Tân Hưng/TH, Chánh Hưng/CH, Dương Quảng Hàm/DQH, Tân Phú/TP, Nguyễn Xí/NX, An Khánh/AK), mẫu DQH-01 hoặc bài số trong lịch Áo Mây."
+description: "Làm marketing cho chuỗi nhượng quyền Áo Mây Laundry và từng cửa hàng: đọc đúng bài và đúng cửa hàng trong Notion, viết caption Facebook, lập kế hoạch 14 ngày, thiết kế poster giữ logo gốc và kiểm tra chất lượng. Dùng khi người dùng nhắc Áo Mây, tên hoặc mã một cửa hàng Áo Mây (Tân Hưng/TH, Chánh Hưng/CH, Dương Quảng Hàm/DQH, Tân Phú/TP, Nguyễn Xí/NX, An Khánh/AK), thương hiệu Miu Miu (MM) hoặc yêu cầu gen poster facebook từ ảnh mẫu, mẫu DQH-01 hoặc bài số trong lịch Áo Mây."
 metadata:
-  version: 1.4.7
+  version: 1.4.10
 ---
 
 # Áo Mây Marketing
@@ -74,6 +74,7 @@ For DQH-01, the delivered PNG and the image uploaded to Notion MUST measure exac
 |---|---|
 | `direct` | 3A: the image model generates the whole poster in one call |
 | `compose` | 3B: code composites the original logo, CTA and Vietnamese text over a background and subject |
+| `restyle` | 3D: the user gives a sample poster; the image model generates a new base with blank zones, code pastes the store's fixed CTA/ticket block and logo (MM = Miu Miu) |
 Never mix routes in one poster. Never change a store's route without the user's instruction.
 
 ### 3A. Direct generation
@@ -112,8 +113,25 @@ Learned from failed runs; apply every time.
 5. **Icons** must be drawn as vectors or taken from the sample; font glyphs for phone, pin or arrow can render as empty boxes, and the model may swap a phone icon for a smiley. Check each icon is the right symbol.
 6. **Proofread before delivery:** read every word and diacritic against the sample, line by line (known slips: "nhăn nhàu" → "nếp nhăn mẹ", "Cầu Vồng" → "Cầu Vông"). Confirm the output size is the requested one.
 7. One image per request, then wait for approval before the next sample. If an A/B "which image do you like more" prompt appears, skip it.
+8a. Miu Miu brand pink for recoloured design details is **#F58B9F** (user-confirmed 2026-10-30); the Miu Miu logo file itself is never recoloured.
 8. **Fixed blocks are built by code, not drawn by the image model.** Paste the user's logo file (transparent background, never re-rendered); draw the contact block and the CTA button with the fonts in `assets/chain/fonts`. Contact block: phone and pin icons the same diameter, the glyph centred inside its pink circle; phone number and address in the same font; about 3% margin from every edge; nothing cropped by the image edge. CTA button: label centred, arrow on the same line, whole button inside its block. Ticket or voucher card: fully inside the image, clean edges, no leftover white patch from the sample, brand name text clear of the button.
 9. **Do not iterate the same image through many model edit rounds.** Each round tends to add a new defect (blur, patches, mis-typed diacritics). If two rounds do not fix a block, rebuild that block by code.
+
+### 3D. Route `restyle` — poster from a sample, per store (code MM and any store whose spec.json has `route: restyle`)
+**ONE TURN, NO EXCEPTIONS. Follow this checklist literally and tick it off in your head before you stop:**
+**[A] First tool call of the turn = Python `restyle_poster.py check <CODE>`; paste its table into your reply text. No image tool call is allowed before [A] is done.**
+**[B] Call the image tool once for the base.**
+**[C] The image tool returning is NOT the end of the turn. Your very next action MUST be a Python tool call: save the returned image as `nen.png`, resize to the canvas with Pillow LANCZOS, then run `restyle_poster.py paste <CODE> nen.png <name>.png --block cta|ticket`. Do not write any text and do not end your reply between [B] and [C].**
+**[D] Reply only after the script printed `PASTE: OK`: show the script output verbatim and link the final file. A reply containing only the generated base, or ending right after the image tool, is a failed task.**
+**If you notice the base exists but [C] has not run, run [C] now, in this same turn, without asking.**
+Everything store-specific comes from `stores/<CODE>/spec.json` (`files`, `fonts`, `colors`, `contacts`, `restyle`); never hard-code it here and never take it from chat. Script: `scripts/restyle_poster.py` (needs Pillow; fontTools optional).
+0. **Information gate — before any generation.** Run `python3 scripts/restyle_poster.py check <CODE>` and print the table. It verifies: status active, route restyle, canvas, logo (exists, SHA-256, RGBA, wide enough for `logo_width`), CTA and ticket block (exist, SHA-256, RGBA, same size as canvas), fonts (exist, contain every Vietnamese letter), colours (`text_accent`, `logo_accent`, `on_pink` valid hex), contacts (hotline, address), block and logo coordinates. Any FAIL → stop, name the missing item and ask the user to supply it. Never invent, substitute or generate a missing logo, CTA, font, colour or contact.
+1. **Read the sample:** layout of every zone, every Vietnamese word exactly (with diacritics), the benefit area, brands of customers visible, whether it needs the CTA or the ticket block. Remove the old store's name (`restyle.forbid_text`) and claims specific to the old store (§3C item 4); keep `restyle.keep_brands`. Summarise in a few lines; if the user said "chạy luôn", do not wait.
+2. **Generate the base** (image model, one image, `restyle.canvas`): same layout and wording, subject photos need not match, background may change but keep the tone. The prompt must state: `restyle.logo_zone` empty plain background; the block's `reserve` band empty; no logo, hotline, address or contact bar; `restyle.forbid_people`; headline in `restyle.headline.font_style`, line 1 `headline_main` colour, line 2 `text_accent`, text on pink backgrounds `on_pink`; script lead-in per `restyle.script_font`. Quote colour values from spec.json.
+3. **Paste by code only** (never the image tool): `python3 scripts/restyle_poster.py paste <CODE> base.png out.png --block cta|ticket`. It re-runs the gate, rejects a base whose logo zone is not plain, pastes the block at its `paste_at` and the logo at `logo_paste_at` / `logo_width`, re-opens the saved file and compares it pixel by pixel with the asset files (block diff must be 0, logo ≤ 4). Exit 1 → regenerate the base, do not repair with the image tool.
+4. **QA by eye** (the script cannot read meaning): every word and diacritic against the sample; no face or whole person; no content crowded under the block; headline solid, wide, not condensed or faded; brand names not duplicated or invented; logo not covered. Then deliver `MiuMiu_<sample>.png` (name per store) plus one line `Assets: check OK · block diff 0 · logo diff ≤4`.
+5. One image per request unless the user asks for a batch (max `restyle.max_posters_per_run`). Do not continue to the next image until the current one printed `PASTE: OK`; if the base step stopped early, finish step 3 in the same turn.
+Posting to Facebook is outside this skill; mention that the platform may label AI-generated images.
 
 ## 4. Text screening and delivery
 The check_marketing_copy tool (part of the App, not of this skill) is a limited automated screen; it never replaces proofreading and is not publication approval or logo verification.

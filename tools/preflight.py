@@ -79,7 +79,7 @@ def check_store(spec_path: Path, strict: bool):
         add(code, "spec.json", "FAIL", f"store_code {spec.get('store_code')!r} khác tên thư mục")
     if status not in ("active", "draft"):
         add(code, "spec.json", "FAIL", f"status {status!r} không hợp lệ")
-    if route not in ("direct", "compose"):
+    if route not in ("direct", "compose", "restyle"):
         add(code, "spec.json", "FAIL", f"route {route!r} không hợp lệ")
     add(code, "spec.json", "OK", f"status={status} route={route}")
 

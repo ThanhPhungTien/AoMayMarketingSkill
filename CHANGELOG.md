@@ -2,6 +2,17 @@
 
 Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi phát hành).
 
+## 1.4.10 — 2026-10-31
+- §3D viết lại thành danh sách [A]–[D]: lệnh đầu tiên của lượt phải là check và dán bảng vào câu trả lời; ảnh trả về từ công cụ ảnh không phải điểm kết thúc, hành động kế tiếp bắt buộc là Python (lưu nen.png, đổi cỡ, paste). Lý do: 1.4.9 vẫn dừng sau bước nền khi thử lại bài giày. Chưa phát hành; release_id: (điền)
+
+## 1.4.9 — 2026-10-31
+- §3D: thứ tự cố định trong một lượt (check → đọc mẫu → sinh nền → paste → giao). Cấm sinh ảnh trước khi in bảng check; trả về mỗi ảnh nền không được tính là giao, phải tới dòng `PASTE: OK`. Lý do: bài thử giày trên ChatGPT với 1.4.8 dừng ngay sau bước nền, không in bảng check, không dán. Manifest plugin 1.4.15. 6 file ảnh cũ trên bản live giữ nguyên. release_id: pluginrel_6ae556ff28a08191b3fdff69a0257672 (ChatGPT báo updated)
+
+## 1.4.8 — 2026-10-31
+- Route mới `restyle` (§3D): gen poster từ ảnh mẫu theo từng cửa hàng. Bước 0 bắt buộc kiểm đủ thông tin (logo, CTA, khối vé, font, màu, hotline/địa chỉ, toạ độ) bằng `scripts/restyle_poster.py check <MÃ>`; thiếu thì dừng, không bịa. Bước dán dùng `restyle_poster.py paste`, tự đọc lại file và so pixel với asset (khối 0, logo ≤4), từ chối nền có vật ở vùng logo.
+- Thêm cửa hàng/thương hiệu MM (Miu Miu Premium Laundry): `assets/stores/MM/` gồm logo F58B9F, thanh CTA, khối vé, spec.json (màu #F34F7B, #F58B9F; Be Vietnam Pro Black cho tiêu đề; quy tắc không mặt người).
+- SKILL.md thêm dòng 8a của §3C (màu logo #F58B9F). preflight chấp nhận route restyle. Manifest plugin 1.4.14. Giữ nguyên 6 file ảnh đang có trên bản live (logo-ao-may.png và 5 file DQH), không dùng delete_paths. release_id: pluginrel_6ae4d64b36388191a900a7826cc25e2f (ChatGPT báo updated; chưa đọc lại danh sách file)
+
 ## 1.4.7 — 2026-10-30
 - §3C thêm mục 8–9: khối cố định (logo, khối liên hệ, nút, thẻ vé) dựng bằng code; không lặp nhiều vòng sửa bằng model ảnh.
 - Gộp file AK (references/AK-editorial-poster-system.md, AK/spec.json) lấy từ bản live 1.4.12 để không bị ghi đè. Manifest plugin 1.4.13. release_id: pluginrel_6ae446e151b081919474aaca18db6999 (đã phát hành, ChatGPT xác nhận)

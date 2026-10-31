@@ -19,6 +19,7 @@ Only fields marked confirmed in Notion may appear on posters or in captions as f
 | TP | Áo Mây – Tân Phú | Tân Phú | draft | direct | — |
 | NX | Áo Mây – Nguyễn Xí | Nguyễn Xí | draft | direct | — |
 | AK | Áo Mây – An Khánh | An Khánh | draft | direct | — |
+| MM | Miu Miu Premium Laundry (thương hiệu riêng, không phải Áo Mây) | Miu Miu | active | restyle | — |
 
 ### TH — Tân Hưng
 - Confirmed (22/10/2026): 6A Đường 79, Phường Tân Hưng, Hồ Chí Minh · hotline 0908 982 393 · fanpage https://www.facebook.com/aomaytanhung
