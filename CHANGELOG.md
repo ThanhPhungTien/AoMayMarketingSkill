@@ -2,8 +2,11 @@
 
 Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi phát hành).
 
+## 1.4.14 — 2026-11-01
+- Spec MM: dải phụ chỉ có chữ, không icon (prompt_template và components); icon chỉ ở mục lợi ích. Lý do: bản trước tôi ghi "có thể kèm icon" nên ChatGPT thêm icon áo vào dải phụ. Chưa phát hành; release_id: (điền)
+
 ## 1.4.13 — 2026-11-01
-- §3D: tự sinh lại nền tối đa 3 lần trong cùng lượt. Sau mỗi nền, soi nhanh (có vẽ logo, tên cửa hàng, hotline, địa chỉ, thanh liên hệ, người, hoặc thiếu thành phần thì coi là hỏng) rồi chạy `paste`; FAIL hoặc hỏng thì sinh lại, hết 3 lần thì dừng và báo lý do từng lần. Lượt hai vẫn là phương án dự phòng. Lý do: thử 1.4.12 live, ChatGPT tự loại nền hỏng nhưng dừng thay vì sinh lại. Chưa phát hành; release_id: (điền)
+- §3D: tự sinh lại nền tối đa 3 lần trong cùng lượt. Sau mỗi nền, soi nhanh (có vẽ logo, tên cửa hàng, hotline, địa chỉ, thanh liên hệ, người, hoặc thiếu thành phần thì coi là hỏng) rồi chạy `paste`; FAIL hoặc hỏng thì sinh lại, hết 3 lần thì dừng và báo lý do từng lần. Lượt hai vẫn là phương án dự phòng. Lý do: thử 1.4.12 live, ChatGPT tự loại nền hỏng nhưng dừng thay vì sinh lại. Đã phát hành 2026-11-01, manifest plugin 1.4.19, 6 file ảnh cũ trên bản live giữ nguyên. release_id: pluginrel_6ae6348c4f208191a6d57db156f1c031 (ChatGPT báo updated)
 
 ## 1.4.12 — 2026-11-01
 - Prompt nền cố định: spec MM thêm `restyle.prompt_template` (nêu đủ 6 thành phần, kể cả DẢI PHỤ riêng, font Be Vietnam Pro Black, vùng trống, điều cấm); SKILL §3D bước 2(e) bắt chép nguyên mẫu này, chỉ điền loại poster và chủ đề. Lý do: thử 1.4.11 live, ChatGPT tự viết prompt và bỏ sót dải phụ. Đã phát hành 2026-11-01, manifest plugin 1.4.18, 6 file ảnh cũ trên bản live giữ nguyên. release_id: pluginrel_6ae6330459ac819198ee3c4df1600237 (ChatGPT báo updated)
