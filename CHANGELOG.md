@@ -4,6 +4,7 @@ Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi p
 
 ## 1.4.10 — 2026-10-31
 - §3D viết lại thành danh sách [A]–[D]: lệnh đầu tiên của lượt phải là check và dán bảng vào câu trả lời; ảnh trả về từ công cụ ảnh không phải điểm kết thúc, hành động kế tiếp bắt buộc là Python (lưu nen.png, đổi cỡ, paste). Lý do: 1.4.9 vẫn dừng sau bước nền khi thử lại bài giày. Chưa phát hành; release_id: (điền)
+- Bổ sung (prompt ngắn): §3D bước 2 và spec `prompt_policy`: prompt gửi model ảnh chỉ nêu mẫu, chủ đề, nhận diện, vùng trống bắt buộc và điều cấm; bố cục để model tự sáng tạo. `components` chỉ là danh sách kiểm tra sau khi sinh, không đưa vào prompt.
 - Bổ sung (dạng poster): spec restyle thêm `poster_types` (compare = so sánh trước/sau, single = không so sánh, một ảnh minh họa chính); component `before_after` đổi thành `visual` theo dạng. §3D bước 2 dặn chọn dạng theo ảnh mẫu.
 - Bổ sung (vị trí logo): spec restyle thêm `logo_position` chỉ nhận `top-left`, `top-center`, `top-right` (kèm `logo_margin`, `logo_zone_height`), thay cho việc nhập toạ độ x,y. Script tự tính toạ độ dán và vùng chừa trống; spec cũ chỉ có `logo_paste_at` và `logo_zone` vẫn chạy. MM đặt `top-left`, kết quả dán giống hệt bản trước.
 - Bổ sung (chuẩn hoá thành phần): spec MM thêm `components` (nền, tiêu đề, dải phụ, ảnh trước/sau, icon lợi ích, logo, CTA), `layout_mode: free` và `layout_constraints`. Chỉ logo và khối CTA/vé cố định vị trí, model tự bố cục phần còn lại; §3D bước 2 bỏ yêu cầu bắt chước bố cục ảnh mẫu.
