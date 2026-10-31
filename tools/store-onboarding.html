@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phiếu thông tin cửa hàng</title>
+<style>
+:root{
+  --bg:#fbf7f5; --card:#ffffff; --ink:#1f2328; --muted:#6b7280; --line:#e6dfdb;
+  --brand:#d6336c; --brand-ink:#ffffff; --ok:#1b7f4c; --warn:#a15c00; --chip:#f4ecee; --focus:#d6336c33;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --card:#1e2127; --ink:#e8eaed; --muted:#9aa1ab; --line:#32363e;
+    --brand:#f06292; --brand-ink:#16181c; --ok:#58c58c; --warn:#e0a24a; --chip:#2a2e36; --focus:#f0629244;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --card:#1e2127; --ink:#e8eaed; --muted:#9aa1ab; --line:#32363e;
+  --brand:#f06292; --brand-ink:#16181c; --ok:#58c58c; --warn:#e0a24a; --chip:#2a2e36; --focus:#f0629244;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,"Segoe UI",Roboto,sans-serif}
+header{padding:20px 16px 8px;max-width:980px;margin:0 auto}
+h1{font-size:22px;margin:0 0 4px}
+.sub{color:var(--muted);margin:0}
+main{max-width:980px;margin:0 auto;padding:8px 16px 96px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px}
+.bar-in{max-width:980px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;font:inherit}
+.tab[aria-selected="true"]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.tab .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--line);margin-left:6px;vertical-align:middle}
+.tab .dot.done{background:var(--ok)}
+button.act{border:1px solid var(--brand);background:var(--brand);color:var(--brand-ink);border-radius:8px;padding:7px 14px;cursor:pointer;font:inherit;font-weight:600}
+button.sec{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:7px 12px;cursor:pointer;font:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.tab:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}
+.card h2{font-size:17px;margin:0 0 4px}
+.card h3{font-size:14px;margin:16px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.info{background:var(--chip);border-radius:8px;padding:10px 12px;margin:8px 0;font-size:14px}
+.info b{font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+label.f{display:block;font-size:13px;color:var(--muted)}
+label.f span.t{display:block;margin-bottom:3px}
+input[type=text],input[type=number],select,textarea{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:8px 10px;font:inherit}
+textarea{min-height:76px;resize:vertical}
+.hexrow{display:flex;gap:8px;align-items:center}
+.hexrow input[type=color]{width:42px;height:36px;padding:0;border:1px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.hexrow input[type=color].empty{background:repeating-linear-gradient(45deg,var(--line) 0 4px,var(--bg) 4px 8px);color-scheme:normal}
+.hexrow input[type=color].empty::-webkit-color-swatch{opacity:0}
+.hexrow input[type=color].empty::-moz-color-swatch{opacity:0}
+input[aria-invalid=true]{border-color:var(--warn)}
+.sug{font-size:12px;color:var(--muted);margin-top:3px}
+.sug button{border:0;background:none;color:var(--brand);cursor:pointer;padding:0 0 0 4px;font:inherit;text-decoration:underline}
+.assetrow{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:start;border-top:1px dashed var(--line);padding:10px 0}
+.assetrow:first-of-type{border-top:0}
+.file-meta{font-size:12px;color:var(--muted);word-break:break-all;margin-top:4px}
+.zone{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.check{display:flex;gap:8px;align-items:flex-start;margin-top:12px}
+.check input{margin-top:4px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;z-index:9}
+.toast.show{opacity:1}
+.note{font-size:13px;color:var(--muted)}
+.warn{color:var(--warn)}
+.mock{max-width:720px;margin:8px 0 4px}
+.mock svg{width:100%;height:auto;display:block}
+.mk-fix{fill:#e1f5ee;stroke:#0f6e56;stroke-width:.6}
+.mk-free{fill:#eeedfe;stroke:#534ab7;stroke-width:.6;cursor:pointer}
+.mk-free:hover{stroke-width:1.4}
+.mk-box{fill:var(--bg);stroke:var(--line);stroke-width:.8}
+.mk-dash{fill:none;stroke:var(--muted);stroke-width:.6;stroke-dasharray:4 3}
+.mt{font:500 13px system-ui,sans-serif;fill:#26215c;pointer-events:none}
+.mtf{font:500 13px system-ui,sans-serif;fill:#04342c;pointer-events:none}
+.ms{font:12px system-ui,sans-serif;fill:var(--muted)}
+.mn{font:500 12px system-ui,sans-serif;fill:var(--ink)}
+.mk-lead{stroke:var(--muted);stroke-width:.6;stroke-dasharray:3 3}
+.mk-arr{stroke:#534ab7;stroke-width:1.5;fill:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mk-fix{fill:#085041;stroke:#9fe1cb}:root:not([data-theme="light"]) .mk-free{fill:#3c3489;stroke:#afa9ec}:root:not([data-theme="light"]) .mt{fill:#cecbf6}:root:not([data-theme="light"]) .mtf{fill:#9fe1cb}:root:not([data-theme="light"]) .mk-arr{stroke:#afa9ec}}
+:root[data-theme="dark"] .mk-fix{fill:#085041;stroke:#9fe1cb}:root[data-theme="dark"] .mk-free{fill:#3c3489;stroke:#afa9ec}:root[data-theme="dark"] .mt{fill:#cecbf6}:root[data-theme="dark"] .mtf{fill:#9fe1cb}:root[data-theme="dark"] .mk-arr{stroke:#afa9ec}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:2px 0 8px}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle;border:1px solid}
+.legend .a{background:#e1f5ee;border-color:#0f6e56}.legend .b{background:#eeedfe;border-color:#534ab7}
+@media (max-width:560px){.assetrow{grid-template-columns:1fr}.zone{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <div class="tabs" role="tablist" id="tabs" aria-label="Chọn cửa hàng"></div>
+  <button class="sec" id="btnLoad" type="button">Mở file đã lưu</button>
+  <button class="sec" id="btnMd" type="button">Xuất Markdown</button>
+  <button class="act" id="btnSave" type="button">Lưu</button>
+  <input type="file" id="fileLoad" accept=".json,application/json" hidden>
+</div></div>
+<header>
+  <h1>Phiếu thông tin cửa hàng để tạo poster</h1>
+  <p class="sub">Điền từng cửa hàng, bấm <b>Lưu</b> để tạo file <code>.json</code> (có thể mở lại để điền tiếp). Phiếu này chỉ thu thập thông tin, không tự cập nhật Notion hay skill, không tự chuyển trạng thái cửa hàng, không đánh dấu bài đã duyệt.</p>
+</header>
+<main id="main"></main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+"use strict";
+var APP_VERSION = 1;
+var DRAFT_KEY = "ao-may-store-onboarding-draft";
+
+var GENERAL_FIELDS = [
+  {key:"canvas_ok", type:"check", label:"Xác nhận kích thước poster chuẩn 1080 × 1080, PNG, một ảnh cuối"},
+  {key:"notion_checked", type:"check", label:"Đã đối chiếu với trang Notion “02 | Hệ thống cửa hàng” và “03 | Design System”"},
+  {key:"note", type:"textarea", label:"Ghi chú chung"}
+];
+
+/* have: đã có; todo: lưu ý; sug: đề xuất (bấm để dùng, vẫn phải tự xác nhận) */
+var STORES = [
+  {code:"DQH", name:"Áo Mây Dương Quảng Hàm", status:"active", route:"compose",
+   have:"logo.png, cta-footer.png, bg-default.png, ref-approved.png, ref-headline.png; font PaytoneOne, Be Vietnam Pro Black/SemiBold; tọa độ logo/tiêu đề/CTA đã khai báo (có SHA-256).",
+   todo:"Đã xác nhận: khoá phong cách/font tiêu đề theo mẫu DQH-01 đã duyệt. Spec vẫn ghi font_status provisional và PaytoneOne-Regular.ttf; cần đối chiếu mẫu thật trước khi sửa spec, không suy ra tên font chỉ từ xác nhận này.",
+   hints:{primary:"Spec đang có background.top_color = #2AE7ED", secondary:"Spec có màu bóng tiêu đề #10A9B9"},
+   sug:{}},
+  {code:"TH", name:"Áo Mây Tân Hưng", status:"active", route:"direct",
+   have:"Logo dùng chung chain/logo-ao-may.png + chữ TÂN HƯNG; bảng màu aqua #36C9D6, teal #087F88, mist #EAFBFC, white #FFFFFF, ink #17383D, sun #FFC857; font body BeVietnamPro-SemiBold.",
+   todo:"Cần CTA PNG gốc, hotline, địa chỉ, 1–3 mẫu poster đã duyệt. Lưu ý “24H” = hoàn thành trong 24 giờ, không phải mở cửa 24/24.",
+   sug:{primary:"#36C9D6", secondary:"#087F88"}},
+  {code:"AK", name:"Áo Mây An Khánh", status:"draft", route:"direct",
+   have:"Logo chung + chữ AN KHÁNH; font body Be Vietnam Pro SemiBold; tài liệu AK Editorial Poster System (butter_yellow #F6D64A, warm_cream #FFF8ED, charcoal_black #242424, nhấn sky blue / soft sage green); canvas trong tài liệu là 1920×1920.",
+   todo:"Cần chốt bộ màu: editorial hay bảng màu chuỗi Áo Mây. Chuẩn hoá canvas về 1080×1080. Cần xác nhận ngôn ngữ poster.",
+   sug:{}},
+  {code:"CH", name:"Áo Mây Chánh Hưng", status:"draft", route:"direct",
+   have:"Logo chuỗi + chữ CHÁNH HƯNG; font body Be Vietnam Pro SemiBold; bảng màu Áo Mây mặc định (aqua #36C9D6, teal #087F88, mist #EAFBFC, ink #17383D, sun #FFC857).",
+   todo:"Cần CTA PNG gốc, hotline, địa chỉ, fanpage, dịch vụ được phép quảng cáo, 1–3 mẫu đã duyệt.",
+   sug:{primary:"#36C9D6", secondary:"#087F88"}},
+  {code:"TP", name:"Áo Mây Tân Phú", status:"draft", route:"direct",
+   have:"Logo chuỗi + chữ TÂN PHÚ; font body Be Vietnam Pro SemiBold; bảng màu Áo Mây mặc định.",
+   todo:"Cần CTA PNG gốc, hotline, địa chỉ, fanpage, dịch vụ được phép quảng cáo, 1–3 mẫu đã duyệt.",
+   sug:{primary:"#36C9D6", secondary:"#087F88"}},
+  {code:"NX", name:"Áo Mây Nguyễn Xí", status:"draft", route:"direct",
+   have:"Logo chuỗi + chữ NGUYỄN XÍ; font body Be Vietnam Pro SemiBold; bảng màu Áo Mây mặc định.",
+   todo:"Cần CTA PNG gốc, hotline, địa chỉ, fanpage, dịch vụ được phép quảng cáo, 1–3 mẫu đã duyệt.",
+   sug:{primary:"#36C9D6", secondary:"#087F88"}},
+  {code:"MM", name:"Miu Miu Premium Laundry", status:"active", route:"restyle",
+   have:"Logo PNG, cta-bar.png, ticket-block.png (đủ SHA-256); font Be Vietnam Pro Black/SemiBold; hotline 0937 246 323; địa chỉ S202 Đ. Cầu Vồng 2, Vinhomes Grand Park, P. Long Bình, TP. HCM. Token: text_accent #F34F7B, logo_accent #F58B9F, headline_main #000000, on_pink #FFFFFF. Nền sáng V1–V4 đã duyệt trong bộ poster, chưa chắc đã ghi vào spec.",
+   todo:"Gửi file font Meow Script nếu muốn render chữ viết tay bằng code (spec ghi hiện chưa có file).",
+   hints:{primary:"Spec poster đang dùng chữ hồng #F34F7B (text_accent), logo #F58B9F", accent:"Notion: #D41459; spec poster: #F34F7B", textPrimary:"Spec poster: tiêu đề đen #000000"},
+   sug:{}}
+];
+
+var COLORS = [
+  ["primary","Màu chính (primary)"],["secondary","Màu bổ trợ (secondary)"],
+  ["textPrimary","Màu chữ chính"],["textSecondary","Màu chữ phụ"],
+  ["background","Màu nền"],["accent","Màu nhấn"]
+];
+var ASSETS = [["logo","Logo PNG gốc"],["cta","CTA / footer PNG gốc"],["ticket","Khối vé / phiếu (nếu dùng)"]];
+var ROUTES = [["","— chọn —"],["keep","Giữ nguyên route hiện tại"],["direct","direct (model ảnh sinh cả poster)"],["compose","compose (ghép logo/CTA/chữ bằng code)"],["restyle","restyle (sinh nền rồi ghép bằng code)"]];
+var LANGS = [["","— chọn —"],["vi","Tiếng Việt"],["en","Tiếng Anh"],["bi","Song ngữ"]];
+
+var PREFILL = {
+ "DQH": {
+  "brandName": "Áo Mây – Dương Quảng Hàm",
+  "hotline": "0942 146 606",
+  "address": "80/28/30 Dương Quảng Hàm, Phường An Nhơn, TP.HCM",
+  "services": "Miễn phí giao nhận tận nơi",
+  "fonts": {
+   "bodyName": "Be Vietnam Pro Black/SemiBold"
+  },
+  "note": "Điền sẵn từ Notion (ChatGPT đọc ngày 31/10/2026). Ô trống = Notion chưa có.\nNotion 02: chưa có fanpage, mã hex màu và font tiêu đề gốc của mẫu DQH-01."
+ },
+ "TH": {
+  "brandName": "Áo Mây – Tân Hưng",
+  "hotline": "0908 982 393",
+  "address": "6A Đường 79, Phường Tân Hưng, Hồ Chí Minh",
+  "fanpage": "https://www.facebook.com/aomaytanhung",
+  "note": "Điền sẵn từ Notion (ChatGPT đọc ngày 31/10/2026). Ô trống = Notion chưa có.\nNotion 02: giặt sấy, giặt hấp, vệ sinh giày, giao nhận, giặt trong ngày / 24 giờ mới là chủ đề marketing, cần xác nhận còn áp dụng. Bộ màu chung #36C9D6, #087F88, #EAFBFC, #FFFFFF, #17383D, #FFC857 trong Design System chỉ là đề xuất chưa duyệt, chưa điền vào ô màu. Link fanpage do ChatGPT trích từ Notion, nên kiểm lại (bảng ghi tên “Áo Mây Tân Hưng”)."
+ },
+ "AK": {
+  "note": "Điền sẵn từ Notion (ChatGPT đọc ngày 31/10/2026). Ô trống = Notion chưa có.\nNotion 02 và 03 chưa có hồ sơ cho cửa hàng này."
+ },
+ "CH": {
+  "brandName": "Áo Mây – Chánh Hưng",
+  "note": "Điền sẵn từ Notion (ChatGPT đọc ngày 31/10/2026). Ô trống = Notion chưa có.\nNotion chỉ có tên cửa hàng; thiếu hotline, địa chỉ, fanpage, danh mục dịch vụ, màu, font."
+ },
+ "TP": {
+  "note": "Điền sẵn từ Notion (ChatGPT đọc ngày 31/10/2026). Ô trống = Notion chưa có.\nNotion 02 và 03 chưa có hồ sơ cho cửa hàng này."
+ },
+ "NX": {
+  "note": "Điền sẵn từ Notion (ChatGPT đọc ngày 31/10/2026). Ô trống = Notion chưa có.\nNotion 02 và 03 chưa có hồ sơ cho cửa hàng này."
+ },
+ "MM": {
+  "brandName": "Miu Miu Premium Laundry & Shoes Spa",
+  "hotline": "0937 246 323",
+  "address": "S202 Đ. Cầu Vồng 2, Vinhomes Grand Park, P. Long Bình, TP. HCM",
+  "fanpage": "https://www.facebook.com/share/1NvqsNsgV3/?mibextid=wwXIfr",
+  "colors": {
+   "primary": "#F58B9F",
+   "secondary": "#FFDDE5",
+   "textPrimary": "#211C1D",
+   "textSecondary": "#34262A",
+   "background": "#FFF5F3",
+   "accent": "#D41459"
+  },
+  "fonts": {
+   "headingName": "Be Vietnam Pro ExtraBold",
+   "bodyName": "Be Vietnam Pro Regular",
+   "scriptName": "Meow Script Regular"
+  },
+  "note": "Điền sẵn từ Notion (ChatGPT đọc ngày 31/10/2026). Ô trống = Notion chưa có.\nMàu lấy từ Notion (Design System v2.0 + bảng màu tham chiếu). Poster đang dùng chữ hồng #F34F7B (text_accent trong spec) và tiêu đề Be Vietnam Pro Black, khác Notion (accent #D41459, ExtraBold): cần chốt bộ nào là chuẩn. Fanpage Notion ghi là “Facebook tham khảo”, chưa xác nhận chính thức. Notion mô tả tiêu đề sans-serif condensed cực đậm nhưng chưa chốt tên font. Dịch vụ: Notion chỉ có nhóm chủ đề (giặt sấy, giặt hấp, vệ sinh/phục hồi giày, repaint đế giày, chăm sóc đồ hiệu), cần xác nhận trước khi công bố."
+ }
+};
+var PREFILL_SRC = "Notion qua ChatGPT, 2026-10-31";
+var state = {general:{}, stores:{}};
+var current = "GENERAL";
+
+function el(tag, attrs, kids){
+  var e = document.createElement(tag);
+  Object.keys(attrs||{}).forEach(function(k){
+    if(k==="class") e.className = attrs[k];
+    else if(k==="text") e.textContent = attrs[k];
+    else if(k.slice(0,2)==="on") e.addEventListener(k.slice(2), attrs[k]);
+    else e.setAttribute(k, attrs[k]);
+  });
+  (kids||[]).forEach(function(c){ if(c) e.appendChild(typeof c==="string"?document.createTextNode(c):c); });
+  return e;
+}
+function toast(msg){
+  var t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove("show"); }, 3200);
+}
+function blankPoster(){ return {block:"",headline1:"",headline2:"",subline:"",beforeLabel:"",afterLabel:"",benefits:[{},{},{},{}]}; }
+function sget(code){
+  if(!state.stores[code]) state.stores[code] = {colors:{},fonts:{},assets:{},refs:[],zones:{},poster:blankPoster()};
+  var s = state.stores[code]; if(!s.poster) s.poster = blankPoster();
+  while(s.poster.benefits.length<4) s.poster.benefits.push({});
+  return s;
+}
+function mockupSvg(){
+  var T = function(x,y,t,c){ return '<text class="'+(c||"ms")+'" x="'+x+'" y="'+y+'">'+t+'</text>'; };
+  var L = function(x1,y){ return '<line class="mk-lead" x1="'+x1+'" y1="'+y+'" x2="418" y2="'+y+'"/>'; };
+  var svg = '<svg viewBox="0 0 700 520" role="img" aria-label="Mockup bố cục poster có ghi chú">'+
+  '<rect class="mk-box" x="10" y="10" width="400" height="400" rx="8"/>'+
+  '<rect class="mk-dash" x="10" y="10" width="141" height="56"/>'+
+  '<rect class="mk-fix" x="30" y="26" width="112" height="34" rx="4"/><text class="mtf" x="86" y="43" text-anchor="middle" dominant-baseline="central">Logo (cố định)</text>'+
+  '<g data-focus="p-headline1"><rect class="mk-free" x="32" y="80" width="300" height="50" rx="4"/><text class="mt" x="182" y="96" text-anchor="middle" dominant-baseline="central">Tiêu đề dòng 1</text><text class="mt" x="182" y="115" text-anchor="middle" dominant-baseline="central">Tiêu đề dòng 2</text></g>'+
+  '<g data-focus="p-subline"><rect class="mk-free" x="32" y="138" width="330" height="26" rx="13"/><text class="mt" x="197" y="151" text-anchor="middle" dominant-baseline="central">Dải phụ + icon</text></g>'+
+  '<g data-focus="p-before"><rect class="mk-free" x="32" y="173" width="170" height="104" rx="10"/><text class="mt" x="117" y="225" text-anchor="middle" dominant-baseline="central">Ảnh trước</text></g>'+
+  '<line class="mk-arr" x1="204" y1="225" x2="215" y2="225"/>'+
+  '<g data-focus="p-after"><rect class="mk-free" x="217" y="173" width="170" height="104" rx="10"/><text class="mt" x="302" y="225" text-anchor="middle" dominant-baseline="central">Ảnh sau</text></g>'+
+  '<g data-focus="p-ben1"><rect class="mk-free" x="30" y="286" width="84" height="50" rx="8"/><text class="mt" x="72" y="311" text-anchor="middle" dominant-baseline="central">Lợi ích 1</text>'+
+  '<rect class="mk-free" x="122" y="286" width="84" height="50" rx="8"/><text class="mt" x="164" y="311" text-anchor="middle" dominant-baseline="central">Lợi ích 2</text>'+
+  '<rect class="mk-free" x="214" y="286" width="84" height="50" rx="8"/><text class="mt" x="256" y="311" text-anchor="middle" dominant-baseline="central">Lợi ích 3</text>'+
+  '<rect class="mk-free" x="306" y="286" width="84" height="50" rx="8"/><text class="mt" x="348" y="311" text-anchor="middle" dominant-baseline="central">Lợi ích 4</text></g>'+
+  '<rect class="mk-dash" x="16" y="345" width="388" height="13"/>'+
+  '<rect class="mk-fix" x="16" y="358" width="388" height="39" rx="10"/><text class="mtf" x="210" y="377" text-anchor="middle" dominant-baseline="central">Thanh CTA / khối vé (cố định)</text>'+
+  L(142,43)+L(332,105)+L(362,151)+L(387,225)+L(390,311)+L(404,351)+L(404,377)+
+  T(424,38,"Logo: cố định tại (54, 54),","mn")+T(424,52,"rộng 302 px. Vùng trống 380×152.")+
+  T(424,84,"Tiêu đề: Be Vietnam Pro Black,","mn")+T(424,98,"in hoa, không condensed, không cắt.")+T(424,112,"Dòng 1 đen #000000, dòng 2 hồng")+T(424,126,"#F34F7B. Bắt đầu dưới y=165.")+
+  T(424,147,"Dải phụ: 1 dòng, icon hồng #F34F7B.","mn")+
+  T(424,215,"Khung ảnh bo góc. Nhãn TRƯỚC/SAU","mn")+T(424,229,"và mũi tên hồng #F34F7B. Ảnh cùng")+T(424,243,"loại sản phẩm với mẫu.")+
+  T(424,303,"Lợi ích: 3 đến 4 mục, icon hồng","mn")+T(424,317,"+ tiêu đề + mô tả ngắn.")+
+  T(424,349,"Vùng đệm 15 px: không nội dung.","mn")+
+  T(424,372,"CTA cố định từ y=940: hotline, địa","mn")+T(424,386,"chỉ, nút đặt lịch. Khối vé từ y=860.")+
+  T(10,436,"Khung 1080×1080 px, PNG. Nền SÁNG vì logo đậm màu, xoay 4 kiểu:","mn")+
+  T(10,452,"V1 trắng kem → hồng phấn · V2 đào nhạt → hồng phấn · V3 hồng lilac nhạt + sóng mảnh · V4 trắng ngà + dải cong hồng.")+
+  T(10,468,"Không hoa, đồ vật, màu vàng, lấp lánh. Nội dung kết thúc trước y≈925 (15 px trên thanh CTA).")+
+  T(10,488,"Các giá trị trên là chuẩn Miu Miu. Cửa hàng khác đổi màu, font theo các ô bên dưới; vị trí logo và CTA vẫn cố định.")+
+  T(10,508,"Ô nét đứt = vùng trống bắt buộc. Bấm khối tím để nhảy tới ô nhập.")+
+  '</svg>';
+  var d = document.createElement("div"); d.className = "mock"; d.innerHTML = svg;
+  d.querySelectorAll("[data-focus]").forEach(function(g){
+    g.addEventListener("click",function(){ var t = document.getElementById(g.getAttribute("data-focus")); if(t){ t.scrollIntoView({block:"center",behavior:"smooth"}); t.focus(); } });
+  });
+  return d;
+}
+
+function field(label, node, hint, sugText){
+  var l = el("label",{class:"f"},[el("span",{class:"t",text:label}), node]);
+  if(hint){
+    var h = el("div",{class:"sug",text:hint});
+    if(sugText && node.applyValue) h.appendChild(el("button",{type:"button",text:"dùng",onclick:function(ev){ ev.preventDefault(); node.applyValue(sugText); }}));
+    l.appendChild(h);
+  }
+  return l;
+}
+function textInput(get,set,ph){
+  var i = el("input",{type:"text",placeholder:ph||""}); i.value = get()||"";
+  i.addEventListener("input",function(){ set(i.value); autosave(); });
+  i.applyValue = function(v){ i.value=v; set(v); autosave(); }; return i;
+}
+function areaInput(get,set,ph){
+  var i = el("textarea",{placeholder:ph||""}); i.value = get()||"";
+  i.addEventListener("input",function(){ set(i.value); autosave(); });
+  i.applyValue = function(v){ i.value=v; set(v); autosave(); }; return i;
+}
+function selectInput(opts,get,set){
+  var s = el("select",{}); opts.forEach(function(o){ s.appendChild(el("option",{value:o[0],text:o[1]})); });
+  s.value = get()||""; s.addEventListener("change",function(){ set(s.value); autosave(); }); return s;
+}
+function checkInput(label,get,set){
+  var c = el("input",{type:"checkbox"}); c.checked = !!get();
+  c.addEventListener("change",function(){ set(c.checked); autosave(); updateDots(); });
+  return el("label",{class:"check"},[c, el("span",{text:label})]);
+}
+function parseHex(v){
+  v = String(v||"").trim().replace(/^#/,"");
+  if(/^[0-9a-fA-F]{3}$/.test(v)) v = v.split("").map(function(ch){return ch+ch;}).join("");
+  return /^[0-9a-fA-F]{6}$/.test(v) ? "#"+v.toUpperCase() : "";
+}
+function hexInput(get,set,suggest){
+  var t = el("input",{type:"text",placeholder:"#RRGGBB"}); t.value = get()||"";
+  var c = el("input",{type:"color","aria-label":"Chọn màu"});
+  var warn = el("div",{class:"sug warn",style:"display:none",text:"Mã màu chưa hợp lệ (dạng #RRGGBB)"});
+  function sync(commit){
+    var raw = t.value, hex = parseHex(raw);
+    if(hex){ c.value = hex.toLowerCase(); c.classList.remove("empty"); warn.style.display="none"; t.removeAttribute("aria-invalid"); set(hex); if(commit) t.value = hex; }
+    else {
+      c.classList.add("empty");
+      var bad = raw.trim()!=="";
+      warn.style.display = bad ? "" : "none"; if(bad) t.setAttribute("aria-invalid","true"); else t.removeAttribute("aria-invalid");
+      set(raw.trim());
+    }
+    autosave();
+  }
+  t.addEventListener("input",function(){ sync(false); });
+  t.addEventListener("change",function(){ sync(true); });
+  t.addEventListener("blur",function(){ sync(true); });
+  c.addEventListener("input",function(){ t.value = c.value.toUpperCase(); sync(false); });
+  t.applyValue = function(v){ t.value = v; sync(true); };
+  sync(true);
+  var wrap = el("div",{},[el("div",{class:"hexrow"},[c,t]), warn]);
+  if(suggest){
+    wrap.appendChild(el("div",{class:"sug"},["Đề xuất: "+suggest,
+      el("button",{type:"button",text:"dùng",onclick:function(){ if(parseHex(suggest)) t.applyValue(suggest); }})]));
+  }
+  return wrap;
+}
+async function sha256(file){
+  try{
+    var buf = await file.arrayBuffer();
+    var d = await crypto.subtle.digest("SHA-256", buf);
+    return Array.prototype.map.call(new Uint8Array(d),function(b){return b.toString(16).padStart(2,"0");}).join("");
+  }catch(e){ return ""; }
+}
+function fileInfoText(f){ return f&&f.name ? (f.name+" · "+Math.round(f.size/1024)+" KB"+(f.sha256?" · sha256 "+f.sha256.slice(0,12)+"…":"")) : "Chưa chọn file"; }
+function filePicker(get,set,accept,multi){
+  var meta = el("div",{class:"file-meta"});
+  var inp = el("input",{type:"file"}); if(accept) inp.setAttribute("accept",accept); if(multi) inp.multiple = true;
+  function show(){
+    var v = get();
+    if(multi){ meta.textContent = (v&&v.length)? v.map(fileInfoText).join("  |  ") : "Chưa chọn file"; }
+    else meta.textContent = fileInfoText(v);
+  }
+  inp.addEventListener("change", async function(){
+    var fs = Array.prototype.slice.call(inp.files||[]); if(!fs.length) return;
+    var out = [];
+    for(var i=0;i<fs.length;i++) out.push({name:fs[i].name,size:fs[i].size,sha256:await sha256(fs[i])});
+    set(multi?out:out[0]); show(); autosave(); toast("Đã ghi tên, dung lượng và SHA-256. File ảnh/font vẫn phải gửi riêng.");
+  });
+  show();
+  return el("div",{},[inp,meta]);
+}
+
+function renderGeneral(){
+  var box = el("div",{class:"card"},[el("h2",{text:"A. Quy chuẩn chung"}),
+    el("div",{class:"info"},["Poster 1080 × 1080 PNG. Logo và CTA là file gốc ghép bằng code, không để AI vẽ lại hay gõ lại hotline, địa chỉ. Màu, font, nền theo từng cửa hàng; không mặc định áp màu Miu Miu cho Áo Mây."])]);
+  GENERAL_FIELDS.forEach(function(f){
+    if(f.type==="check") box.appendChild(checkInput(f.label,function(){return state.general[f.key];},function(v){state.general[f.key]=v;}));
+    else box.appendChild(el("div",{style:"margin-top:12px"},[field(f.label, areaInput(function(){return state.general[f.key];},function(v){state.general[f.key]=v;}))]));
+  });
+  return box;
+}
+
+function renderStore(st){
+  var d = sget(st.code);
+  var card = el("div",{class:"card"});
+  card.appendChild(el("h2",{text:st.code+" — "+st.name}));
+  card.appendChild(el("div",{class:"note",text:"Hiện trạng: "+st.status+" · route "+st.route}));
+  card.appendChild(el("div",{class:"info"},[el("b",{text:"Đã có: "}), st.have]));
+  card.appendChild(el("div",{class:"info"},[el("b",{text:"Cần lưu ý: "}), st.todo]));
+  if(d.prefillApplied && PREFILL[st.code]) card.appendChild(el("div",{class:"info"},[el("b",{text:"Điền sẵn: "}), "các ô có dữ liệu lấy từ "+d.prefillApplied+". Ô để trống nghĩa là Notion chưa có. Vẫn cần bạn đối chiếu và tích xác nhận."]));
+
+  card.appendChild(el("h3",{text:"Thông tin hiển thị"}));
+  var g1 = el("div",{class:"grid"});
+  g1.appendChild(field("Tên thương hiệu hiển thị", textInput(function(){return d.brandName;},function(v){d.brandName=v;}), st.sug.brandName?("Đề xuất: "+st.sug.brandName):"", st.sug.brandName));
+  g1.appendChild(field("Hotline", textInput(function(){return d.hotline;},function(v){d.hotline=v;},"Đúng như trên CTA"), st.sug.hotline?("Đề xuất: "+st.sug.hotline):"", st.sug.hotline));
+  g1.appendChild(field("Fanpage", textInput(function(){return d.fanpage;},function(v){d.fanpage=v;})));
+  card.appendChild(g1);
+  card.appendChild(el("div",{style:"margin-top:12px"},[field("Địa chỉ chính xác", areaInput(function(){return d.address;},function(v){d.address=v;},"Đúng như trên CTA"), st.sug.address?("Đề xuất: "+st.sug.address):"", st.sug.address)]));
+  card.appendChild(el("div",{style:"margin-top:12px"},[field("Dịch vụ / chính sách được phép đưa lên poster", areaInput(function(){return d.services;},function(v){d.services=v;},"Mỗi dòng một mục. Chỉ ghi những gì đã xác nhận."))]));
+
+  card.appendChild(el("h3",{text:"Màu"}));
+  var gc = el("div",{class:"grid"});
+  COLORS.forEach(function(c){
+    var sug = st.sug[c[0]]; var hint = st.hints && st.hints[c[0]];
+    var node = hexInput(function(){return d.colors[c[0]];},function(v){d.colors[c[0]]=v;}, sug);
+    gc.appendChild(field(c[1], node, hint));
+  });
+  card.appendChild(gc);
+
+  card.appendChild(el("h3",{text:"Font"}));
+  var gf = el("div",{class:"grid"});
+  [["heading","Font tiêu đề"],["body","Font nội dung"],["script","Font chữ viết tay (nếu có)"]].forEach(function(f){
+    gf.appendChild(field(f[1]+" — tên font", textInput(function(){return d.fonts[f[0]+"Name"];},function(v){d.fonts[f[0]+"Name"]=v;},"Tên font chính xác")));
+    gf.appendChild(field(f[1]+" — file .ttf/.otf", filePicker(function(){return d.fonts[f[0]+"File"];},function(v){d.fonts[f[0]+"File"]=v;},".ttf,.otf")));
+  });
+  card.appendChild(gf);
+
+  card.appendChild(el("h3",{text:"Tài sản gốc"}));
+  ASSETS.forEach(function(a){
+    var row = el("div",{class:"assetrow"});
+    row.appendChild(el("div",{},[el("b",{text:a[1]})]));
+    var right = el("div",{});
+    right.appendChild(selectInput([["","— chọn —"],["keep","Giữ nguyên file đang dùng"],["new","Gửi file mới"],["none","KHÔNG DÙNG"]],
+      function(){return (d.assets[a[0]]||{}).mode;},function(v){d.assets[a[0]]=d.assets[a[0]]||{};d.assets[a[0]].mode=v;}));
+    right.appendChild(el("div",{style:"height:6px"}));
+    right.appendChild(filePicker(function(){return (d.assets[a[0]]||{}).file;},function(v){d.assets[a[0]]=d.assets[a[0]]||{};d.assets[a[0]].file=v;},"image/png,image/*"));
+    row.appendChild(right); card.appendChild(row);
+  });
+  card.appendChild(el("div",{style:"margin-top:8px"},[field("Mẫu poster đã duyệt (1–3 ảnh)", filePicker(function(){return d.refs;},function(v){d.refs=v;},"image/*",true))]));
+
+  card.appendChild(el("h3",{text:"Vùng an toàn và quy trình"}));
+  var zr = el("div",{class:"zone"});
+  [["x0","logo x0"],["y0","logo y0"],["x1","logo x1"],["y1","logo y1"]].forEach(function(z){
+    var i = el("input",{type:"number",min:"0",max:"1080",placeholder:"px"}); i.value = d.zones[z[0]]||"";
+    i.addEventListener("input",function(){ d.zones[z[0]]=i.value; autosave(); });
+    zr.appendChild(field(z[1],i));
+  });
+  card.appendChild(field("Vùng chừa cho logo (toạ độ px, tuỳ chọn)", zr));
+  var g3 = el("div",{class:"grid",style:"margin-top:12px"});
+  g3.appendChild(field("Chừa trống dưới từ y (px) cho CTA/vé", (function(){var i=el("input",{type:"number",min:"0",max:"1080",placeholder:"vd 940"});i.value=d.footerFromY||"";i.addEventListener("input",function(){d.footerFromY=i.value;autosave();});return i;})()));
+  g3.appendChild(field("Route tạo poster", selectInput(ROUTES,function(){return d.route;},function(v){d.route=v;}), "Không tự đổi route; chọn “Giữ nguyên” nếu chưa quyết."));
+  g3.appendChild(field("Ngôn ngữ poster", selectInput(LANGS,function(){return d.lang;},function(v){d.lang=v;})));
+  card.appendChild(g3);
+
+  card.appendChild(el("h3",{text:"Nội dung poster mẫu (theo các thành phần)"}));
+  card.appendChild(el("div",{class:"note",text:"Logo và CTA/vé cố định vị trí. Các khối tím do ChatGPT tự bố trí, bạn chỉ cần cho biết nội dung. Bấm vào khối trên hình để nhảy tới ô nhập."}));
+  var lg = el("div",{class:"legend"}); lg.innerHTML = '<span><i class="a"></i>Cố định, script dán</span><span><i class="b"></i>ChatGPT tự bố trí</span>';
+  card.appendChild(lg);
+  card.appendChild(mockupSvg());
+  var P = d.poster;
+  function pid(node,id){ node.id = id; return node; }
+  var gp = el("div",{class:"grid"});
+  gp.appendChild(field("Tiêu đề dòng 1 (chữ đen)", pid(textInput(function(){return P.headline1;},function(v){P.headline1=v;},"vd: VỆ SINH GIÀY"),"p-headline1")));
+  gp.appendChild(field("Tiêu đề dòng 2 (chữ màu thương hiệu, nếu có)", pid(textInput(function(){return P.headline2;},function(v){P.headline2=v;}),"p-headline2")));
+  gp.appendChild(field("Dải / câu phụ (1 dòng)", pid(textInput(function(){return P.subline;},function(v){P.subline=v;},"vd: Làm sạch kỹ • Khử mùi • Giữ form"),"p-subline")));
+  gp.appendChild(field("Nhãn khung trước", pid(textInput(function(){return P.beforeLabel;},function(v){P.beforeLabel=v;},"vd: TRƯỚC / BEFORE"),"p-before")));
+  gp.appendChild(field("Nhãn khung sau", pid(textInput(function(){return P.afterLabel;},function(v){P.afterLabel=v;},"vd: SAU / AFTER"),"p-after")));
+  gp.appendChild(field("Khối cố định ở đáy", selectInput([["","— chọn —"],["cta","Thanh CTA"],["ticket","Khối vé"]],function(){return P.block;},function(v){P.block=v;})));
+  card.appendChild(gp);
+  card.appendChild(el("div",{class:"note",style:"margin-top:10px",text:"Lợi ích (3 đến 4 mục: tiêu đề ngắn + mô tả ngắn, icon do ChatGPT vẽ)"}));
+  var gb = el("div",{class:"grid"});
+  for(var bi=0; bi<4; bi++){ (function(i){
+    var b = P.benefits[i];
+    var t = pid(textInput(function(){return b.title;},function(v){b.title=v;},"vd: Làm sạch"),"p-ben"+(i+1));
+    var m = textInput(function(){return b.desc;},function(v){b.desc=v;},"vd: sâu từng chi tiết");
+    gb.appendChild(field("Lợi ích "+(i+1)+" — tiêu đề", t));
+    gb.appendChild(field("Lợi ích "+(i+1)+" — mô tả", m));
+  })(bi); }
+  card.appendChild(gb);
+
+  card.appendChild(el("div",{style:"margin-top:12px"},[field("Ghi chú", areaInput(function(){return d.note;},function(v){d.note=v;}))]));
+  card.appendChild(checkInput("Tôi đã điền và xác nhận thông tin của cửa hàng này (không có nghĩa đã duyệt bài hay chuyển draft → active)", function(){return d.confirmed;}, function(v){d.confirmed=v;}));
+  return card;
+}
+
+function renderTabs(){
+  var tabs = document.getElementById("tabs"); tabs.textContent = "";
+  var all = [{code:"GENERAL",name:"Chung"}].concat(STORES);
+  all.forEach(function(s){
+    var b = el("button",{class:"tab",role:"tab",type:"button","data-code":s.code,"aria-selected":String(s.code===current),
+      onclick:function(){ current=s.code; renderTabs(); renderMain(); window.scrollTo({top:0}); }},[s.code==="GENERAL"?"Chung":s.code]);
+    if(s.code!=="GENERAL") b.appendChild(el("span",{class:"dot"+(sget(s.code).confirmed?" done":"")}));
+    tabs.appendChild(b);
+  });
+}
+function updateDots(){
+  document.querySelectorAll(".tab").forEach(function(b){
+    var c = b.getAttribute("data-code"); var dot = b.querySelector(".dot");
+    if(dot) dot.className = "dot"+(sget(c).confirmed?" done":"");
+  });
+}
+function renderMain(){
+  var m = document.getElementById("main"); m.textContent = "";
+  if(current==="GENERAL") m.appendChild(renderGeneral());
+  else m.appendChild(renderStore(STORES.filter(function(s){return s.code===current;})[0]));
+}
+
+function applyPrefill(){
+  Object.keys(PREFILL).forEach(function(code){
+    var d = sget(code), p = PREFILL[code];
+    if(d.prefillApplied) return;
+    ["brandName","hotline","address","fanpage","services","note"].forEach(function(k){ if(p[k] && !d[k]) d[k] = p[k]; });
+    Object.keys(p.colors||{}).forEach(function(k){ if(!d.colors[k]) d.colors[k] = p.colors[k]; });
+    Object.keys(p.fonts||{}).forEach(function(k){ if(!d.fonts[k]) d.fonts[k] = p.fonts[k]; });
+    d.prefillApplied = PREFILL_SRC;
+  });
+}
+function collect(){
+  var out = {schema:"ao-may-store-onboarding", version:APP_VERSION, savedAt:new Date().toISOString(), general:state.general, stores:{}};
+  STORES.forEach(function(s){ var d = sget(s.code); out.stores[s.code] = Object.assign({name:s.name, currentStatus:s.status, currentRoute:s.route}, JSON.parse(JSON.stringify(d))); });
+  return out;
+}
+function stamp(){ var n=new Date(),p=function(x){return String(x).padStart(2,"0");}; return n.getFullYear()+p(n.getMonth()+1)+p(n.getDate())+"-"+p(n.getHours())+p(n.getMinutes()); }
+async function saveBlob(text, name, type){
+  var blob = new Blob([text],{type:type});
+  if(window.showSaveFilePicker){
+    try{
+      var ext = name.split(".").pop();
+      var h = await window.showSaveFilePicker({suggestedName:name, types:[{description:ext.toUpperCase(), accept:{[type]:["."+ext]}}]});
+      var w = await h.createWritable(); await w.write(blob); await w.close(); toast("Đã lưu "+h.name); return;
+    }catch(e){ if(e&&e.name==="AbortError") return; }
+  }
+  var a = el("a",{href:URL.createObjectURL(blob),download:name}); document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); },2000); toast("Đã tải về "+name+" (thư mục Tải xuống)");
+}
+function mdEscape(s){ return String(s==null?"":s).replace(/\|/g,"\\|").replace(/\n/g,"<br>"); }
+function toMarkdown(){
+  var d = collect(), L = [];
+  L.push("# PHIẾU THÔNG TIN CỬA HÀNG ĐÃ ĐIỀN","","> Lưu lúc "+d.savedAt+". Phiếu thu thập thông tin; chưa cập nhật Notion, skill, route hay trạng thái cửa hàng.","");
+  L.push("## A. Chung","","- Canvas 1080×1080 PNG: "+(d.general.canvas_ok?"đã xác nhận":"chưa xác nhận"),"- Đã đối chiếu Notion 02/03: "+(d.general.notion_checked?"có":"chưa"));
+  if(d.general.note) L.push("- Ghi chú: "+d.general.note);
+  L.push("");
+  STORES.forEach(function(s){
+    var x = d.stores[s.code];
+    L.push("## "+s.code+" — "+s.name,"","Hiện trạng: "+s.status+" · route "+s.route+" · "+(x.confirmed?"**đã xác nhận**":"chưa xác nhận"),"");
+    L.push("| Mục | Giá trị |","|---|---|");
+    L.push("| Tên hiển thị | "+mdEscape(x.brandName)+" |","| Hotline | "+mdEscape(x.hotline)+" |","| Địa chỉ | "+mdEscape(x.address)+" |","| Fanpage | "+mdEscape(x.fanpage)+" |","| Dịch vụ/chính sách | "+mdEscape(x.services)+" |");
+    COLORS.forEach(function(c){ L.push("| "+c[1]+" | "+mdEscape((x.colors||{})[c[0]])+" |"); });
+    [["heading","Font tiêu đề"],["body","Font nội dung"],["script","Font viết tay"]].forEach(function(f){
+      var fl=(x.fonts||{})[f[0]+"File"]; L.push("| "+f[1]+" | "+mdEscape((x.fonts||{})[f[0]+"Name"])+(fl?" (file "+mdEscape(fl.name)+")":"")+" |");
+    });
+    ASSETS.forEach(function(a){ var v=(x.assets||{})[a[0]]||{}; L.push("| "+a[1]+" | "+mdEscape(v.mode||"")+(v.file?" — "+mdEscape(v.file.name)+" sha256 "+(v.file.sha256||"?"):"")+" |"); });
+    L.push("| Mẫu đã duyệt | "+mdEscape((x.refs||[]).map(function(r){return r.name;}).join(", "))+" |");
+    var p = x.poster||{}; var bens = (p.benefits||[]).filter(function(b){return b&&(b.title||b.desc);}).map(function(b){return (b.title||"")+(b.desc?" — "+b.desc:"");}).join("; ");
+    L.push("| Poster: tiêu đề | "+mdEscape([p.headline1,p.headline2].filter(Boolean).join(" / "))+" |","| Poster: dải phụ | "+mdEscape(p.subline)+" |","| Poster: nhãn trước/sau | "+mdEscape([p.beforeLabel,p.afterLabel].filter(Boolean).join(" / "))+" |","| Poster: lợi ích | "+mdEscape(bens)+" |","| Poster: khối đáy | "+mdEscape(p.block)+" |");
+    var z = x.zones||{}; L.push("| Vùng logo | "+mdEscape([z.x0,z.y0,z.x1,z.y1].join(", "))+" |","| Chừa đáy từ y | "+mdEscape(x.footerFromY)+" |","| Route | "+mdEscape(x.route)+" |","| Ngôn ngữ | "+mdEscape(x.lang)+" |","| Ghi chú | "+mdEscape(x.note)+" |","");
+  });
+  return L.join("\n");
+}
+function loadObj(o){
+  if(!o||o.schema!=="ao-may-store-onboarding") throw new Error("Không phải file phiếu thông tin cửa hàng");
+  state.general = o.general||{};
+  STORES.forEach(function(s){ var src=(o.stores||{})[s.code]; if(src){ var c=JSON.parse(JSON.stringify(src)); delete c.name; delete c.currentStatus; delete c.currentRoute; c.colors=c.colors||{};c.fonts=c.fonts||{};c.assets=c.assets||{};c.refs=c.refs||[];c.zones=c.zones||{};c.poster=c.poster||blankPoster(); state.stores[s.code]=c; } });
+}
+var _saveT;
+function autosave(){ clearTimeout(_saveT); _saveT=setTimeout(function(){ try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(collect())); }catch(e){} },400); }
+
+document.getElementById("btnSave").addEventListener("click",function(){ saveBlob(JSON.stringify(collect(),null,2),"ao-may-store-onboarding_"+stamp()+".json","application/json"); });
+document.getElementById("btnMd").addEventListener("click",function(){ saveBlob(toMarkdown(),"ao-may-store-onboarding_"+stamp()+".md","text/markdown"); });
+document.getElementById("btnLoad").addEventListener("click",function(){ document.getElementById("fileLoad").click(); });
+document.getElementById("fileLoad").addEventListener("change",function(ev){
+  var f = ev.target.files[0]; if(!f) return;
+  f.text().then(function(t){ loadObj(JSON.parse(t)); renderTabs(); renderMain(); toast("Đã mở "+f.name); })
+   .catch(function(e){ toast("Không mở được: "+e.message); });
+  ev.target.value = "";
+});
+window.addEventListener("beforeunload",function(e){ try{ if(localStorage.getItem(DRAFT_KEY)){ /* bản nháp đã tự lưu trong trình duyệt */ } }catch(x){} });
+
+(function init(){
+  try{ var raw = localStorage.getItem(DRAFT_KEY); if(raw){ loadObj(JSON.parse(raw)); setTimeout(function(){ toast("Đã khôi phục bản nháp tự lưu trong trình duyệt"); },300); } }catch(e){}
+  applyPrefill();
+  renderTabs(); renderMain();
+  window.__collect = collect; window.__md = toMarkdown;
+})();
+</script>
+</body>
+</html>
