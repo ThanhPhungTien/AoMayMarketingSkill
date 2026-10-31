@@ -42,13 +42,23 @@
     "canvas": [1080, 1080],
     "logo_paste_at": [54, 54],
     "logo_width": 302,
-    "logo_zone": [0, 0, 380, 170],
+    "logo_zone": [0, 0, 380, 152],
+    "zone_edge_max": 18,
+    "logo_zone_detail_max": 0.009,
+    "headline_top_min": 170,
+    "background": "NỀN SÁNG vì logo đậm màu (không dùng nền hồng đậm hay tối); không dùng một màu phẳng; không hoa, đồ vật, khăn, nước hoa; góc trên trái mượt, không ô hay mép cứng; nội dung dừng trước y=905 (35px trên khối CTA).",
+    "background_variants": [
+      "V1: trắng kem chuyển hồng phấn rất nhạt, vài tia sáng chéo mờ",
+      "V2: đào nhạt chuyển hồng phấn, vài vòng tròn lớn mờ ở rìa",
+      "V3: hồng lilac rất nhạt với các đường sóng mảnh mờ",
+      "V4: trắng ngà với một dải cong hồng nhạt ở một cạnh"
+    ],
     "blocks": {
-      "cta": {"file": "cta", "paste_at": [0, 0], "reserve": [0, 940, 1080, 140]},
-      "ticket": {"file": "ticket", "paste_at": [0, 0], "reserve": [0, 860, 1080, 220]}
+      "cta": {"file": "cta", "paste_at": [0, 0], "reserve": [0, 940, 1080, 140], "margin": 15},
+      "ticket": {"file": "ticket", "paste_at": [0, 0], "reserve": [0, 860, 1080, 220], "margin": 3}
     },
     "headline": {
-      "font_style": "Be Vietnam Pro Black, in hoa, nét rộng, không condensed, chữ đặc",
+      "font_style": "Be Vietnam Pro Black, in hoa, nét rộng, KHÔNG condensed (kể cả khi ảnh mẫu dùng font hẹp), chữ đặc",
       "line_1": "headline_main",
       "line_2": "text_accent"
     },

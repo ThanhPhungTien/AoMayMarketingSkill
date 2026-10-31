@@ -16,7 +16,7 @@ import sys
 import unicodedata
 from pathlib import Path
 
-from PIL import Image, ImageChops, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 ASSETS = Path(__file__).resolve().parent.parent / "assets"
 HEX = re.compile(r"^#[0-9A-Fa-f]{6}$")
@@ -141,16 +141,58 @@ def show():
     return not bad
 
 
-def blank_ok(base, zone):
+def blank_ok(base, zone, limit=0.018):
     """Vùng logo của nền phải trơn: chấp nhận chuyển sắc nhẹ, từ chối chữ/vật thể."""
     patch = base.crop(tuple(zone)).convert("RGB")
     diff = ImageChops.difference(patch, patch.filter(ImageFilter.GaussianBlur(4))).convert("L")
     hist = diff.histogram()
     share = sum(hist[23:]) / float(patch.width * patch.height)
-    return share <= 0.018, round(share, 5)
+    return share <= limit, round(share, 5)
 
 
-def paste(code, base_path, out_path, block_name):
+def edge_step(base, zone):
+    """Ô phẳng lộ ra: bước nhảy độ sáng lớn nhất khi băng qua cạnh phải / cạnh dưới của vùng logo.
+    Chuyển sắc mượt cho bước nhỏ; ô hồng viền cứng cho bước lớn."""
+    import numpy as np
+    g = np.asarray(base.convert("L"), dtype=float)
+    x0, y0, x1, y1 = zone
+    cols = [abs(g[4:y1 - 20, x + 1].mean() - g[4:y1 - 20, x].mean()) for x in range(x1 - 30, x1 + 60)]
+    rows = [abs(g[y + 1, 8:50].mean() - g[y, 8:50].mean()) for y in range(y1 - 30, y1 + 5)]
+    return round(max(cols + rows), 2)
+
+
+def heal_zone(base, zone, grow=(60, 30), feather=14):
+    """Làm mượt góc logo: lấp vùng (zone mở rộng) bằng khuếch tán từ viền ngoài rồi trộn mép mềm.
+    Chỉ sửa nền do model ảnh sinh ra, không đụng file asset."""
+    import numpy as np
+    x0, y0, x1, y1 = zone
+    hx1, hy1 = min(base.width, x1 + grow[0]), min(base.height, y1 + grow[1])
+    arr = np.asarray(base.convert("RGB"), dtype=float)
+    s = 4
+    ring_w = 24
+    sub = arr[: hy1 + ring_w, : hx1 + ring_w]
+    small = np.asarray(Image.fromarray(sub.astype("uint8")).resize(
+        (sub.shape[1] // s, sub.shape[0] // s), Image.BOX), dtype=float)
+    h, w = hy1 // s, hx1 // s
+    fix = np.ones(small.shape[:2], bool)
+    fix[:h, :w] = False  # vùng cần lấp; ngoài ra là biên cố định
+    f = small.copy()
+    f[:h, :w] = small[h:h + 1, w:w + 1].mean(axis=(0, 1)) if small.shape[0] > h and small.shape[1] > w else small.mean(axis=(0, 1))
+    for _ in range(1500):
+        p = np.pad(f, ((1, 1), (1, 1), (0, 0)), mode="edge")
+        avg = (p[:-2, 1:-1] + p[2:, 1:-1] + p[1:-1, :-2] + p[1:-1, 2:]) / 4.0
+        f = np.where(fix[..., None], small, avg)
+    fill = Image.fromarray(np.clip(f, 0, 255).astype("uint8")).resize((sub.shape[1], sub.shape[0]), Image.BICUBIC)
+    mask = Image.new("L", (sub.shape[1], sub.shape[0]), 0)
+    ImageDraw.Draw(mask).rectangle([0, 0, hx1 - 4, hy1 - 4], fill=255)
+    mask = mask.filter(ImageFilter.GaussianBlur(feather / 2.0))
+    out = base.convert("RGB").copy()
+    patch = Image.composite(fill, out.crop((0, 0, sub.shape[1], sub.shape[0])), mask)
+    out.paste(patch, (0, 0))
+    return out.convert("RGBA")
+
+
+def paste(code, base_path, out_path, block_name, heal=False):
     spec = check(code)
     if not show():
         return 1
@@ -169,10 +211,27 @@ def paste(code, base_path, out_path, block_name):
     if base.size != canvas:
         print(f"FAIL: nền {base.size}, cần {canvas} (không tự resize)")
         return 1
-    ok, share = blank_ok(base, rs["logo_zone"])
-    print(f"vùng logo của nền: chi tiết sắc {share} (≤0.018) -> {'OK' if ok else 'FAIL'}")
+    if heal:
+        base = heal_zone(base, rs["logo_zone"])
+        print("làm mượt góc logo: đã lấp vùng logo từ viền ngoài (--heal)")
+    zl = rs.get("logo_zone_detail_max", 0.018)
+    ok, share = blank_ok(base, rs["logo_zone"], zl)
+    print(f"vùng logo của nền: chi tiết sắc {share} (≤{zl}) -> {'OK' if ok else 'FAIL'}")
     if not ok:
         print("FAIL: vùng logo không trống — sinh lại nền")
+        return 1
+    ry = blk["reserve"][1]
+    mg = blk.get("margin", 35)
+    ok2, share2 = blank_ok(base, (0, ry - mg, base.width, ry))
+    print(f"dải sát trên khối {block_name}: chi tiết sắc {share2} (≤0.018) -> {'OK' if ok2 else 'FAIL'}")
+    if not ok2:
+        print(f"FAIL: chữ/icon lấn vào {mg}px trên khối {block_name} (y {ry - mg}-{ry}) — nội dung phải dừng trước y={ry - mg}")
+        return 1
+    step = edge_step(base, rs["logo_zone"])
+    limit = rs.get("zone_edge_max", 8)
+    print(f"cạnh vùng logo: bước nhảy độ sáng {step} (<{limit}) -> {'OK' if step < limit else 'FAIL'}")
+    if step >= limit:
+        print("FAIL: vùng logo là ô phẳng có viền cứng — sinh lại nền, chuyển sắc mượt, không ô riêng")
         return 1
 
     out = base.copy()
@@ -223,11 +282,12 @@ def main():
     p.add_argument("base")
     p.add_argument("out")
     p.add_argument("--block", default="cta")
+    p.add_argument("--heal", action="store_true", help="làm mượt góc logo của nền trước khi kiểm và dán")
     a = ap.parse_args()
     if a.cmd == "check":
         check(a.code)
         sys.exit(0 if show() else 1)
-    sys.exit(paste(a.code, a.base, a.out, a.block))
+    sys.exit(paste(a.code, a.base, a.out, a.block, a.heal))
 
 
 if __name__ == "__main__":

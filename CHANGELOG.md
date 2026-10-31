@@ -4,6 +4,8 @@ Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi p
 
 ## 1.4.10 — 2026-10-31
 - §3D viết lại thành danh sách [A]–[D]: lệnh đầu tiên của lượt phải là check và dán bảng vào câu trả lời; ảnh trả về từ công cụ ảnh không phải điểm kết thúc, hành động kế tiếp bắt buộc là Python (lưu nen.png, đổi cỡ, paste). Lý do: 1.4.9 vẫn dừng sau bước nền khi thử lại bài giày. Chưa phát hành; release_id: (điền)
+- Bổ sung (lô v4 Miu Miu, nền sáng): cổng kiểm `paste` thêm (a) dải sát trên khối CTA/vé (`margin` theo từng khối: cta 15, ticket 3), (b) ngưỡng riêng cho vùng logo `logo_zone_detail_max` 0.009, (c) `logo_zone` thu còn [0,0,380,152] cho khớp chiều cao logo thật, (d) quét cạnh logo chỉ ở x 8–120 và y 122–157 để không nhầm với đầu tiêu đề; thêm cờ `--heal` (làm mượt góc logo, ít dùng, có thể kéo màu tiêu đề vào góc nên mặc định tắt). Spec MM: nền SÁNG vì logo đậm màu, `background_variants` V1–V4 để xoay vòng.
+- Bổ sung (rà soát lô 14 poster Miu Miu): `paste` thêm kiểm cạnh vùng logo (`zone_edge_max`), từ chối nền có ô phẳng viền cứng sau logo vốn làm cụt đầu tiêu đề; spec MM thêm `headline_top_min` 210 và ghi rõ không dùng font condensed dù ảnh mẫu dùng; §3D bước 2 và 4 yêu cầu chuyển sắc mượt, tiêu đề dưới 210px, soát logo cũ và ô icon trống.
 
 ## 1.4.9 — 2026-10-31
 - §3D: thứ tự cố định trong một lượt (check → đọc mẫu → sinh nền → paste → giao). Cấm sinh ảnh trước khi in bảng check; trả về mỗi ảnh nền không được tính là giao, phải tới dòng `PASTE: OK`. Lý do: bài thử giày trên ChatGPT với 1.4.8 dừng ngay sau bước nền, không in bảng check, không dán. Manifest plugin 1.4.15. 6 file ảnh cũ trên bản live giữ nguyên. release_id: pluginrel_6ae556ff28a08191b3fdff69a0257672 (ChatGPT báo updated)
