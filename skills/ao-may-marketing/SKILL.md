@@ -2,7 +2,7 @@
 name: ao-may-marketing
 description: "Làm marketing cho chuỗi nhượng quyền Áo Mây Laundry và từng cửa hàng: đọc đúng bài và đúng cửa hàng trong Notion, viết caption Facebook, lập kế hoạch 14 ngày, thiết kế poster giữ logo gốc và kiểm tra chất lượng. Dùng khi người dùng nhắc Áo Mây, tên hoặc mã một cửa hàng Áo Mây (Tân Hưng/TH, Chánh Hưng/CH, Dương Quảng Hàm/DQH, Tân Phú/TP, Nguyễn Xí/NX, An Khánh/AK), thương hiệu Miu Miu (MM) hoặc yêu cầu gen poster facebook từ ảnh mẫu, mẫu DQH-01 hoặc bài số trong lịch Áo Mây."
 metadata:
-  version: 1.4.12
+  version: 1.4.13
 ---
 
 # Áo Mây Marketing
@@ -118,10 +118,11 @@ Learned from failed runs; apply every time.
 9. **Do not iterate the same image through many model edit rounds.** Each round tends to add a new defect (blur, patches, mis-typed diacritics). If two rounds do not fix a block, rebuild that block by code.
 
 ### 3D. Route `restyle` — poster from a sample, per store (code MM and any store whose spec.json has `route: restyle`)
-**TWO TURNS, THE IMAGE TOOL ENDS TURN 1 (tested 2026-11-01: ChatGPT stops right after the image tool, so do not rely on a single turn).**
+**TRY TO FINISH IN ONE TURN (retry the base up to 3 times); turn 2 is the fallback because ChatGPT often stops right after the image tool (tested 2026-11-01).**
 **Turn 1 (user asks for a poster):**
 **[A] First tool call = Python: locate the skill folder (the plugin copy, or unzip the attached skill zip into /mnt/data), run `restyle_poster.py check <CODE>` and paste its table into the reply. No image tool call before [A] is done.**
-**[B] Call the image tool once for the base, saved as the base for turn 2. Then end the turn with exactly one line: `Nền đã xong. Gõ "ghép" để dán logo và CTA.` Never present the base as the finished poster and never redraw logo or CTA in the image.**
+**[B] Call the image tool for the base (attempt 1 of 3). Look at it: it counts as FAILED if it draws any logo or store name, hotline, address, a contact bar or a person, or lacks one of the 6 components in `restyle.prompt_template` (above all the separate subline strip and the benefits icons). On a failed look, go straight to attempt 2 (same prompt plus one line naming what was wrong); never present a failed base.**
+**[B2] On a base that looks right, the NEXT action is Python in the same turn: save it as nen.png, resize to the canvas with Pillow LANCZOS, run `restyle_poster.py paste <CODE> nen.png <name>.png --block cta|ticket`. If it prints FAIL, go back to [B] for the next attempt. After 3 failed attempts stop and report each reason. If you still end the turn after the image tool, close with exactly one line: `Nền đã xong. Gõ "ghép" để dán logo và CTA.`**
 **Turn 2 (any message from the user, usually "ghép"; also if the user says the logo or CTA is missing):**
 **[C] The FIRST and ONLY action is Python, no image tool at all: take the latest base image, resize it to the canvas with Pillow LANCZOS, run `restyle_poster.py paste <CODE> nen.png <name>.png --block cta|ticket`.**
 **[D] Reply only after the script printed `PASTE: OK`: show the script output verbatim and link the final file. If the script prints FAIL, say why and return to turn 1 [B] for a new base; do not repair with the image tool.**
