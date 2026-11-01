@@ -2,6 +2,10 @@
 
 Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi phát hành).
 
+## 1.4.16 — 2026-11-01
+- CH: `prompt_template` thêm câu chừa trống cụ thể (y<215 trơn, tiêu đề từ y≥230, ảnh và lợi ích trong y≤870, từ y=880 xuống đáy trơn hoàn toàn) và cấm cam kết y tế/giao nhận. Lý do: thử 1.4.15 live, ChatGPT tự viết prompt không có các mốc này, sinh 3 nền đều bị tự loại (vẽ logo, lấn vùng CTA) rồi dừng; 13 poster chạy tay có các mốc này đều ghép được. Chưa phát hành; release_id: (điền)
+- CH nền giàu chiều sâu (phòng sáng xoá phông, rèm, cây, bong bóng; không nền phẳng) theo yêu cầu người dùng: cập nhật `background` và `prompt_template`. Logo CH thu còn 160px, `logo_margin` 30, `logo_zone_height` 184, `headline_top_min` 200; ngưỡng riêng của CH nới cho nền xoá phông: `logo_zone_detail_max` 0.02, `zone_edge_max` 30. Đã dựng lại 13 poster CH với cấu hình này.
+
 ## 1.4.15 — 2026-11-01
 - Cửa hàng CH (Chánh Hưng) bật `active`, route `restyle` (theo yêu cầu người dùng; fanpage chưa có nhưng thanh CTA không dùng). Thêm logo riêng CH (`stores/CH/logo.png`, người dùng cung cấp), thanh CTA `stores/CH/cta-bar.png` dựng bằng `tools/make_cta_bar.py` (HTML chụp bằng Chrome ngầm, từ hotline và địa chỉ trong spec; không có nút LIÊN HỆ NGAY), font Montserrat (`chain/fonts`, OFL) cho tiêu đề và nội dung, màu theo website aomay.vn. Khối `restyle` CH: logo giữa trên, chừa trống từ y=945, prompt mẫu dùng mẫu Latusa và cấm logo, tên, hotline của Latusa.
 - Script `restyle_poster.py`: thêm `logo_crop_alpha` để dán logo có viền trong suốt thừa theo vùng nội dung (không sửa file logo). Đã phát hành 2026-11-01, manifest plugin 1.4.21, 6 file ảnh cũ trên bản live giữ nguyên. release_id: pluginrel_6ae6bc85ddb881918926c2675bdd8b19 (ChatGPT báo updated)

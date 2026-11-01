@@ -44,13 +44,13 @@
     ],
     "logo_position": "top-center",
     "logo_crop_alpha": true,
-    "logo_margin": 36,
-    "logo_zone_height": 200,
-    "logo_width": 180,
-    "zone_edge_max": 18,
-    "logo_zone_detail_max": 0.009,
-    "headline_top_min": 215,
-    "background": "NỀN SÁNG vì logo teal đậm; không dùng một màu phẳng; chuyển sắc mượt, có thể bong bóng xà phòng, tia sáng, nước; giữa trên mượt, không ô hay mép cứng; nội dung dừng trước y=945 (15px trên khối CTA).",
+    "logo_margin": 30,
+    "logo_zone_height": 184,
+    "logo_width": 160,
+    "zone_edge_max": 30,
+    "logo_zone_detail_max": 0.02,
+    "headline_top_min": 200,
+    "background": "NỀN GIÀU CHIỀU SÂU, không phẳng một màu: không gian phòng sáng chụp xoá phông (soft focus) tông aqua–teal nhạt, có rèm voan trắng mờ, cây xanh mờ ở hai bên, ánh sáng lấp lánh và vài bong bóng xà phòng trong suốt. Riêng vùng logo (y<215) và vùng trên CTA (y≥880) chỉ là nền mờ chuyển sắc mượt, không chi tiết sắc nét; nội dung dừng trước y=945 (15px trên khối CTA).",
     "blocks": {
       "cta": {
         "file": "cta",
@@ -68,7 +68,7 @@
       }
     },
     "layout_mode": "free",
-    "prompt_template": "Poster Áo Mây Chánh Hưng, dạng {poster_type}, chủ đề {topic}. Bố cục tự thiết kế, nhưng PHẢI đủ 6 thành phần: (1) nền SÁNG kem xanh nhạt #EFFBFB (logo teal đậm), không một màu phẳng; (2) tiêu đề 1-2 dòng IN HOA, dòng 1 teal đậm #0A6A6E, dòng 2 cam #ED8752, font Montserrat ExtraBold nét rộng đặc, KHÔNG condensed; (3) DẢI PHỤ: một câu ngắn một dòng nằm riêng dưới tiêu đề, chỉ có chữ, KHÔNG icon; (4) MỘT ảnh minh họa chính (không so sánh) hoặc hai khung TRƯỚC/SAU (so sánh), ảnh cùng loại sản phẩm với mẫu; (5) mục LỢI ÍCH 3-4 mục, mỗi mục icon thật + tiêu đề ngắn + mô tả ngắn, không ô icon trống; (6) chữ tiếng Việt có dấu đúng, không bịa giá, ưu đãi hay thời gian hoàn thành. Màu phụ: teal #44A49F, chữ #344054. Chừa TRỐNG nền trơn: giữa trên (cho logo, rộng khoảng 240px, cao 200px) và toàn bộ phần dưới y=945. Không vẽ logo hay tên cửa hàng, không hotline hay địa chỉ, không người, không nhắc Latusa, Miu Miu, An Khánh hay tên cửa hàng khác.",
+    "prompt_template": "Poster Áo Mây Chánh Hưng, dạng {poster_type}, chủ đề {topic}. Bố cục tự thiết kế, nhưng PHẢI đủ 6 thành phần: (1) nền SÁNG giàu chiều sâu: không gian phòng sáng xoá phông tông aqua–teal nhạt (#EFFBFB đến aqua), rèm voan mờ, cây xanh mờ hai bên, ánh sáng lấp lánh, vài bong bóng xà phòng trong suốt; tuyệt đối không nền phẳng một màu; (2) tiêu đề 1-2 dòng IN HOA, dòng 1 teal đậm #0A6A6E, dòng 2 cam #ED8752, font Montserrat ExtraBold nét rộng đặc, KHÔNG condensed; (3) DẢI PHỤ: một câu ngắn một dòng nằm riêng dưới tiêu đề, chỉ có chữ, KHÔNG icon; (4) MỘT ảnh minh họa chính (không so sánh) hoặc hai khung TRƯỚC/SAU (so sánh), ảnh cùng loại sản phẩm với mẫu; (5) mục LỢI ÍCH 3-4 mục, mỗi mục icon thật + tiêu đề ngắn + mô tả ngắn, không ô icon trống; (6) chữ tiếng Việt có dấu đúng, không bịa giá, ưu đãi, thời gian hoàn thành, giao nhận hay cam kết an toàn/y tế (ví dụ 'an toàn cho da'). Màu phụ: teal #44A49F, chữ #344054. BẮT BUỘC CHỪA TRỐNG (canvas 1080x1080): phần trên cùng y<200 là nền mờ chuyển sắc nhạt, không chữ, sóng, bong bóng hay góc màu; tiêu đề (kể cả dấu mũ) bắt đầu từ y≥215; ảnh chính VÀ hàng lợi ích nằm trọn trong y≤870 (nếu có hai khung ảnh thì kết thúc ở y≈740, hàng lợi ích trong y=760-870); từ y=880 xuống hết đáy chỉ là nền nhạt mờ dần hoàn toàn trơn, không chữ, icon, vật thể, mặt bàn, sàn, bóng, sóng hay viền. Không vẽ logo hay tên cửa hàng, không hotline hay địa chỉ, không người, không nhắc Latusa, Miu Miu, An Khánh hay tên cửa hàng khác.",
     "prompt_policy": "Prompt gửi model ảnh chỉ gồm: mẫu và chủ đề, nhận diện (màu, font), vùng trống bắt buộc, điều cấm. Không chỉ định bố cục, vị trí hay cỡ chữ. Nhưng PHẢI chép restyle.prompt_template (nêu đủ 6 thành phần và font Montserrat). Thiếu thành phần hoặc sai font là lỗi, phải gen lại. Mẫu Latusa có logo LATUSA trên áo, túi, biển hiệu và có người (shipper, người ủi): bỏ hết.",
     "poster_types": {
       "compare": "so sánh: hai khung TRƯỚC/SAU + mũi tên (ví dụ giày trước và sau)",
