@@ -228,7 +228,7 @@ def heal_zone(base, zone, grow=(60, 30), feather=14):
     return out.convert("RGBA")
 
 
-def paste(code, base_path, out_path, block_name, heal=False):
+def paste(code, base_path, out_path, block_name, heal=False, logo_key="logo"):
     spec = check(code)
     if not show():
         return 1
@@ -239,8 +239,11 @@ def paste(code, base_path, out_path, block_name, heal=False):
         return 1
     canvas = tuple(rs["canvas"])
     block = Image.open(ASSETS / files[blk["file"]]["path"]).convert("RGBA")
-    logo = Image.open(ASSETS / files["logo"]["path"]).convert("RGBA")
-    if rs.get("logo_crop_alpha"):  # logo có viền trong suốt thừa: dán theo vùng nội dung, không sửa file
+    if logo_key not in files:
+        print(f"FAIL: spec không khai báo files.{logo_key}")
+        return 1
+    logo = Image.open(ASSETS / files[logo_key]["path"]).convert("RGBA")
+    if rs.get("logo_crop_alpha") or logo_key != "logo":  # logo có viền trong suốt thừa: dán theo vùng nội dung, không sửa file
         logo = logo.crop(logo.getchannel("A").getbbox())
     lw = rs["logo_width"]
     pos, zone = logo_geometry(rs)
@@ -253,6 +256,13 @@ def paste(code, base_path, out_path, block_name, heal=False):
     if heal:
         base = heal_zone(base, zone)
         print("làm mượt góc logo: đã lấp vùng logo từ viền ngoài (--heal)")
+    if logo_key == "logo_white":  # chữ trắng chỉ đọc được trên nền đậm vừa
+        x, y, w, h = zone
+        lum = base.convert("L").crop((x, y, x + w, y + h)).resize((1, 1), Image.BOX).getpixel((0, 0))
+        print(f"logo trắng: độ sáng nền vùng logo {lum:.0f} (cần ≤ 200) -> {'OK' if lum <= 200 else 'FAIL'}")
+        if lum > 200:
+            print("FAIL: nền vùng logo quá sáng cho logo trắng — sinh lại nền hồng đậm hơn ở góc logo, hoặc dùng logo thường")
+            return 1
     zl = rs.get("logo_zone_detail_max", 0.018)
     ok, share = blank_ok(base, zone, zl)
     print(f"vùng logo của nền: chi tiết sắc {share} (≤{zl}) -> {'OK' if ok else 'FAIL'}")
@@ -321,11 +331,13 @@ def main():
     p.add_argument("out")
     p.add_argument("--block", default="cta")
     p.add_argument("--heal", action="store_true", help="làm mượt góc logo của nền trước khi kiểm và dán")
+    p.add_argument("--logo", choices=("default", "white"), default="default",
+                   help="white: dán files.logo_white (chữ trắng, cần nền vùng logo đậm vừa)")
     a = ap.parse_args()
     if a.cmd == "check":
         check(a.code)
         sys.exit(0 if show() else 1)
-    sys.exit(paste(a.code, a.base, a.out, a.block, a.heal))
+    sys.exit(paste(a.code, a.base, a.out, a.block, a.heal, "logo_white" if a.logo == "white" else "logo"))
 
 
 if __name__ == "__main__":

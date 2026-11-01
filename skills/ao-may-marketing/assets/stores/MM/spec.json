@@ -16,6 +16,7 @@
       "sha256": "fcd9e9940f7edc27347665dfae4c85d6ae6fc5552582fe60863cdf49f990fbd0",
       "require_rgba": true
     },
+    "logo_white": {"path": "stores/MM/logo-white.png", "sha256": "5dd0bc1b0d9252b5076272431f082322cf3092dd04cc2e6c803dc4d219ac73f4", "require_rgba": true, "optional": true},
     "ticket": {
       "path": "stores/MM/ticket-block.png",
       "sha256": "414d5b506c4abf12733e74b3939362b7c7bd6e7be7b67549601079c4f1ec4749",
