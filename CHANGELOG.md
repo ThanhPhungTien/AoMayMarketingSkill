@@ -4,7 +4,7 @@ Mỗi bản: ngày · thay đổi · release_id trên ChatGPT (điền sau khi p
 
 ## 1.4.15 — 2026-11-01
 - Cửa hàng CH (Chánh Hưng) bật `active`, route `restyle` (theo yêu cầu người dùng; fanpage chưa có nhưng thanh CTA không dùng). Thêm logo riêng CH (`stores/CH/logo.png`, người dùng cung cấp), thanh CTA `stores/CH/cta-bar.png` dựng bằng `tools/make_cta_bar.py` (HTML chụp bằng Chrome ngầm, từ hotline và địa chỉ trong spec; không có nút LIÊN HỆ NGAY), font Montserrat (`chain/fonts`, OFL) cho tiêu đề và nội dung, màu theo website aomay.vn. Khối `restyle` CH: logo giữa trên, chừa trống từ y=945, prompt mẫu dùng mẫu Latusa và cấm logo, tên, hotline của Latusa.
-- Script `restyle_poster.py`: thêm `logo_crop_alpha` để dán logo có viền trong suốt thừa theo vùng nội dung (không sửa file logo). Chưa phát hành; release_id: (điền)
+- Script `restyle_poster.py`: thêm `logo_crop_alpha` để dán logo có viền trong suốt thừa theo vùng nội dung (không sửa file logo). Đã phát hành 2026-11-01, manifest plugin 1.4.21, 6 file ảnh cũ trên bản live giữ nguyên. release_id: pluginrel_6ae6bc85ddb881918926c2675bdd8b19 (ChatGPT báo updated)
 
 ## 1.4.14 — 2026-11-01
 - Spec MM: dải phụ chỉ có chữ, không icon (prompt_template và components); icon chỉ ở mục lợi ích. Lý do: bản trước tôi ghi "có thể kèm icon" nên ChatGPT thêm icon áo vào dải phụ. Đã phát hành 2026-11-01, manifest plugin 1.4.20, 6 file ảnh cũ trên bản live giữ nguyên. release_id: pluginrel_6ae6366094908191a5f26548310859b8 (ChatGPT báo updated)
