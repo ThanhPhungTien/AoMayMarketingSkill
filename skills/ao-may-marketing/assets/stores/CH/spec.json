@@ -1,31 +1,137 @@
 {
-  "_note": "Chánh Hưng: chưa có thông tin xác nhận nên để draft — chưa làm poster. Đổi status thành active khi Notion 02 đủ địa chỉ, hotline, fanpage. Mọi đường dẫn tính từ thư mục assets/. Người dùng tự quản lý file; đổi file thì cập nhật sha256 (để trống = không kiểm).",
-  "version": "2026-10-27",
+  "_note": "Áo Mây – Chánh Hưng: cửa hàng theo trụ sở (màu và font của Áo Mây, xem mục B phiếu cửa hàng), có logo riêng kèm nhãn CHÁNH HƯNG. Route restyle: model ảnh sinh nền theo ảnh mẫu (mẫu Latusa), code dán logo và thanh CTA thật. Hotline và địa chỉ lấy từ poster mẫu CH người dùng đưa (2026-11-01); fanpage chưa có nhưng thanh CTA không dùng. Bật active 2026-11-01 theo yêu cầu người dùng. Mọi đường dẫn tính từ thư mục assets/.",
+  "version": "2026-11-01",
   "store_code": "CH",
   "store_name": "Áo Mây – Chánh Hưng",
-  "status": "draft",
-  "route": "direct",
+  "status": "active",
+  "route": "restyle",
   "files": {
     "logo": {
-      "path": "chain/logo-ao-may.png",
-      "sha256": "",
-      "require_rgba": true
+      "path": "stores/CH/logo.png",
+      "sha256": "371da03a7619225718ef548e76b32d5d23c93ab0af04d053be44cc1dfe82321b",
+      "require_rgba": true,
+      "note": "Logo Áo Mây + LAUNDRY + CHÁNH HƯNG do người dùng cung cấp, canvas 900x900 có viền trong suốt; khi dán cắt theo vùng nội dung (restyle.logo_crop_alpha)."
+    },
+    "cta": {
+      "path": "stores/CH/cta-bar.png",
+      "sha256": "1243e5e0425de3fea9539208a9409348d50d930eaf5e88c16cdc24b90d13f061",
+      "require_rgba": true,
+      "note": "Dựng bằng tools/make_cta_bar.py từ contacts (ghim địa chỉ + điện thoại, không nút LIÊN HỆ NGAY); đổi liên hệ thì chạy lại và cập nhật sha256."
     }
   },
-  "logo": {
-    "mode": "chain+label",
-    "file": "chain/logo-ao-may.png",
-    "label": "CHÁNH HƯNG"
+  "fonts": {
+    "headline": "chain/fonts/Montserrat-VariableFont_wght.ttf",
+    "body": "chain/fonts/Montserrat-VariableFont_wght.ttf"
   },
   "colors": {
-    "aqua": "#36C9D6",
-    "teal": "#087F88",
-    "mist": "#EAFBFC",
-    "white": "#FFFFFF",
-    "ink": "#17383D",
-    "sun": "#FFC857"
+    "text_accent": "#ED8752",
+    "logo_accent": "#44A49F",
+    "on_pink": "#FFFFFF",
+    "headline_main": "#0A6A6E",
+    "background": "#EFFBFB",
+    "text": "#344054"
   },
-  "fonts": {
-    "body": "chain/fonts/BeVietnamPro-SemiBold.ttf"
+  "contacts": {
+    "hotline": "0764 771 429",
+    "address": "43 Hưng Phú, Phường Chánh Hưng, TP.HCM",
+    "fanpage": "",
+    "note": "Hotline và địa chỉ đã nằm sẵn trong ảnh CTA; không gõ lại trên poster. Fanpage chưa có, không điền khi chưa xác nhận."
+  },
+  "restyle": {
+    "canvas": [
+      1080,
+      1080
+    ],
+    "logo_position": "top-center",
+    "logo_crop_alpha": true,
+    "logo_margin": 36,
+    "logo_zone_height": 200,
+    "logo_width": 180,
+    "zone_edge_max": 18,
+    "logo_zone_detail_max": 0.009,
+    "headline_top_min": 215,
+    "background": "NỀN SÁNG vì logo teal đậm; không dùng một màu phẳng; chuyển sắc mượt, có thể bong bóng xà phòng, tia sáng, nước; giữa trên mượt, không ô hay mép cứng; nội dung dừng trước y=945 (15px trên khối CTA).",
+    "blocks": {
+      "cta": {
+        "file": "cta",
+        "paste_at": [
+          0,
+          0
+        ],
+        "reserve": [
+          0,
+          960,
+          1080,
+          120
+        ],
+        "margin": 15
+      }
+    },
+    "layout_mode": "free",
+    "prompt_template": "Poster Áo Mây Chánh Hưng, dạng {poster_type}, chủ đề {topic}. Bố cục tự thiết kế, nhưng PHẢI đủ 6 thành phần: (1) nền SÁNG kem xanh nhạt #EFFBFB (logo teal đậm), không một màu phẳng; (2) tiêu đề 1-2 dòng IN HOA, dòng 1 teal đậm #0A6A6E, dòng 2 cam #ED8752, font Montserrat ExtraBold nét rộng đặc, KHÔNG condensed; (3) DẢI PHỤ: một câu ngắn một dòng nằm riêng dưới tiêu đề, chỉ có chữ, KHÔNG icon; (4) MỘT ảnh minh họa chính (không so sánh) hoặc hai khung TRƯỚC/SAU (so sánh), ảnh cùng loại sản phẩm với mẫu; (5) mục LỢI ÍCH 3-4 mục, mỗi mục icon thật + tiêu đề ngắn + mô tả ngắn, không ô icon trống; (6) chữ tiếng Việt có dấu đúng, không bịa giá, ưu đãi hay thời gian hoàn thành. Màu phụ: teal #44A49F, chữ #344054. Chừa TRỐNG nền trơn: giữa trên (cho logo, rộng khoảng 240px, cao 200px) và toàn bộ phần dưới y=945. Không vẽ logo hay tên cửa hàng, không hotline hay địa chỉ, không người, không nhắc Latusa, Miu Miu, An Khánh hay tên cửa hàng khác.",
+    "prompt_policy": "Prompt gửi model ảnh chỉ gồm: mẫu và chủ đề, nhận diện (màu, font), vùng trống bắt buộc, điều cấm. Không chỉ định bố cục, vị trí hay cỡ chữ. Nhưng PHẢI chép restyle.prompt_template (nêu đủ 6 thành phần và font Montserrat). Thiếu thành phần hoặc sai font là lỗi, phải gen lại. Mẫu Latusa có logo LATUSA trên áo, túi, biển hiệu và có người (shipper, người ủi): bỏ hết.",
+    "poster_types": {
+      "compare": "so sánh: hai khung TRƯỚC/SAU + mũi tên (ví dụ giày trước và sau)",
+      "single": "không so sánh: một ảnh minh họa chính; mục lợi ích có thể 3 mục"
+    },
+    "fixed_positions": "Chỉ logo (top-center, logo_width) và thanh CTA (blocks.cta.paste_at) cố định. Mọi thành phần khác do model tự bố cục.",
+    "components": [
+      {
+        "key": "background",
+        "required": true,
+        "note": "nền sáng theo `background`"
+      },
+      {
+        "key": "headline",
+        "required": true,
+        "note": "1-2 dòng IN HOA; dòng 1 teal đậm headline_main, dòng 2 cam text_accent; chữ lấy đúng ý của mẫu, bỏ tên Latusa"
+      },
+      {
+        "key": "subline",
+        "required": true,
+        "note": "một câu ngắn một dòng, chỉ chữ, không icon"
+      },
+      {
+        "key": "visual",
+        "required": true,
+        "note": "theo poster_types; ảnh cùng loại sản phẩm với mẫu, không người, không logo Latusa trên hàng hoá"
+      },
+      {
+        "key": "benefits",
+        "required": true,
+        "note": "3-4 mục icon thật + tiêu đề ngắn + mô tả ngắn; không ô icon trống"
+      },
+      {
+        "key": "logo",
+        "required": true,
+        "fixed": true,
+        "note": "code dán ở giữa trên, model chỉ chừa trống"
+      },
+      {
+        "key": "cta",
+        "required": true,
+        "fixed": true,
+        "note": "code dán thanh liên hệ ở đáy, model chừa trống từ y=945"
+      }
+    ],
+    "layout_constraints": "Bố cục tự do miễn: đủ các thành phần; không thành phần nào chạm vùng logo hoặc lấn xuống y=945; không bị cắt mép; chữ không condensed; không thêm logo, hotline, địa chỉ hay thương hiệu khác.",
+    "headline": {
+      "font_style": "Montserrat ExtraBold, in hoa, nét rộng, KHÔNG condensed (kể cả khi mẫu Latusa dùng font hẹp), chữ đặc",
+      "line_1": "headline_main",
+      "line_2": "text_accent"
+    },
+    "forbid_people": "không mặt người, không toàn thân; tay và cánh tay được",
+    "forbid_text": [
+      "Latusa",
+      "LATUSA",
+      "LATUSA.vn",
+      "Miu Miu",
+      "An Khánh",
+      "Tân Hưng",
+      "320 Phan Đình Phùng",
+      "0935 749 495"
+    ],
+    "keep_brands": [],
+    "max_posters_per_run": 5
   }
 }

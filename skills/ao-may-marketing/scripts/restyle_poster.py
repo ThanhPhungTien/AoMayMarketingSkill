@@ -98,9 +98,13 @@ def check(code):
         if key in ("cta", "ticket") and canvas and im.size != canvas:
             add(f"files.{key}", "FAIL", f"cỡ {im.size} khác canvas {canvas}")
             continue
-        if key == "logo" and im.width < rs.get("logo_width", 0):
-            add(f"files.{key}", "FAIL", f"rộng {im.width}px < {rs.get('logo_width')}px cần dán")
-            continue
+        if key == "logo":
+            lim = im.convert("RGBA")
+            if rs.get("logo_crop_alpha"):
+                lim = lim.crop(lim.getchannel("A").getbbox())
+            if lim.width < rs.get("logo_width", 0):
+                add(f"files.{key}", "FAIL", f"rộng {lim.width}px < {rs.get('logo_width')}px cần dán")
+                continue
         add(f"files.{key}", "OK", f"{im.size[0]}x{im.size[1]}" + (", SHA khớp" if want else ", chưa khai báo SHA"))
 
     for role in ("headline", "body"):
@@ -236,6 +240,8 @@ def paste(code, base_path, out_path, block_name, heal=False):
     canvas = tuple(rs["canvas"])
     block = Image.open(ASSETS / files[blk["file"]]["path"]).convert("RGBA")
     logo = Image.open(ASSETS / files["logo"]["path"]).convert("RGBA")
+    if rs.get("logo_crop_alpha"):  # logo có viền trong suốt thừa: dán theo vùng nội dung, không sửa file
+        logo = logo.crop(logo.getchannel("A").getbbox())
     lw = rs["logo_width"]
     pos, zone = logo_geometry(rs)
     logo = logo.resize((lw, round(logo.height * lw / logo.width)), Image.LANCZOS)
