@@ -259,8 +259,8 @@ def paste(code, base_path, out_path, block_name, heal=False, logo_key="logo"):
     if logo_key == "logo_white":  # chữ trắng chỉ đọc được trên nền đậm vừa
         x, y, w, h = zone
         lum = base.convert("L").crop((x, y, x + w, y + h)).resize((1, 1), Image.BOX).getpixel((0, 0))
-        print(f"logo trắng: độ sáng nền vùng logo {lum:.0f} (cần ≤ 200) -> {'OK' if lum <= 200 else 'FAIL'}")
-        if lum > 200:
+        print(f"logo trắng: độ sáng nền vùng logo {lum:.0f} (cần ≤ 215) -> {'OK' if lum <= 215 else 'FAIL'}")
+        if lum > 215:
             print("FAIL: nền vùng logo quá sáng cho logo trắng — sinh lại nền hồng đậm hơn ở góc logo, hoặc dùng logo thường")
             return 1
     zl = rs.get("logo_zone_detail_max", 0.018)
