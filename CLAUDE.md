@@ -11,6 +11,9 @@ Repo này là **bản gốc** của skill ChatGPT `ao-may-marketing` (chuỗi nh
 - Phát hành: tăng `version` trong SKILL.md → thêm mục CHANGELOG.md → `python3 tools/build_release.py` → làm theo RELEASE_PROMPT.md. Zip luôn là bản đầy đủ.
 - Không commit hay push khi người dùng chưa đồng ý.
 
+## Làm poster hàng loạt
+Luồng vận hành (vai trò, hai cách làm với ChatGPT, bẫy đã gặp, trạng thái từng cửa hàng): đọc [WORKFLOW.md](WORKFLOW.md) trước khi làm. Người dùng thả thư mục mẫu thì chạy luôn luồng đó, không hỏi lại.
+
 ## Lệnh hay dùng
 ```bash
 pip install pillow fonttools
