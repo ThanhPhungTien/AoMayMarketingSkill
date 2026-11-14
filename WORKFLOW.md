@@ -84,3 +84,9 @@ Nếu đáy ảnh còn chi tiết sát CTA: làm mờ dần về màu nền (scr
 - **Cổng kiểm báo FAIL:** vẽ lại kèm một dòng "LẦN SỬA" riêng cho ảnh đó, không dùng `--heal` khi vật thể sát góc logo (để lại mảng tối).
 - **Song song:** 5 tab ChatGPT chạy được, mỗi ảnh khoảng 3 phút. Hạn mức ảnh trong ngày hết sau khoảng 100 ảnh.
 - **Soi chữ:** người dùng soi từng dấu bằng mắt; soi lại phóng to trước khi gửi, không chỉ nhìn bản thu nhỏ.
+
+## 9. Chuẩn logo (2026-11-15)
+- **Cỡ dán theo khung, không theo chiều rộng:** spec khai `restyle.logo_box: [200, 135]` (rộng tối đa × cao tối đa, px trên canvas 1080). Script giữ tỉ lệ logo, logo cao bị giới hạn bởi chiều cao, logo ngang bị giới hạn bởi chiều rộng, nên mọi cửa hàng có diện tích hiển thị gần nhau. Cách tính: 135 lấy theo logo Chánh Hưng đã duyệt (160×135); logo cách mép trên `logo_margin` 30. Kết quả: CH 160×135, DN 154×135, TH 177×135, DQH 200×102.
+- **File logo phải đạt** (`restyle_poster.py check <MÃ>` báo FAIL kèm lý do nếu không): PNG RGBA nền trong suốt; vùng nội dung sau khi cắt viền trong suốt ≥ 400×270 px (để thu về khung 200×135 vẫn nét khoảng 2 lần); tỉ lệ rộng/cao từ 1,0 đến 2,2. Viền trong suốt thừa không sao, script cắt lúc dán, không sửa file của người dùng.
+- **Ngoại lệ:** spec chưa có `logo_box` vẫn dùng `logo_width` cũ (AK rộng 250 vì vùng trống 225; MM ở góc trái, tỉ lệ 3,3). Đổi sang `logo_box` khi cần đồng bộ.
+- Đổi `logo_box` hay thêm cửa hàng mới: chạy `check`, rồi dán thử một nền (`paste`) để chắc vùng logo và cổng kiểm vẫn đạt.

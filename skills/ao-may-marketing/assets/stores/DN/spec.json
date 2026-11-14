@@ -46,7 +46,10 @@
     "logo_crop_alpha": true,
     "logo_margin": 30,
     "logo_zone_height": 184,
-    "logo_width": 160,
+    "logo_box": [
+      200,
+      135
+    ],
     "zone_edge_max": 30,
     "logo_zone_detail_max": 0.02,
     "headline_top_min": 200,

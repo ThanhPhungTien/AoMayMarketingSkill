@@ -83,6 +83,9 @@ def check(code):
     for key, f in files.items():
         p = ASSETS / f.get("path", "")
         opt = f.get("optional")
+        if p.is_dir():
+            add(f"files.{key}", "OK", "thư mục (tuỳ chọn)")
+            continue
         if not p.exists():
             add(f"files.{key}", "WARN" if opt else "FAIL", f"thiếu file {f.get('path')}")
             continue
@@ -100,8 +103,22 @@ def check(code):
             continue
         if key == "logo":
             lim = im.convert("RGBA")
-            if rs.get("logo_crop_alpha"):
+            if rs.get("logo_crop_alpha") or rs.get("logo_box"):
                 lim = lim.crop(lim.getchannel("A").getbbox())
+            if rs.get("logo_box"):
+                # Chuẩn logo (xem WORKFLOW.md): nội dung đủ lớn để thu nhỏ vẫn nét, tỉ lệ vừa khung trên cùng.
+                asp = lim.width / lim.height
+                bad = []
+                if lim.width < LOGO_MIN[0] or lim.height < LOGO_MIN[1]:
+                    bad.append(f"vùng nội dung {lim.width}x{lim.height} < tối thiểu {LOGO_MIN[0]}x{LOGO_MIN[1]}")
+                if not LOGO_ASPECT[0] <= asp <= LOGO_ASPECT[1]:
+                    bad.append(f"tỉ lệ rộng/cao {asp:.2f} ngoài {LOGO_ASPECT[0]}-{LOGO_ASPECT[1]}")
+                if bad:
+                    add(f"files.{key}", "FAIL", "; ".join(bad))
+                    continue
+                lw0, lh0 = logo_size(rs, lim)
+                add(f"files.{key}", "OK", f"{im.size[0]}x{im.size[1]}, nội dung {lim.width}x{lim.height}, dán {lw0}x{lh0} (khung {rs['logo_box'][0]}x{rs['logo_box'][1]})")
+                continue
             if lim.width < rs.get("logo_width", 0):
                 add(f"files.{key}", "FAIL", f"rộng {lim.width}px < {rs.get('logo_width')}px cần dán")
                 continue
@@ -126,9 +143,10 @@ def check(code):
     for k in ("hotline", "address"):
         add(f"contacts.{k}", "OK" if ct.get(k) else "FAIL", ct.get(k) or "chưa khai báo")
 
-    for k in ("logo_width", "blocks"):
-        if not rs.get(k):
-            add(f"restyle.{k}", "FAIL", "chưa khai báo")
+    if not (rs.get("logo_box") or rs.get("logo_width")):
+        add("restyle.logo_box", "FAIL", "chưa khai báo (logo_box [rộng tối đa, cao tối đa], hoặc logo_width cũ)")
+    if not rs.get("blocks"):
+        add("restyle.blocks", "FAIL", "chưa khai báo")
     lp = rs.get("logo_position")
     if lp:
         add("restyle.logo_position", "OK" if lp in LOGO_POSITIONS else "FAIL", f"{lp} (chỉ nhận {', '.join(LOGO_POSITIONS)})")
@@ -160,16 +178,33 @@ def blank_ok(base, zone, limit=0.018):
 
 
 LOGO_POSITIONS = ("top-left", "top-center", "top-right")
+# Chuẩn file logo khi spec dùng logo_box (tính 2026-11-15 từ 6 logo đang có):
+LOGO_MIN = (400, 270)       # vùng nội dung (sau khi cắt viền trong suốt) tối thiểu, để dán ở khung 200x135 vẫn nét ~2x
+LOGO_ASPECT = (1.0, 2.2)    # rộng/cao
 
 
-def logo_geometry(rs):
+def logo_size(rs, lim):
+    """Cỡ logo khi dán. `logo_box` [rộng tối đa, cao tối đa]: vừa khung, giữ tỉ lệ (logo cao bị giới hạn bởi chiều cao,
+    logo ngang bị giới hạn bởi chiều rộng) nên mọi cửa hàng có diện tích hiển thị gần nhau.
+    Spec cũ chỉ có `logo_width`: rộng cố định như trước. `lim` là logo đã cắt viền trong suốt."""
+    box = rs.get("logo_box")
+    if box:
+        bw, bh = box
+        w = min(bw, int(bh * lim.width / lim.height))
+        return w, round(w * lim.height / lim.width)
+    lw = rs["logo_width"]
+    return lw, round(lw * lim.height / lim.width)
+
+
+def logo_geometry(rs, lw=None):
     """Vị trí logo: chỉ 3 lựa chọn top-left / top-center / top-right (không nhập x,y).
-    Trả về (toạ độ dán, vùng chừa trống). Spec cũ chỉ có logo_paste_at/logo_zone vẫn chạy."""
+    Trả về (toạ độ dán, vùng chừa trống). Spec cũ chỉ có logo_paste_at/logo_zone vẫn chạy.
+    `lw`: chiều rộng logo sẽ dán (từ logo_size); mặc định logo_width của spec."""
     mode = rs.get("logo_position")
     if not mode:
         return tuple(rs["logo_paste_at"]), list(rs["logo_zone"])
     W, _ = rs["canvas"]
-    lw, m = rs["logo_width"], rs.get("logo_margin", 54)
+    lw, m = (lw or rs["logo_width"]), rs.get("logo_margin", 54)
     x = {"top-left": m, "top-center": (W - lw) // 2, "top-right": W - m - lw}[mode]
     pad, zh = 24, rs.get("logo_zone_height", 152)
     zx0 = 0 if mode == "top-left" else max(0, x - pad)
@@ -243,11 +278,11 @@ def paste(code, base_path, out_path, block_name, heal=False, logo_key="logo"):
         print(f"FAIL: spec không khai báo files.{logo_key}")
         return 1
     logo = Image.open(ASSETS / files[logo_key]["path"]).convert("RGBA")
-    if rs.get("logo_crop_alpha") or logo_key != "logo":  # logo có viền trong suốt thừa: dán theo vùng nội dung, không sửa file
+    if rs.get("logo_crop_alpha") or rs.get("logo_box") or logo_key != "logo":  # logo có viền trong suốt thừa: dán theo vùng nội dung, không sửa file
         logo = logo.crop(logo.getchannel("A").getbbox())
-    lw = rs["logo_width"]
-    pos, zone = logo_geometry(rs)
-    logo = logo.resize((lw, round(logo.height * lw / logo.width)), Image.LANCZOS)
+    lw, lh = logo_size(rs, logo)
+    pos, zone = logo_geometry(rs, lw)
+    logo = logo.resize((lw, lh), Image.LANCZOS)
 
     base = Image.open(base_path).convert("RGBA")
     if base.size != canvas:
