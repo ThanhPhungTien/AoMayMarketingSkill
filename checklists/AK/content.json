@@ -1,0 +1,243 @@
+{
+  "store": "AK",
+  "canvas": [
+    1080,
+    1080
+  ],
+  "posters": [
+    {
+      "no": 1,
+      "title": "GIẶT HẤP LUXURY",
+      "line1": "GIẶT HẤP",
+      "line2": "LUXURY",
+      "subline": "Vest · Đầm · Áo khoác · Đồ cao cấp",
+      "benefits": [
+        "CHĂM SÓC TINH TẾ",
+        "GIỮ FORM",
+        "THƠM SẠCH"
+      ],
+      "type": "single",
+      "layout_ref": "Burberry",
+      "visual": "Giá treo vest, áo khoác, đầm cao cấp, vòng zoom vải",
+      "source": "Latusa 01"
+    },
+    {
+      "no": 2,
+      "title": "GIẶT SẤY / LẤY NGAY TRONG NGÀY",
+      "line1": "GIẶT SẤY",
+      "line2": "LẤY NGAY TRONG NGÀY",
+      "subline": "Nhanh chóng · Sạch thơm · Gấp gọn",
+      "benefits": [
+        "LẤY NGAY TRONG NGÀY",
+        "GIAO NHẬN TẬN NƠI",
+        "SẠCH THƠM",
+        "TIỆN LỢI"
+      ],
+      "type": "single",
+      "layout_ref": "Giặt sấy",
+      "visual": "Máy giặt, đồ gấp gọn, túi giặt không logo",
+      "source": "Latusa 02"
+    },
+    {
+      "no": 3,
+      "title": "VỆ SINH ĐẾ GIÀY",
+      "line1": "VỆ SINH",
+      "line2": "ĐẾ GIÀY",
+      "subline": "Sạch kỹ · Gọn gàng · Giữ form",
+      "benefits": [
+        "LÀM SẠCH SÂU",
+        "GIỮ FORM BỀN ĐẸP",
+        "KHỬ MÙI HIỆU QUẢ"
+      ],
+      "type": "compare",
+      "layout_ref": "Trekking",
+      "visual": "Trước/sau đế giày, nhãn BEFORE/AFTER",
+      "source": "Latusa 03, thay 'may dán đế' bằng vệ sinh (chưa xác nhận dịch vụ)"
+    },
+    {
+      "no": 4,
+      "title": "GIẶT HẤP CAO CẤP / LẤY NGAY TRONG NGÀY",
+      "line1": "GIẶT HẤP CAO CẤP",
+      "line2": "LẤY NGAY TRONG NGÀY",
+      "subline": "Vest · Áo cưới · Đồ hiệu",
+      "benefits": [
+        "SẠCH SÂU · THƠM LÂU",
+        "BẢO VỆ FORM · GIỮ GIÁ TRỊ"
+      ],
+      "type": "single",
+      "layout_ref": "Áo cưới",
+      "visual": "Quần áo trong túi bọc treo trên giá, không mặt tiền cửa hàng",
+      "source": "Latusa 04, 24H đổi 'lấy ngay trong ngày'"
+    },
+    {
+      "no": 5,
+      "title": "GIẶT HẤP CAO CẤP",
+      "line1": "GIẶT HẤP",
+      "line2": "CAO CẤP",
+      "subline": "Chăm sóc quần áo cao cấp · Sạch sâu · Giữ form đẹp",
+      "benefits": [
+        "XỬ LÝ VẾT BẨN KỸ",
+        "GIỮ FORM CHUẨN",
+        "CÔNG NGHỆ LÀM SẠCH CAO CẤP",
+        "GIAO NHẬN TẬN NƠI"
+      ],
+      "type": "single",
+      "layout_ref": "Công sở",
+      "visual": "Vest, đầm trên giá, vòng zoom vải; không người",
+      "source": "Latusa 05, bỏ nhân viên, bỏ 'lấy liền 24H'"
+    },
+    {
+      "no": 6,
+      "title": "GIẶT HẤP GIAO NHẬN TẬN NHÀ",
+      "line1": "GIẶT HẤP",
+      "line2": "GIAO NHẬN TẬN NHÀ",
+      "subline": "Tiện lợi · Nhanh gọn · Sạch thơm",
+      "benefits": [
+        "GIAO NHẬN TẬN NƠI",
+        "TIỆN LỢI",
+        "SẠCH THƠM"
+      ],
+      "type": "single",
+      "layout_ref": "Giao nhận",
+      "visual": "Giá đồ, túi giao, xe đậu không người lái, không logo",
+      "source": "Latusa 06, bỏ shipper"
+    },
+    {
+      "no": 7,
+      "title": "GIẶT HẤP & GIẶT KHÔ / LẤY NGAY TRONG NGÀY",
+      "line1": "GIẶT HẤP & GIẶT KHÔ",
+      "line2": "LẤY NGAY TRONG NGÀY",
+      "subline": "Vest · Đầm · Sơ mi",
+      "benefits": [
+        "SẠCH SÂU",
+        "GIỮ FORM",
+        "THƠM LÂU"
+      ],
+      "type": "single",
+      "layout_ref": "Công sở",
+      "visual": "Ba món đồ vest, đầm, sơ mi trên mắc",
+      "source": "Latusa 07, 24H đổi 'lấy ngay trong ngày'"
+    },
+    {
+      "no": 8,
+      "title": "VỆ SINH GIÀY",
+      "line1": "VỆ SINH",
+      "line2": "GIÀY",
+      "subline": "Sạch đẹp · Giữ chất liệu",
+      "benefits": [
+        "LÀM SẠCH KỸ",
+        "GIỮ FORM",
+        "KHỬ MÙI"
+      ],
+      "type": "compare",
+      "layout_ref": "Boot",
+      "visual": "Trước/sau sneaker, mũi tên vàng, nhãn BEFORE/AFTER",
+      "source": "Latusa 08, thay 'phục hồi màu' bằng vệ sinh (chưa xác nhận dịch vụ)"
+    },
+    {
+      "no": 9,
+      "title": "MỘT VẾT BẨN NHỎ CÓ THỂ LÀM HỎNG CẢ CHIẾC ÁO?",
+      "line1": "MỘT VẾT BẨN NHỎ CÓ THỂ",
+      "line2": "LÀM HỎNG CẢ CHIẾC ÁO?",
+      "subline": "Xử lý vết bẩn đúng cách",
+      "benefits": [
+        "XỬ LÝ VẾT BẨN ĐÚNG CÁCH"
+      ],
+      "type": "single",
+      "layout_ref": "Burberry",
+      "visual": "Áo blouse lụa, vòng zoom vết bẩn",
+      "source": "Latusa 09"
+    },
+    {
+      "no": 10,
+      "title": "GIẶT SẤY / SẠCH THƠM TIỆN LỢI",
+      "line1": "GIẶT SẤY",
+      "line2": "SẠCH THƠM TIỆN LỢI",
+      "subline": "Lấy ngay trong ngày",
+      "benefits": [
+        "NHANH CHÓNG",
+        "SẠCH THƠM",
+        "TIỆN LỢI"
+      ],
+      "type": "single",
+      "layout_ref": "Giặt sấy",
+      "visual": "Máy giặt, rổ khăn gấp",
+      "source": "Latusa 10, bỏ '4-5H', khác ảnh 02 ở tiêu đề và hình"
+    },
+    {
+      "no": 11,
+      "title": "VỆ SINH GIÀY DA LỘN",
+      "line1": "VỆ SINH GIÀY",
+      "line2": "DA LỘN",
+      "subline": "Sạch nhanh · Giữ màu · Giữ form",
+      "benefits": [
+        "LÀM SẠCH SÂU",
+        "GIỮ MÀU",
+        "GIỮ FORM"
+      ],
+      "type": "compare",
+      "layout_ref": "Boot",
+      "visual": "Trước/sau giày da lộn, nhãn BEFORE/AFTER",
+      "source": "Latusa 11, thay 'tẩy lem' bằng vệ sinh (chưa xác nhận dịch vụ)"
+    },
+    {
+      "no": 12,
+      "title": "BAO LÂU NÊN VỆ SINH GIÀY 1 LẦN?",
+      "line1": "BAO LÂU NÊN",
+      "line2": "VỆ SINH GIÀY 1 LẦN?",
+      "subline": "Giữ giày sạch đẹp lâu hơn",
+      "benefits": [
+        "LÀM SẠCH KỸ",
+        "GIỮ FORM"
+      ],
+      "type": "single",
+      "layout_ref": "Trekking",
+      "visual": "Sneaker trắng, bàn chải, khăn gấp",
+      "source": "Latusa 12, bỏ '2-4 tuần / lần'"
+    },
+    {
+      "no": 13,
+      "title": "GIẶT SẠCH RỒI, SAO MẶC LÊN VẪN KHÔNG ĐẸP?",
+      "line1": "GIẶT SẠCH RỒI, SAO MẶC LÊN",
+      "line2": "VẪN KHÔNG ĐẸP?",
+      "subline": "Ủi hoàn thiện chuẩn form",
+      "benefits": [
+        "ỦI HOÀN THIỆN",
+        "CHUẨN FORM"
+      ],
+      "type": "single",
+      "layout_ref": "Áo cưới",
+      "visual": "Sơ mi gấp, áo lụa, bàn ủi",
+      "source": "Latusa 13"
+    },
+    {
+      "no": 14,
+      "title": "ÁO KHÔNG BẨN, SAO VẪN CÓ MÙI?",
+      "line1": "ÁO KHÔNG BẨN,",
+      "line2": "SAO VẪN CÓ MÙI?",
+      "subline": "Xử lý mùi · Làm mới sợi vải",
+      "benefits": [
+        "XỬ LÝ MÙI",
+        "LÀM MỚI SỢI VẢI"
+      ],
+      "type": "single",
+      "layout_ref": "Burberry",
+      "visual": "Áo trắng, hoa trắng, làn hơi thoảng",
+      "source": "Latusa 14"
+    },
+    {
+      "no": 15,
+      "title": "ĐẦM TIỆC DÍNH SON, TỰ CHÀ Ở NHÀ CÓ ỔN KHÔNG?",
+      "line1": "ĐẦM TIỆC DÍNH SON, TỰ CHÀ Ở NHÀ",
+      "line2": "CÓ ỔN KHÔNG?",
+      "subline": "Giặt hấp đầm dự tiệc",
+      "benefits": [
+        "GIẶT HẤP ĐẦM DỰ TIỆC"
+      ],
+      "type": "single",
+      "layout_ref": "Áo cưới",
+      "visual": "Đầm tiệc có vết son, thỏi son",
+      "source": "Latusa 15"
+    }
+  ]
+}

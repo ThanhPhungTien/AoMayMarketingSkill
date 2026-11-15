@@ -1,31 +1,40 @@
 {
-  "_note": "Áo Mây – An Khánh: hồ sơ mới tạo 27/10/2026, chưa có thông tin xác nhận. Route mặc định direct; đổi khi có mẫu riêng. Mọi đường dẫn tính từ thư mục assets/. Người dùng tự quản lý file; đổi file thì cập nhật sha256 (để trống = không kiểm).",
-  "version": "2026-10-30",
+  "_note": "Áo Mây – An Khánh. Route restyle theo mẫu An Khánh người dùng đưa (nền kem sáng, tiêu đề đen + vàng, ảnh trái, ý phụ icon phải); nội dung lấy từ mẫu Latusa. Hotline và địa chỉ lấy từ poster mẫu An Khánh, CTA do người dùng duyệt 2026-11-03; logo là bản tách nền từ logo người dùng gửi. Bật active 2026-11-03 theo yêu cầu làm 15 ảnh. Mục editorial_poster_system (nền vàng bơ, tiếng Anh) KHÔNG dùng cho đợt mẫu An Khánh. Mọi đường dẫn tính từ thư mục assets/.",
+  "version": "2026-11-03",
   "store_code": "AK",
   "store_name": "Áo Mây – An Khánh",
-  "status": "draft",
-  "route": "direct",
+  "contacts": {
+    "hotline": "0767 858 188",
+    "address": "19 đường 41, phường An Khánh, TP. Thủ Đức",
+    "fanpage": "",
+    "note": "Lấy từ poster mẫu An Khánh người dùng đưa (2026-11-03), người dùng duyệt CTA cùng ngày. Hotline và địa chỉ đã nằm sẵn trong ảnh CTA; không gõ lại trên poster. Fanpage chưa có, không điền khi chưa xác nhận."
+  },
+  "status": "active",
+  "route": "restyle",
   "files": {
     "logo": {
-      "path": "chain/logo-ao-may.png",
-      "sha256": "",
-      "require_rgba": true
+      "path": "stores/AK/logo.png",
+      "sha256": "7544ad94f700a2a8ca67da152aeb5bd28faba0bd39126d4c9432cb545a79230f",
+      "require_rgba": true,
+      "note": "Logo Áo Mây + AN KHÁNH - THỦ ĐỨC do người dùng cung cấp (logo an khánh png.jpg, 1080x1080 nền trắng), tách nền trắng thành PNG nền trong suốt, mực đen #1C1C1C; canvas có viền trong suốt, nội dung nằm trong (104,232)-(1008,800)."
+    },
+    "cta": {
+      "path": "stores/AK/cta-bar.png",
+      "sha256": "9daeb895418eabc965ef6738db769f75d9eb50f7c55776a2f59dc178d5bf2b41",
+      "require_rgba": true,
+      "note": "CTA kem-vàng (hotline, địa chỉ, nút ĐẶT LỊCH NGAY) dựng từ tools/cta-bar-AK.html bằng Chrome headless, canvas 1080x1080 nền trong suốt, thanh ở y≈946-1044; đổi liên hệ thì sửa HTML, chụp lại và cập nhật sha256."
     }
   },
-  "logo": {
-    "mode": "chain+label",
-    "file": "chain/logo-ao-may.png",
-    "label": "AN KHÁNH"
-  },
   "colors": {
-    "aqua": "#36C9D6",
-    "teal": "#087F88",
-    "mist": "#EAFBFC",
-    "white": "#FFFFFF",
-    "ink": "#17383D",
-    "sun": "#FFC857"
+    "text_accent": "#B6802D",
+    "logo_accent": "#CF9B48",
+    "on_pink": "#FFFFFF",
+    "headline_main": "#000000",
+    "background": "#FBF1E5",
+    "text": "#1B1B1B"
   },
   "fonts": {
+    "headline": "chain/fonts/BeVietnamPro-Black.ttf",
     "body": "chain/fonts/BeVietnamPro-SemiBold.ttf"
   },
   "editorial_poster_system": {
@@ -48,5 +57,103 @@
     "language_rule": "English unless specific Vietnamese marketing copy is provided",
     "approval": "user-supplied creative direction; do not mark poster approved",
     "preflight": "keep existing draft status and verified facts requirement"
-  }
+  },
+  "restyle": {
+    "canvas": [
+      1080,
+      1080
+    ],
+    "logo_position": "top-left",
+    "logo_crop_alpha": true,
+    "logo_margin": 48,
+    "logo_zone_height": 225,
+    "logo_width": 250,
+    "zone_edge_max": 30,
+    "logo_zone_detail_max": 0.02,
+    "headline_top_min": 50,
+    "background": "Căn phòng kem ngà ánh nắng cửa sổ xoá phông, hoa trắng mờ ở góc trái, bóng lá nhẹ, đá cẩm thạch và khung vàng mờ. Vùng logo (x<330, y<225) và vùng trên CTA (y≥920) chỉ là nền mờ chuyển sắc mượt, không chi tiết sắc nét.",
+    "blocks": {
+      "cta": {
+        "file": "cta",
+        "paste_at": [
+          0,
+          0
+        ],
+        "reserve": [
+          0,
+          935,
+          1080,
+          145
+        ],
+        "margin": 15
+      }
+    },
+    "layout_mode": "sample",
+    "prompt_template": "Poster Áo Mây An Khánh, dạng {poster_type}, chủ đề {topic}. Làm theo phong cách các mẫu An Khánh đính kèm: bố cục, màu nền, màu chữ, kiểu chữ giống mẫu. PHẢI đủ 6 thành phần: (1) nền SÁNG ấm giàu chiều sâu: căn phòng kem ngà ánh nắng cửa sổ xoá phông, hoa trắng mờ ở góc trái dưới và góc trái trên, bóng lá nhẹ, chút đá cẩm thạch và khung vàng mờ; tuyệt đối không nền phẳng một màu; (2) tiêu đề IN HOA ở CỘT PHẢI (nửa phải poster), một vạch vàng ngắn phía trên, dòng 1 đen #000000, dòng 2 vàng nâu #B6802D, font sans condensed cực đậm nét hẹp cao như mẫu An Khánh; tiêu đề dài (câu hỏi) được xuống 3-4 dòng nhỏ hơn; (3) một dòng phụ nhỏ bên dưới tiêu đề, các ý cách nhau bằng dấu chấm giữa (·), chỉ chữ; (4) ảnh sản phẩm chính ở nửa TRÁI, đủ lớn, kèm một vòng tròn phóng to chi tiết viền vàng #CF9B48 (nếu hợp chủ đề); dạng so sánh thì hai món TRƯỚC/SAU có mũi tên cong vàng và hai nhãn nhỏ BEFORE / AFTER như mẫu; ảnh cùng loại sản phẩm với mẫu Latusa; (5) MỤC LỢI ÍCH 2-4 mục ở cột phải dưới tiêu đề: mỗi mục là icon nét mảnh trong vòng tròn viền vàng + tiêu đề ngắn IN HOA đậm + (nếu có) một dòng mô tả nhỏ, không ô icon trống; (6) chữ tiếng Việt có dấu đúng, không bịa giá, ưu đãi, số giờ hoàn thành, giao nhận hay cam kết an toàn/y tế. Có thể thêm 1-2 ngôi sao lấp lánh vàng nhỏ. Màu chữ chính chỉ đen #000000, vàng nâu #B6802D, vàng #CF9B48 trên nền kem #FBF1E5. BẮT BUỘC CHỪA TRỐNG (canvas 1080x1080): góc trên trái x<330, y<225 chỉ là nền kem mờ chuyển sắc nhạt, không chữ, hoa nét sắc, vật thể hay khung (code dán logo vào đó); tiêu đề và mọi nội dung nằm trọn trong y≤915; từ y=920 xuống hết đáy chỉ là nền mờ trơn dịu, không chữ, icon, vật thể, mặt bàn, hoa sắc nét hay viền (code dán thanh liên hệ vào đó). Không vẽ logo hay tên cửa hàng, không hotline hay địa chỉ, không người (mặt, toàn thân; tay được), không nhắc Latusa, Miu Miu, Chánh Hưng hay tên cửa hàng khác.",
+    "prompt_policy": "Đính kèm mẫu An Khánh gần nhất với chủ đề (mục layout trong bảng nội dung) cùng mẫu Latusa. Prompt gửi model ảnh gồm: mẫu và chủ đề, nội dung chữ chốt (tiêu đề, dòng phụ, ý phụ), nhận diện (màu, kiểu chữ), vùng trống bắt buộc, điều cấm. PHẢI chép restyle.prompt_template. Mẫu Latusa có logo LATUSA trên áo, túi, biển hiệu và có người: bỏ hết. Ảnh đã chốt nội dung ở bảng 15 ảnh; chữ nào ngoài bảng là lỗi, gen lại.",
+    "poster_types": {
+      "compare": "so sánh: hai món TRƯỚC/SAU + mũi tên vàng + nhãn BEFORE / AFTER (giày trước và sau)",
+      "single": "không so sánh: một ảnh chính kèm vòng phóng to chi tiết"
+    },
+    "fixed_positions": "Chỉ logo (top-left, logo_width) và thanh CTA (blocks.cta.paste_at) cố định. Mọi thành phần khác theo bố cục mẫu An Khánh.",
+    "components": [
+      {
+        "key": "background",
+        "required": true,
+        "note": "nền kem sáng theo `background`"
+      },
+      {
+        "key": "headline",
+        "required": true,
+        "note": "cột phải, dòng 1 đen, dòng 2 vàng nâu #B6802D, condensed cực đậm, IN HOA; đúng chữ trong bảng nội dung"
+      },
+      {
+        "key": "subline",
+        "required": true,
+        "note": "một dòng nhỏ, ý cách nhau bằng ·, chỉ chữ"
+      },
+      {
+        "key": "visual",
+        "required": true,
+        "note": "nửa trái, theo poster_types, không người, không logo Latusa trên hàng hoá"
+      },
+      {
+        "key": "benefits",
+        "required": true,
+        "note": "2-4 mục icon vòng vàng + tiêu đề ngắn IN HOA"
+      },
+      {
+        "key": "logo",
+        "required": true,
+        "fixed": true,
+        "note": "code dán góc trên trái, model chỉ chừa trống"
+      },
+      {
+        "key": "cta",
+        "required": true,
+        "fixed": true,
+        "note": "code dán thanh liên hệ ở đáy, model chừa trống từ y=920"
+      }
+    ],
+    "layout_constraints": "Bố cục theo mẫu An Khánh: không thành phần nào chạm vùng logo hoặc lấn xuống y=920; không bị cắt mép; không thêm logo, hotline, địa chỉ hay thương hiệu khác.",
+    "headline": {
+      "font_style": "sans condensed cực đậm, IN HOA, kiểu mẫu An Khánh",
+      "line_1": "headline_main",
+      "line_2": "text_accent"
+    },
+    "forbid_people": "không mặt người, không toàn thân; tay và cánh tay được",
+    "forbid_text": [
+      "Latusa",
+      "LATUSA",
+      "LATUSA.vn",
+      "Miu Miu",
+      "Chánh Hưng",
+      "Tân Hưng",
+      "320 Phan Đình Phùng",
+      "0935 749 495"
+    ],
+    "keep_brands": [],
+    "max_posters_per_run": 5
+  },
+  "fonts_note": "Chỉ để kiểm dấu tiếng Việt. Chữ tiêu đề trên poster là sans condensed cực đậm (kiểu mẫu An Khánh), do model vẽ."
 }

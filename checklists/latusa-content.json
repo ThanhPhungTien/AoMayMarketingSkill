@@ -1,0 +1,197 @@
+{
+ "_note": "Nội dung trích NGUYÊN VĂN từ mẫu Latusa (người dùng yêu cầu 2026-11-06). Chỉ bỏ nhận diện Latusa (tên, logo, hotline, địa chỉ, SINCE 2017, nút LIÊN HỆ NGAY). Không tự nghĩ nội dung. Đã đọc 15 mẫu 4/11, còn 15 mẫu cũ chưa đọc.",
+ "latusa_4_11": [
+  {
+   "no": 1,
+   "source": "Latusa 4/11 #1 (710059159)",
+   "l1": "GIẶT TOPPER",
+   "l2": "LÔNG VŨ",
+   "sub": "VỆ SINH GIÀY & GIẶT HẤP CAO CẤP TIÊU CHUẨN CHÂU ÂU",
+   "benefits": [
+    "Giặt khử khuẩn, tạo mùi thơm",
+    "Bảo vệ chất liệu",
+    "Giao nhận tận nơi",
+    "Nhân viên lành nghề"
+   ],
+   "strip": "Giặt topper sạch thơm • Giữ phom • Giao nhận tận nơi",
+   "dropped": [
+    "LATUSA",
+    "SINCE 2017",
+    "hotline",
+    "địa chỉ",
+    "LIÊN HỆ NGAY"
+   ]
+  },
+  {
+   "no": 2,
+   "source": "Latusa 4/11 #2 (724099498)",
+   "l1": "DÁN KEO",
+   "l2": "ĐẾ GIÀY",
+   "sub": "Phục hồi đế bong • Chắc chắn • Thẩm mỹ",
+   "labels": [
+    "BEFORE",
+    "AFTER"
+   ],
+   "benefits": [
+    "BÁM DÍNH CHẮC CHẮN",
+    "BỀN BỈ VƯỢT TRỘI",
+    "THẨM MỸ NHƯ MỚI"
+   ],
+   "dropped": [
+    "LATUSA ĐÀ NẴNG",
+    "hotline",
+    "địa chỉ",
+    "LIÊN HỆ NGAY"
+   ]
+  },
+  {
+   "no": 3,
+   "source": "Latusa 4/11 #3 (744598123)",
+   "l1": "DRY CLEAN",
+   "l2": "LUXURY SERVICE",
+   "sub": "Premium fabric care • Gentle finish • Elegant results",
+   "line2": "For suits, shirts, dresses and designer wear"
+  },
+  {
+   "no": 4,
+   "source": "Latusa 4/11 #4",
+   "l1": "SPA QUẦN ÁO HIỆU",
+   "l2": "CAO CẤP",
+   "sub": "Xử lý điểm bẩn - Làm mới - Hoàn thiện chỉn chu",
+   "line2": "Chăm sóc chi tiết từng sợi vải",
+   "badge": "CHĂM SÓC CHI TIẾT TỪNG SỢI VẢI"
+  },
+  {
+   "no": 5,
+   "source": "Latusa 4/11 #5",
+   "l1": "GIẶT HẤP",
+   "l2": "JELLYCAT",
+   "pill": "DỊU NHẸ - AN TOÀN",
+   "sub": "Làm sạch thú bông cao cấp • sạch thơm • mềm mại",
+   "benefits": [
+    "Làm sạch dịu nhẹ",
+    "Khử mùi thơm mát",
+    "Giữ bông mềm đẹp",
+    "An toàn cho bé yêu"
+   ]
+  },
+  {
+   "no": 6,
+   "source": "Latusa 4/11 #6",
+   "l1": "GIẶT ỦI",
+   "l2": "CẤP TỐC",
+   "sub": "Phẳng nhanh - Chỉn chu - Lấy liền",
+   "line2": "Sơ mi • Quần tây • Váy đầm • Đồ công sở",
+   "badge": "PHẲNG MỊN THƠM THO SẴN SÀNG MỌI KHOẢNH KHẮC"
+  },
+  {
+   "no": 7,
+   "source": "Latusa 4/11 #7",
+   "l1": "DÁN KEO",
+   "l2": "ĐẾ GIÀY",
+   "sub": "Xử lý bung đế - hở keo",
+   "line2": "Chắc keo - chuẩn form - bền đẹp",
+   "badge": "DÁN KEO CHẮC CHẮN 100%",
+   "labels": [
+    "TRƯỚC",
+    "SAU"
+   ]
+  },
+  {
+   "no": 8,
+   "source": "Latusa 4/11 #8",
+   "l1": "SO SÁNH",
+   "l2": "GIẶT SẤY & GIẶT HẤP",
+   "left": [
+    "NHANH - TIỆN",
+    "ĐỒ THƯỜNG",
+    "SẤY KHÔ NHANH"
+   ],
+   "right": [
+    "GIỮ FORM ĐẸP",
+    "SẠCH DỊU NHẸ",
+    "PHÙ HỢP ĐỒ CAO CẤP"
+   ],
+   "strip": "ĐỒ THƯỜNG GIẶT SẤY - ĐỒ CAO CẤP GIẶT HẤP"
+  },
+  {
+   "no": 9,
+   "source": "Latusa 4/11 #9",
+   "l1": "DÁN KEO ĐẾ GIÀY",
+   "badge": "PHỤC HỒI CHUYÊN NGHIỆP",
+   "sub": "XỬ LÝ BUNG KEO – CHẮC CHẮN – GỌN ĐẸP",
+   "steps": [
+    "TRƯỚC KHI XỬ LÝ: ĐẾ BỊ BUNG KEO (Hở mép, tách đế, mất thẩm mỹ)",
+    "QUY TRÌNH XỬ LÝ: VỆ SINH – BÔI KEO – ÉP NHIỆT (Kỹ thuật chuẩn – keo chuyên dụng)",
+    "SAU KHI XỬ LÝ: ĐẾ CHẮC – GỌN ĐẸP (Bám chắc, thẩm mỹ như mới)"
+   ],
+   "benefits": [
+    "XỬ LÝ BUNG KEO (Khắc phục đế hở, đế tách)",
+    "ÉP KEO CHẮC CHẮN (Tăng độ bám sau khi xử lý)",
+    "HOÀN THIỆN GỌN ĐẸP (Tôn lại vẻ ngoài của đôi giày)",
+    "PHÙ HỢP NHIỀU DÒNG GIÀY (Sneaker, giày da, giày thời trang)"
+   ],
+   "strip": "XỬ LÝ NHANH – ĐI BỀN HƠN"
+  },
+  {
+   "no": 10,
+   "source": "Latusa 4/11 #10",
+   "l1": "QUY TRÌNH",
+   "l2": "GIẶT HẤP",
+   "l3": "4 BƯỚC",
+   "line2": "tại Áo Mây",
+   "steps": [
+    "1 Tẩy điểm (Xử lý vết bẩn cục bộ)",
+    "2 Giặt hấp (Giặt sạch sâu bằng hơi nước)",
+    "3 Thổi form (Thổi hơi giữ form tự nhiên)",
+    "4 Ủi pressing (Ủi ép phẳng phiu chuẩn chỉnh)"
+   ]
+  },
+  {
+   "no": 11,
+   "source": "Latusa 4/11 #11",
+   "l1": "GIẶT SẤY",
+   "l2": "RÈM CỬA",
+   "pill": "SẠCH THƠM - GỌN NHÀ",
+   "sub": "Làm sạch bụi bẩn • khử mùi • giữ nếp đẹp",
+   "benefits": [
+    "Làm sạch bụi bẩn",
+    "Khử mùi hiệu quả",
+    "Giữ nếp đẹp",
+    "Nhận giao tận nơi"
+   ]
+  },
+  {
+   "no": 12,
+   "source": "Latusa 4/11 #12 (767300871)",
+   "l1": "VEST MẶC XONG",
+   "l2": "CÓ NÊN GIẶT NGAY?",
+   "sub": "Tùy chất liệu • Tùy mức độ bẩn",
+   "badge": "GIẶT HẤP CAO CẤP"
+  },
+  {
+   "no": 13,
+   "source": "Latusa 4/11 #13",
+   "l1": "LOAFER DA BỊ MỐC",
+   "l2": "SAU MÙA MƯA?",
+   "sub": "Khử mốc • làm sạch • dưỡng da",
+   "tag": "LUXURY CARE"
+  },
+  {
+   "no": 14,
+   "source": "Latusa 4/11 #14",
+   "l1": "SNEAKER DÍNH",
+   "l2": "CÀ PHÊ, DẦU MỠ, BÙN ĐẤT?",
+   "sub": "Làm sạch đúng chất liệu",
+   "tag": "SHOES CARE"
+  },
+  {
+   "no": 15,
+   "source": "Latusa 4/11 #15",
+   "l1": "ÁO TRẮNG BỊ VÀNG",
+   "l2": "CỨU ĐƯỢC KHÔNG?",
+   "sub": "Cần xử lý sớm để tăng khả năng phục hồi",
+   "pill": "GIẶT KHÔ • GIẶT HẤP"
+  }
+ ]
+}
