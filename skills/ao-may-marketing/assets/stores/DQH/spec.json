@@ -1,10 +1,10 @@
 {
-  "_note": "Dương Quảng Hàm — mẫu DQH-01, ghép bằng code. Mọi đường dẫn tính từ thư mục assets/. Người dùng tự quản lý file; đổi file thì cập nhật sha256 (để trống = không kiểm). Toạ độ box = [x, y, w, h], đo từ ảnh mẫu đã duyệt 27/10/2026, sai số khoảng ±3 px.",
-  "version": "2026-10-27b",
+  "_note": "Áo Mây – Dương Quảng Hàm: route restyle cho đợt chuyển mẫu Latusa (đổi từ compose theo yêu cầu 2026-11-06; các khoá compose DQH-01 giữ nguyên để không mất tham số). Logo, footer, ref-headline là file người dùng. CTA kiểu thanh teal Áo Mây dựng bằng tools/make_cta_bar.py, người dùng duyệt 2026-11-06. bg-default và ref-approved còn lệch SHA, người dùng chưa xác nhận. Mọi đường dẫn tính từ thư mục assets/. 2026-11-06: nhận diện restyle DQH chuyển sang style chung Áo Mây (teal #0A6A6E + cam #ED8752, Montserrat, nền sáng aqua-teal) thay cho cyan + đen; ghi đè màu cyan cũ. Nền khác nhau giữa các poster.",
+  "version": "2026-11-06",
   "store_code": "DQH",
   "store_name": "Áo Mây – Dương Quảng Hàm",
   "status": "active",
-  "route": "compose",
+  "route": "restyle",
   "template": "DQH-01",
   "canvas": [
     1080,
@@ -13,8 +13,9 @@
   "files": {
     "logo": {
       "path": "stores/DQH/logo.png",
-      "sha256": "1afd653b31085b383761c0ebdf2293da6c2851c48e5b92dae0ca099688b4de54",
-      "require_rgba": true
+      "sha256": "f902c6f8ee5968e198df37baade67e6d8f39f29477c23a29d877a9ef6f02c8b6",
+      "require_rgba": true,
+      "note": "Logo DQH người dùng chốt 2026-11-06 (Dương Quảng Hàm\\logo.png, 900x900, thay bản 1080x1080 cũ). Dùng chung cho route restyle (cắt theo vùng nội dung)."
     },
     "footer": {
       "path": "stores/DQH/cta-footer.png",
@@ -23,11 +24,15 @@
     },
     "background": {
       "path": "stores/DQH/bg-default.png",
-      "sha256": "a8eac0e200e9e4762ea508a11cadefd9315999b93d4e540c9788361837cc0bc7"
+      "sha256": "a8eac0e200e9e4762ea508a11cadefd9315999b93d4e540c9788361837cc0bc7",
+      "optional": true,
+      "note": "Chỉ dùng cho route compose cũ; file hiện chưa có trong repo và lệch SHA-256 với bản người dùng, chờ xác nhận. Route restyle không cần."
     },
     "ref_approved": {
       "path": "stores/DQH/ref-approved.png",
-      "sha256": "8b4b5dda4241f0a6a9a56effbae257f94dd6cf000bb4b87e3cfc334c3cb93112"
+      "sha256": "8b4b5dda4241f0a6a9a56effbae257f94dd6cf000bb4b87e3cfc334c3cb93112",
+      "optional": true,
+      "note": "Chỉ dùng cho route compose cũ; file hiện chưa có trong repo và lệch SHA-256 với bản người dùng, chờ xác nhận. Route restyle không cần."
     },
     "ref_headline": {
       "path": "stores/DQH/ref-headline.png",
@@ -36,12 +41,19 @@
     "headline_dir": {
       "path": "stores/DQH/headline/",
       "optional": true
+    },
+    "cta": {
+      "path": "stores/DQH/cta-bar.png",
+      "sha256": "d2ab17884a92791dde0c0dfde6b5a5410cf98e455fd42859c1ee8bf17a488215",
+      "require_rgba": true,
+      "note": "Dựng bằng tools/make_cta_bar.py từ contacts; người dùng duyệt 2026-11-06. Đổi liên hệ thì chạy lại và cập nhật sha256."
     }
   },
   "fonts": {
-    "headline": "chain/fonts/PaytoneOne-Regular.ttf",
+    "headline": "chain/fonts/Montserrat-VariableFont_wght.ttf",
     "secondary": "chain/fonts/BeVietnamPro-Black.ttf",
-    "body": "chain/fonts/BeVietnamPro-SemiBold.ttf"
+    "body": "chain/fonts/Montserrat-VariableFont_wght.ttf",
+    "compose_note": "Phông Paytone One (headline compose DQH-01) vẫn nằm trong repo cho route compose cũ; route restyle dùng Montserrat như CH."
   },
   "logo": {
     "scale": 0.467,
@@ -124,5 +136,120 @@
   },
   "background": {
     "top_color": "#2AE7ED"
+  },
+  "contacts": {
+    "hotline": "0942 146 606",
+    "address": "80/28/30 Dương Quảng Hàm, Phường An Nhơn, TP.HCM",
+    "fanpage": "",
+    "note": "Lấy từ brand-context (26/10/2026) và CTA DQH của người dùng. Có miễn phí giao nhận tận nơi (xác nhận), không nêu điều kiện. Hotline và địa chỉ nằm sẵn trong ảnh CTA."
+  },
+  "colors": {
+    "text_accent": "#ED8752",
+    "logo_accent": "#44A49F",
+    "on_pink": "#FFFFFF",
+    "headline_main": "#0A6A6E",
+    "background": "#EFFBFB",
+    "text": "#344054"
+  },
+  "restyle": {
+    "canvas": [
+      1080,
+      1080
+    ],
+    "logo_position": "top-left",
+    "logo_crop_alpha": true,
+    "logo_margin": 30,
+    "logo_zone_height": 184,
+    "logo_box": [
+      200,
+      135
+    ],
+    "zone_edge_max": 30,
+    "logo_zone_detail_max": 0.02,
+    "headline_top_min": 200,
+    "background": "NỀN GIÀU CHIỀU SÂU, không phẳng một màu: không gian phòng sáng chụp xoá phông (soft focus) tông aqua–teal nhạt, có rèm voan trắng mờ, cây xanh mờ ở hai bên, ánh sáng lấp lánh và vài bong bóng xà phòng trong suốt. Riêng vùng logo (y<215) và vùng trên CTA (y≥880) chỉ là nền mờ chuyển sắc mượt, không chi tiết sắc nét; nội dung dừng trước y=945 (15px trên khối CTA). Nền thay đổi theo từng poster (bối cảnh khác nhau theo chủ đề), không lặp một nền cho nhiều poster.",
+    "blocks": {
+      "cta": {
+        "file": "cta",
+        "paste_at": [
+          0,
+          0
+        ],
+        "reserve": [
+          0,
+          960,
+          1080,
+          120
+        ],
+        "margin": 15
+      }
+    },
+    "layout_mode": "free",
+    "prompt_template": "Poster Áo Mây Dương Quảng Hàm, dạng {poster_type}, chủ đề {topic}. Bố cục tự thiết kế, nhưng PHẢI đủ 6 thành phần: (1) nền SÁNG giàu chiều sâu: không gian phòng sáng xoá phông tông aqua–teal nhạt (#EFFBFB đến aqua), rèm voan mờ, cây xanh mờ hai bên, ánh sáng lấp lánh, vài bong bóng xà phòng trong suốt; tuyệt đối không nền phẳng một màu; (2) tiêu đề 1-2 dòng IN HOA, dòng 1 teal đậm #0A6A6E, dòng 2 cam #ED8752, font Montserrat ExtraBold nét rộng đặc, KHÔNG condensed; (3) DẢI PHỤ: một câu ngắn một dòng nằm riêng dưới tiêu đề, chỉ có chữ, KHÔNG icon; (4) MỘT ảnh minh họa chính (không so sánh) hoặc hai khung TRƯỚC/SAU (so sánh), ảnh cùng loại sản phẩm với mẫu; (5) mục LỢI ÍCH 3-4 mục, mỗi mục icon thật + tiêu đề ngắn + mô tả ngắn, không ô icon trống; (6) chữ tiếng Việt có dấu đúng, không bịa giá, ưu đãi, thời gian hoàn thành, giao nhận hay cam kết an toàn/y tế (ví dụ 'an toàn cho da'). Màu phụ: teal #44A49F, chữ #344054. BẮT BUỘC CHỪA TRỐNG (canvas 1080x1080): phần trên cùng y<200 là nền mờ chuyển sắc nhạt, không chữ, sóng, bong bóng hay góc màu; tiêu đề (kể cả dấu mũ) bắt đầu từ y≥215; ảnh chính VÀ hàng lợi ích nằm trọn trong y≤870 (nếu có hai khung ảnh thì kết thúc ở y≈740, hàng lợi ích trong y=760-870); từ y=880 xuống hết đáy chỉ là nền nhạt mờ dần hoàn toàn trơn, không chữ, icon, vật thể, mặt bàn, sàn, bóng, sóng hay viền. Không vẽ logo hay tên cửa hàng, không hotline hay địa chỉ, không người, không nhắc Latusa, Miu Miu hay tên cửa hàng khác. NỀN KHÁC NHAU GIỮA CÁC POSTER: mỗi poster có bối cảnh nền riêng theo chủ đề (ví dụ phòng giặt sáng, kệ gỗ cạnh cửa sổ, tủ quần áo, bàn ủi, hiên nhà nắng, tiệm giày), luôn là nền SÁNG tông aqua-teal nhạt xoá phông đúng nhận diện Áo Mây; không dùng lại cùng một nền (bầu trời mây) cho nhiều poster.",
+    "prompt_policy": "Prompt gửi model ảnh chỉ gồm: mẫu và chủ đề, nhận diện (màu, font), vùng trống bắt buộc, điều cấm. Không chỉ định bố cục, vị trí hay cỡ chữ. Nhưng PHẢI chép restyle.prompt_template (nêu đủ 6 thành phần và font Montserrat). Thiếu thành phần hoặc sai font là lỗi, phải gen lại. Mẫu Latusa có logo LATUSA trên áo, túi, biển hiệu và có người (shipper, người ủi): bỏ hết.",
+    "poster_types": {
+      "compare": "so sánh: hai khung TRƯỚC/SAU + mũi tên (ví dụ giày trước và sau)",
+      "single": "không so sánh: một ảnh minh họa chính; mục lợi ích có thể 3 mục"
+    },
+    "fixed_positions": "Chỉ logo (top-center, logo_width) và thanh CTA (blocks.cta.paste_at) cố định. Mọi thành phần khác do model tự bố cục.",
+    "components": [
+      {
+        "key": "background",
+        "required": true,
+        "note": "nền sáng theo `background`"
+      },
+      {
+        "key": "headline",
+        "required": true,
+        "note": "1-2 dòng IN HOA; dòng 1 teal đậm headline_main, dòng 2 cam text_accent; chữ lấy đúng ý của mẫu, bỏ tên Latusa"
+      },
+      {
+        "key": "subline",
+        "required": true,
+        "note": "một câu ngắn một dòng, chỉ chữ, không icon"
+      },
+      {
+        "key": "visual",
+        "required": true,
+        "note": "theo poster_types; ảnh cùng loại sản phẩm với mẫu, không người, không logo Latusa trên hàng hoá"
+      },
+      {
+        "key": "benefits",
+        "required": true,
+        "note": "3-4 mục icon thật + tiêu đề ngắn + mô tả ngắn; không ô icon trống"
+      },
+      {
+        "key": "logo",
+        "required": true,
+        "fixed": true,
+        "note": "code dán ở giữa trên, model chỉ chừa trống"
+      },
+      {
+        "key": "cta",
+        "required": true,
+        "fixed": true,
+        "note": "code dán thanh liên hệ ở đáy, model chừa trống từ y=945"
+      }
+    ],
+    "layout_constraints": "Bố cục tự do miễn: đủ các thành phần; không thành phần nào chạm vùng logo hoặc lấn xuống y=945; không bị cắt mép; chữ không condensed; không thêm logo, hotline, địa chỉ hay thương hiệu khác.",
+    "headline": {
+      "font_style": "Montserrat ExtraBold, in hoa, nét rộng, KHÔNG condensed (kể cả khi mẫu Latusa dùng font hẹp), chữ đặc",
+      "line_1": "headline_main",
+      "line_2": "text_accent"
+    },
+    "forbid_people": "không mặt người, không toàn thân; tay và cánh tay được",
+    "forbid_text": [
+      "Latusa",
+      "LATUSA",
+      "LATUSA.vn",
+      "Miu Miu",
+      "Chánh Hưng",
+      "Tân Hưng",
+      "An Khánh",
+      "320 Phan Đình Phùng",
+      "0935 749 495"
+    ],
+    "keep_brands": [],
+    "max_posters_per_run": 5
   }
 }

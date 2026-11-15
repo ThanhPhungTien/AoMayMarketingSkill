@@ -90,3 +90,23 @@ Nếu đáy ảnh còn chi tiết sát CTA: làm mờ dần về màu nền (scr
 - **File logo phải đạt** (`restyle_poster.py check <MÃ>` báo FAIL kèm lý do nếu không): PNG RGBA nền trong suốt; vùng nội dung sau khi cắt viền trong suốt ≥ 400×270 px (để thu về khung 200×135 vẫn nét khoảng 2 lần); tỉ lệ rộng/cao từ 1,0 đến 2,2. Viền trong suốt thừa không sao, script cắt lúc dán, không sửa file của người dùng.
 - **Ngoại lệ:** spec chưa có `logo_box` vẫn dùng `logo_width` cũ (AK rộng 250 vì vùng trống 225; MM ở góc trái, tỉ lệ 3,3). Đổi sang `logo_box` khi cần đồng bộ.
 - Đổi `logo_box` hay thêm cửa hàng mới: chạy `check`, rồi dán thử một nền (`paste`) để chắc vùng logo và cổng kiểm vẫn đạt.
+
+## 10. Vị trí logo và cách thể hiện layout (2026-11-15)
+**Luật chung (2026-11-15): mọi cửa hàng đặt logo ở góc trên trái.** Vị trí khác chỉ khi người dùng bảo cho một poster lẻ. Bảng theo cửa hàng (`restyle.logo_position` trong spec):
+| Mã | Vị trí | Cỡ | Ghi chú |
+|---|---|---|---|
+| DN Đà Nẵng | top-left | khung 200×135, lề 30 | Quyết định 2026-11-15: logo luôn ở góc trái |
+| MM Miu Miu | top-left | rộng 302, lề 54 | Thương hiệu riêng |
+| AK An Khánh | top-left | rộng 250, lề 48 | Vùng chừa 225 |
+| CH | top-left | khung 200×135, lề 30 | Đổi 2026-11-15 theo yêu cầu |
+| TH, DQH | top-left | khung 200×135, lề 30 | Đổi 2026-11-15 theo luật chung |
+Một poster lẻ cần vị trí khác: đổi tạm `logo_position` rồi `paste`, sau đó trả lại spec.
+
+**Layout khi logo ở góc trái trên** (đã chạy được ở DN và DQH_10, tránh dải trống lớn phía trên):
+- Nói theo % khung vuông trong prompt: hình chữ nhật 0-21% rộng × 0-19% cao (DQH: 0-24%) là nền mờ đồng màu, không chữ, vật thể, cây, cửa sổ hay mảng tối. Không được chừa cả dải ngang phía trên.
+- Tiêu đề bắt đầu từ khoảng 4-5% chiều cao, nằm bên phải góc logo (từ 24-26% chiều rộng sang phải). Phần còn lại dùng hết khung.
+- Nội dung phủ từ ~5% đến ~84% chiều cao, phải LỚN. Dặn thêm "lần sửa" nội dung kết thúc ≤78% khi cổng "dải trên CTA" báo trượt (ChatGPT thường vượt thêm ~5%). Từ ~86% xuống đáy là nền trơn cho thanh CTA.
+- Poster có hàng thẻ dưới: thẻ cao 56-84%, chữ và icon to; tiêu đề cùng ảnh minh hoạ chiếm khoảng 4-52%.
+- Nếu một poster lẻ để logo top-center thì tiêu đề phải bắt đầu ≥ ~25% (nếu không trượt cổng "cạnh vùng logo"), nên phía trên trống nhiều. Đây là lý do chuyển sang góc trái.
+
+**Poster khai trương có ảnh thật** (DN, đã duyệt): khung ảnh dọc 5,5-49% rộng × 21-75,5% cao để trống hoàn toàn (`tools/batch/paste_photo.py` dán, rect mặc định 60,225,470,590); cột chữ bên phải 53-96%; trang trí dàn đều khắp ảnh nhưng dừng ở ~84% chiều cao.
